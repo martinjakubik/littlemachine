@@ -54,14 +54,14 @@ def strBoolean(value):
 
 commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
 commandLineParser.add_argument('boxSize', type = int, help = 'the size of each box')
-commandLineParser.add_argument('numberOfBoxes', type = int, help = 'the number of boxes to generate')
 commandLineParser.add_argument('--printDot', action = 'store_true', default = False, help = 'if true, prints a dot in empty spaces')
 
 arguments = commandLineParser.parse_args()
 
 boxSize = arguments.boxSize
-numberOfBoxes = arguments.numberOfBoxes
 printDot = arguments.printDot
+
+numberOfBoxes = 2 ** (boxSize ** 2)
 
 if numberOfBoxes > MAX_NUMBER_OF_BOXES:
     print 'too many boxes. try less than', MAX_NUMBER_OF_BOXES
