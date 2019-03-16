@@ -12,15 +12,15 @@ def convertDecimalToBinary(decimal, pad_size):
 
     max_position = pad_size ** 2
 
-    binaryString = ""
+    binaryString = ''
     remainder = decimal
     for exponent in reversed(range(max_position)):
         power = 2 ** exponent
         if power <= remainder:
-            binaryString += "1"
+            binaryString += '1'
             remainder = remainder - power
         else:
-            binaryString += "0"
+            binaryString += '0'
 
     return binaryString
 
@@ -29,7 +29,7 @@ def printFace(boxSize, facepixels, printDot):
     column = 0
 
     for pixel in facepixels:
-        if pixel == "1":
+        if pixel == '1':
             block = str(u'\u2588\u2588'.encode('utf-8'))
             sys.stdout.write(block)
         elif printDot:
@@ -53,10 +53,10 @@ def strBoolean(value):
     else:
         raise argparse.ArgumentTypeError('boolean value expected')
 
-commandLineParser = argparse.ArgumentParser(description = "generates pixel boxes")
-commandLineParser.add_argument("boxSize", type = int, help = "the size of each box")
-commandLineParser.add_argument("numberOfBoxes", type = int, help = "the number of boxes to generate")
-commandLineParser.add_argument("--printDot", action = 'store_true', default = False, help = "if true, prints a dot in empty spaces")
+commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
+commandLineParser.add_argument('boxSize', type = int, help = 'the size of each box')
+commandLineParser.add_argument('numberOfBoxes', type = int, help = 'the number of boxes to generate')
+commandLineParser.add_argument('--printDot', action = 'store_true', default = False, help = 'if true, prints a dot in empty spaces')
 
 arguments = commandLineParser.parse_args()
 
@@ -65,7 +65,7 @@ numberOfBoxes = arguments.numberOfBoxes
 printDot = arguments.printDot
 
 if numberOfBoxes > MAX_NUMBER_OF_BOXES:
-    print "too many boxes. try less than", MAX_NUMBER_OF_BOXES
+    print 'too many boxes. try less than', MAX_NUMBER_OF_BOXES
     raise SystemExit(1)
 
 for index in range(numberOfBoxes):
