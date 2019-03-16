@@ -45,10 +45,18 @@ def printFace(boxSize, facepixels, printDot):
 
     print '\n'
 
+def strBoolean(value):
+    if value.lower() in ('true', 'yes', 't', 'y', '1'):
+        return True
+    elif value.lower() in ('false', 'no', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('boolean value expected')
+
 commandLineParser = argparse.ArgumentParser(description = "generates pixel boxes")
 commandLineParser.add_argument("boxSize", type = int, help = "the size of each box")
 commandLineParser.add_argument("numberOfBoxes", type = int, help = "the number of boxes to generate")
-commandLineParser.add_argument("printDot", type = bool, default = False, help = "if true, prints a dot in empty spaces")
+commandLineParser.add_argument("--printDot", action = 'store_true', default = False, help = "if true, prints a dot in empty spaces")
 
 arguments = commandLineParser.parse_args()
 
