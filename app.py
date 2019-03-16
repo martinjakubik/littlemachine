@@ -1,5 +1,4 @@
 import sys
-import codecs
 import argparse
 
 MAX_EXPONENT = 64
