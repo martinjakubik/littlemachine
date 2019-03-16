@@ -42,7 +42,7 @@ def printFace(boxSize, binary, printDot):
             sys.stdout.write('\n')
             column = 0
 
-    print '\n'
+    sys.stdout.write(binary + '\n\n')
 
 def strBoolean(value):
     if value.lower() in ('true', 'yes', 't', 'y', '1'):
