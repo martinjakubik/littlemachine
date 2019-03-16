@@ -1,14 +1,20 @@
 import sys
+import codecs
 import argparse
 
 MAX_EXPONENT = 64
-MAX_NUMBER_OF_BOXES = 10000
+MAX_NUMBER_OF_BOXES = 65536
 
-def convertDecimalToBinary(decimal):
+def convertDecimalToBinary(decimal, pad_size):
+
+    if pad_size ** 2 > MAX_EXPONENT:
+        pad_size = MAX_EXPONENT
+
+    max_position = pad_size ** 2
 
     binaryString = ""
     remainder = decimal
-    for exponent in reversed(range(MAX_EXPONENT)):
+    for exponent in reversed(range(max_position)):
         power = 2 ** exponent
         if power <= remainder:
             binaryString += "1"
@@ -18,16 +24,20 @@ def convertDecimalToBinary(decimal):
 
     return binaryString
 
-def printFace(facepixels):
+def printFace(boxSize, facepixels, printDot):
+
     column = 0
 
     for pixel in facepixels:
         if pixel == "1":
-            sys.stdout.write(u'\u2588\u2588')
-        else:
+            block = str(u'\u2588\u2588'.encode('utf-8'))
+            sys.stdout.write(block)
+        elif printDot:
             sys.stdout.write(' .')
+        else:
+            sys.stdout.write('  ')
 
-        if column < 7:
+        if column < (boxSize - 1):
             column = column + 1
         else:
             sys.stdout.write('\n')
@@ -35,17 +45,21 @@ def printFace(facepixels):
 
     print '\n'
 
-commandLineParser = argparse.ArgumentParser(description = "generates 64-pixel boxes")
+commandLineParser = argparse.ArgumentParser(description = "generates pixel boxes")
+commandLineParser.add_argument("boxSize", type = int, help = "the size of each box")
 commandLineParser.add_argument("numberOfBoxes", type = int, help = "the number of boxes to generate")
+commandLineParser.add_argument("printDot", type = bool, default = False, help = "if true, prints a dot in empty spaces")
 
 arguments = commandLineParser.parse_args()
 
+boxSize = arguments.boxSize
 numberOfBoxes = arguments.numberOfBoxes
+printDot = arguments.printDot
 
 if numberOfBoxes > MAX_NUMBER_OF_BOXES:
     print "too many boxes. try less than", MAX_NUMBER_OF_BOXES
     raise SystemExit(1)
 
 for index in range(numberOfBoxes):
-    face = convertDecimalToBinary(index)
-    printFace(face)
+    face = convertDecimalToBinary(index, boxSize)
+    printFace(boxSize, face, printDot)
