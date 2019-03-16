@@ -23,11 +23,11 @@ def convertDecimalToBinary(decimal, pad_size):
 
     return binaryString
 
-def printFace(boxSize, facepixels, printDot):
+def printFace(boxSize, binary, printDot):
 
     column = 0
 
-    for pixel in facepixels:
+    for pixel in binary:
         if pixel == '1':
             block = str(u'\u2588\u2588'.encode('utf-8'))
             sys.stdout.write(block)
@@ -68,5 +68,5 @@ if numberOfBoxes > MAX_NUMBER_OF_BOXES:
     raise SystemExit(1)
 
 for index in range(numberOfBoxes):
-    face = convertDecimalToBinary(index, boxSize)
-    printFace(boxSize, face, printDot)
+    binary = convertDecimalToBinary(index, boxSize)
+    printFace(boxSize, binary, printDot)
