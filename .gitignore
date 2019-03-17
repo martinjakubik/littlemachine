@@ -1,5 +1,7 @@
 *.pyc
 
+.DS_Store
+
 boxes.txt
 boxes*.txt
 
