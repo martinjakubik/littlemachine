@@ -1,0 +1,8 @@
+*.pyc
+
+boxes.txt
+boxes*.txt
+
+boxes4
+boxes9/*
+boxes16/*
