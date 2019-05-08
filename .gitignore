@@ -8,3 +8,10 @@ boxes*.txt
 boxes4
 boxes9/*
 boxes16/*
+
+node_modules
+public
+
+build
+
+js/lib
