@@ -32,26 +32,20 @@ requirejs(['Tools'], function (Tools) {
             }
         };
 
-        static labellist = [
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no',
-            'no'
-        ];
-        
+        static makeLabelList() {
+
+            var aLabelList = [];
+            for (var i = 0; i < (2 ** BOX_SIZE ** 2); i++) {
+                aLabelList.push('unlabelled');
+            }
+            return aLabelList;
+
+        }
+
         constructor() {
 
             this.decimal = 0;
-            this.labellist = LabelMaker.labellist;
+            this.labellist = LabelMaker.makeLabelList();
 
         }
 
