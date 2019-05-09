@@ -1,3 +1,11 @@
+button {
+    background-color: #fafafa;
+    height: 1.4em;
+    width: 1.4em;
+    font-size: 48pt;
+    color: #6a6a6a;
+}
+
 .picturenavigator {
     margin: 3em 0 0 16em;
     width: 26em;
@@ -11,11 +19,6 @@
 }
 
 .navigationbutton {
-    background-color: #fafafa;
-    height: 1.2em;
-    width: 1.2em;
-    font-size: 48pt;
-    color: #6a6a6a;
     vertical-align: middle;
 }
 
@@ -41,9 +44,6 @@
 }
 
 .labelbutton {
-    background-color: #fafafa;
-    height: 1.2em;
-    font-size: 48pt;
     margin: 1em .1em;
     width: 3em;
 }
@@ -65,9 +65,6 @@
 }
 
 .savebutton {
-    background-color: #fafafa;
-    height: 1.2em;
-    font-size: 48pt;
     margin: 1em 5em;
     width: 3em;
 }
