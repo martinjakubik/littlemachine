@@ -18,7 +18,19 @@ requirejs(['Tools'], function (Tools) {
         constructor() {
         }
 
-        makeCanvas() {
+        renderMainView() {
+
+            this.renderCanvas();
+
+            var oLabelMakerView = document.createElement('div');
+
+            Tools.setClass(oLabelMakerView, 'labelmaker');
+            oLabelMakerView.setAttribute('id', 'labelmaker');
+            document.body.insertBefore(oLabelMakerView, null);
+
+        }
+
+        renderCanvas() {
 
             var oCanvas = document.createElement('canvas');
     
@@ -27,26 +39,13 @@ requirejs(['Tools'], function (Tools) {
             oCanvas.setAttribute('height', PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
             document.body.insertBefore(oCanvas, null);
 
-        }
-
-        makeMainView() {
-
-            this.makeCanvas();
-
-            var oLabelMakerView = document.createElement('div');
-
-            Tools.setClass(oLabelMakerView, 'labelmaker');
-            oLabelMakerView.setAttribute('id', 'labelmaker');
-            document.body.insertBefore(oLabelMakerView, null);
-
-            var oCanvas = document.getElementById( PICTURE_CANVAS_ID ) ;
-
             this.context = oCanvas.getContext("2d");
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE, PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+
         }
 
-        addPictures() {
+        renderPicture() {
             var i = 13;
             var sBinary = convertDecimalToBinary(i, BOX_SIZE);
             this.drawAsSquare(sBinary);
@@ -116,7 +115,7 @@ requirejs(['Tools'], function (Tools) {
 
     var oLabelMaker = new LabelMaker();
 
-    oLabelMaker.makeMainView();
-    oLabelMaker.addPictures();
+    oLabelMaker.renderMainView();
+    oLabelMaker.renderPicture();
 
 })
