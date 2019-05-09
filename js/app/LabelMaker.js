@@ -25,6 +25,12 @@ requirejs(['Tools'], function (Tools) {
             }
         };
 
+        static oLabels() {
+            return {
+                yes: 0,
+                no: 1
+            }
+        };
         
         constructor() {
             this.decimal = 0;
@@ -45,12 +51,23 @@ requirejs(['Tools'], function (Tools) {
             var oButtonLeft = this.makeNavigationButton(LabelMaker.oSides().left);
             var oCanvas = this.makeCanvas();
             var oButtonRight = this.makeNavigationButton(LabelMaker.oSides().right);
-
+            
             oPictureNavigator.insertBefore(oButtonLeft, null);
             oPictureNavigator.insertBefore(oCanvas, null);
             oPictureNavigator.insertBefore(oButtonRight, null);
+            
+            var oLabelControl = document.createElement('div');
+            oLabelControl.setAttribute('id', 'labelcontrol');
+            Tools.setClass(oLabelControl, 'labelcontrol');
+            
+            var oButtonYes = this.makeLabelButton(LabelMaker.oLabels().yes);
+            var oButtonNo = this.makeLabelButton(LabelMaker.oLabels().no);
 
+            oLabelControl.insertBefore(oButtonYes, null);
+            oLabelControl.insertBefore(oButtonNo, null);
+            
             document.body.insertBefore(oPictureNavigator, null);
+            document.body.insertBefore(oLabelControl, null);
 
         }
 
@@ -87,6 +104,22 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        makeLabelButton(iLabel) {
+
+            var oButton = document.createElement('button');
+
+            var sLabel = iLabel === LabelMaker.oLabels().yes ? 'yes' : 'no';
+
+            var sButtonClass = `labelbutton`;
+            var sButtonId = `labelbutton${sLabel}`;
+            Tools.setClass(oButton, sButtonClass);
+            oButton.setAttribute('id', sButtonId);
+            oButton.onclick = this.setLabel.bind(this, iLabel);
+
+            return oButton;
+
+        }
+
         incrementPicture(iIncrement) {
 
             if (Math.abs(iIncrement) === 1) {
@@ -96,6 +129,10 @@ requirejs(['Tools'], function (Tools) {
             }
 
             this.renderPicture();
+
+        }
+
+        setLabel(iLabel) {
 
         }
 

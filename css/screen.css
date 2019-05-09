@@ -24,3 +24,31 @@
 #navigationbuttonright::before {
     content: '>';
 }
+
+.labelcontrol {
+    margin: 1em 1em 1em 10em;
+}
+
+.labelbutton {
+    background-color: #fafafa;
+    height: 1.2em;
+    font-size: 48pt;
+    margin: 1em .1em;
+    width: 3em;
+}
+
+#labelbuttonyes {
+    color: #004600;
+}
+
+#labelbuttonno {
+    color: #460000;
+}
+
+#labelbuttonyes::before {
+    content: 'yes';
+}
+
+#labelbuttonno::before {
+    content: 'no';
+}
