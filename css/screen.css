@@ -1,3 +1,23 @@
 .picturenavigator {
     margin: 10% 0 0 50%;
 }
+
+#picturecanvas {
+    position: relative;
+    top: 1em;
+    margin: 0 1em 0 1em;
+}
+
+.navigationbutton {
+    background-color: gray;
+    height: 5em;
+    width: 5em;
+}
+
+#navigationbuttonleft::before {
+    content: '<';
+}
+
+#navigationbuttonright::before {
+    content: '>';
+}

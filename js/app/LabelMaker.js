@@ -72,9 +72,10 @@ requirejs(['Tools'], function (Tools) {
             var oButton = document.createElement('button');
 
             var sSide = iSide === LabelMaker.oSides().left ? 'left' : 'right';
-            var sButtonClass = `navigation${sSide}`;
+            var sButtonClass = `navigationbutton`;
+            var sButtonId = `navigationbutton${sSide}`;
             Tools.setClass(oButton, sButtonClass);
-            oButton.setAttribute('id', 'labelmaker');
+            oButton.setAttribute('id', sButtonId);
 
             return oButton;
 
