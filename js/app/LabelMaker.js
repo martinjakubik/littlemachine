@@ -58,6 +58,8 @@ requirejs(['Tools'], function (Tools) {
         renderMainView() {
 
             this.navigationField = this.makeNavigationField();
+            this.navigationField.setAttribute('value', this.decimal);
+
             this.renderPictureNavigator();
             this.renderLabelControl();
 
