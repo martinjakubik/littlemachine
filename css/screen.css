@@ -24,12 +24,10 @@ button {
 }
 
 .navigationfield {
-    position: relative;
     font-size: 18pt;
     text-align: center;
-    top: 1em;
-    left: 5em;
     width: 5em;
+    margin: 1em 1em 1em 6em;
 }
 
 #navigationbuttonleft::before {
@@ -42,6 +40,30 @@ button {
 
 .labelcontrol {
     margin: 1em 1em 1em 16em;
+}
+
+.labeldot {
+    width: 1em;
+    border-radius: .4em;
+    height: 1em;
+    margin: 0 6em 0 6em;
+    display: inline-block;
+}
+
+#labeldotyes.on {
+    background-color: #004600;
+}
+
+#labeldotno.on {
+    background-color: #460000;
+}
+
+#labeldotyes.off {
+    background-color: #cfdacf;
+}
+
+#labeldotno.off {
+    background-color: #d1c6c6;
 }
 
 .labelbutton {

@@ -84,9 +84,22 @@ requirejs(['Tools'], function (Tools) {
             oLabelControl.setAttribute('id', 'labelcontrol');
             Tools.setClass(oLabelControl, 'labelcontrol');
 
+            var oLabelDots = document.createElement('div');
+            oLabelDots.setAttribute('id', 'labeldots');
+            Tools.setClass(oLabelDots, 'labeldots');
+
+            this.dotYes = this.makeLabelDot(LabelMaker.labels().yes);
+            this.dotNo = this.makeLabelDot(LabelMaker.labels().no);
+
+            this.renderDotColors();
+
             var oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
             var oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
 
+            oLabelDots.insertBefore(this.dotYes, null);
+            oLabelDots.insertBefore(this.dotNo, null);
+
+            oLabelControl.insertBefore(oLabelDots, null);
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
 
@@ -94,6 +107,22 @@ requirejs(['Tools'], function (Tools) {
 
             document.body.insertBefore(oLabelControl, null);
             document.body.insertBefore(oButtonSave, null);
+
+        }
+
+        renderDotColors() {
+
+            if (this.labellist[this.decimal] === 'yes') {
+                Tools.removeClass(this.dotYes, 'off');
+                Tools.removeClass(this.dotNo, 'on');
+                Tools.addClass(this.dotYes, 'on');
+                Tools.addClass(this.dotNo, 'off');
+            } else {
+                Tools.removeClass(this.dotYes, 'on');
+                Tools.removeClass(this.dotNo, 'off');
+                Tools.addClass(this.dotYes, 'off');
+                Tools.addClass(this.dotNo, 'on');
+            }
 
         }
 
@@ -144,6 +173,21 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        makeLabelDot(iLabel) {
+
+            var oDot = document.createElement('div');
+
+            var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+
+            var sDotClass = 'labeldot';
+            var sDotId = `labeldot${sLabel}`;
+            Tools.setClass(oDot, sDotClass);
+            oDot.setAttribute('id', sDotId);
+
+            return oDot;
+
+        }
+
         makeLabelButton(iLabel) {
 
             var oButton = document.createElement('button');
@@ -184,6 +228,7 @@ requirejs(['Tools'], function (Tools) {
             }
 
             this.renderPicture();
+            this.renderDotColors();
 
         }
 
@@ -197,6 +242,7 @@ requirejs(['Tools'], function (Tools) {
             }
 
             this.renderPicture();
+            this.renderDotColors();
             this.navigationField.setAttribute('value', this.decimal);
 
         }
@@ -205,6 +251,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
             this.labellist[this.decimal] = sLabel;
+            this.renderDotColors();
 
         }
 
