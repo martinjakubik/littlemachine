@@ -49,8 +49,10 @@ requirejs(['Tools'], function (Tools) {
         ];
         
         constructor() {
+
             this.decimal = 0;
             this.labellist = LabelMaker.labellist;
+
         }
 
         renderMainView() {
