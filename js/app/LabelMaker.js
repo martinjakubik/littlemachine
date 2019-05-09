@@ -114,6 +114,7 @@ requirejs(['Tools'], function (Tools) {
             var sFieldId = 'navigationfield';
             Tools.setClass(oField, sFieldClass);
             oField.setAttribute('id', sFieldId);
+            oField.onchange = this.movePicture.bind(this);
 
             return oField;
 
@@ -135,14 +136,16 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
-        movePicture(iValue) {
+        movePicture() {
 
-                if (this.decimal + iIncrement >= MIN_DECIMAL && this.decimal + iIncrement < MAX_DECIMAL) {
-                    this.decimal = this.decimal + iIncrement;
-                }
+            var sValue = this.navigationField.value;
+            var iValue = parseInt(sValue);
+
+            if (MIN_DECIMAL <= iValue && iValue < MAX_DECIMAL) {
+                this.decimal = iValue;
+            }
 
             this.renderPicture();
-            this.navigationField.setAttribute('value', this.decimal);
 
         }
 
@@ -151,6 +154,7 @@ requirejs(['Tools'], function (Tools) {
             if (Math.abs(iIncrement) === 1) {
                 if (this.decimal + iIncrement >= MIN_DECIMAL && this.decimal + iIncrement < MAX_DECIMAL) {
                     this.decimal = this.decimal + iIncrement;
+                    this.navigationField.value = this.decimal;
                 }
             }
 
