@@ -5,7 +5,7 @@ requirejs(['Tools'], function (Tools) {
 
     var MAX_EXPONENT = 4096;
     var MAX_NUMBER_OF_BOXES = 65536;
-    var BOX_SIZE = 5;
+    var BOX_SIZE = 4;
 
     var MIN_DECIMAL = 0;
     var MAX_DECIMAL = MAX_NUMBER_OF_BOXES;
