@@ -13,13 +13,14 @@ button {
 
 #picturecanvas {
     position: relative;
-    top: 1em;
+    top: 0.4em;
     margin: 0 1em 0 1em;
     border: 1px solid black;
 }
 
 .navigationbutton {
-    vertical-align: middle;
+    vertical-align: text-bottom;
+    height: 3em;
 }
 
 .navigationfield {
