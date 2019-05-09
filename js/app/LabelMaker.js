@@ -3,15 +3,15 @@ requirejs(['Tools'], function (Tools) {
 
     'use strict';
 
-    var MAX_EXPONENT = 3;
+    var MAX_EXPONENT = 4096;
     var MAX_NUMBER_OF_BOXES = 65536;
-    var BOX_SIZE = 3;
+    var BOX_SIZE = 5;
 
     var MIN_DECIMAL = 0;
     var MAX_DECIMAL = MAX_NUMBER_OF_BOXES;
 
-    var PICTURE_CANVAS_WIDTH = 3;
-    var PICTURE_CANVAS_HEIGHT = 3;
+    var PICTURE_CANVAS_WIDTH = BOX_SIZE;
+    var PICTURE_CANVAS_HEIGHT = BOX_SIZE;
     var DRAW_BLOCK_SIZE = 48;
 
     var PICTURE_CANVAS_ID = 'picturecanvas';
