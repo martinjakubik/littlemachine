@@ -15,33 +15,68 @@ requirejs(['Tools'], function (Tools) {
 
     class LabelMaker {
 
+        static oSides() {
+            return {
+                left: 0,
+                right: 1
+            }
+        };
+
+        
         constructor() {
+            this.iSide = LabelMaker.oSides().left;
         }
 
         renderMainView() {
 
-            this.renderCanvas();
+            this.renderPictureNavigator();
 
-            var oLabelMakerView = document.createElement('div');
+        }
+        
+        renderPictureNavigator() {
+            
+            var oPictureNavigator = document.createElement('div');
+            oPictureNavigator.setAttribute('id', 'picturenavigator');
+            Tools.setClass(oPictureNavigator, 'picturenavigator');
 
-            Tools.setClass(oLabelMakerView, 'labelmaker');
-            oLabelMakerView.setAttribute('id', 'labelmaker');
-            document.body.insertBefore(oLabelMakerView, null);
+            var oButtonLeft = this.makeNavigationButton(LabelMaker.oSides().left);
+            var oCanvas = this.makeCanvas();
+            var oButtonRight = this.makeNavigationButton(LabelMaker.oSides().right);
+
+            oPictureNavigator.insertBefore(oButtonLeft, null);
+            oPictureNavigator.insertBefore(oCanvas, null);
+            oPictureNavigator.insertBefore(oButtonRight, null);
+
+            document.body.insertBefore(oPictureNavigator, null);
 
         }
 
-        renderCanvas() {
+        makeCanvas() {
 
             var oCanvas = document.createElement('canvas');
     
             oCanvas.setAttribute('id', PICTURE_CANVAS_ID);
             oCanvas.setAttribute('width', PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE);
             oCanvas.setAttribute('height', PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
-            document.body.insertBefore(oCanvas, null);
 
             this.context = oCanvas.getContext("2d");
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE, PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+
+            return oCanvas;
+
+        }
+
+        makeNavigationButton(iSide) {
+
+            var oButton = document.createElement('button');
+
+            var sSide = iSide === LabelMaker.oSides().left ? 'left' : 'right';
+            var sButtonClass = `navigation${sSide}`;
+            Tools.setClass(oButton, sButtonClass);
+            oButton.setAttribute('id', 'labelmaker');
+
+            return oButton;
 
         }
 
