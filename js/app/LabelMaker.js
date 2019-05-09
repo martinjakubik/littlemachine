@@ -57,6 +57,7 @@ requirejs(['Tools'], function (Tools) {
 
             this.navigationField = this.makeNavigationField();
             this.renderPictureNavigator();
+            this.renderLabelControl();
 
         }
         
@@ -75,19 +76,24 @@ requirejs(['Tools'], function (Tools) {
             oPictureNavigator.insertBefore(oButtonRight, null);
             oPictureNavigator.insertBefore(this.navigationField, null);
 
+            document.body.insertBefore(oPictureNavigator, null);
+
+        }
+
+        renderLabelControl() {
+
             var oLabelControl = document.createElement('div');
             oLabelControl.setAttribute('id', 'labelcontrol');
             Tools.setClass(oLabelControl, 'labelcontrol');
 
             var oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
             var oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
-            
+
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
 
             var oButtonSave = this.makeSaveButton();
 
-            document.body.insertBefore(oPictureNavigator, null);
             document.body.insertBefore(oLabelControl, null);
             document.body.insertBefore(oButtonSave, null);
 
