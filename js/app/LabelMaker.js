@@ -31,6 +31,43 @@ requirejs(['Tools'], function (Tools) {
                 no: 1
             }
         };
+
+        labels = {
+            list: [
+                {
+                    value: 0,
+                    label: 'no'
+                },
+                {
+                    value: 1,
+                    label: 'no'
+                },
+                {
+                    value: 2,
+                    label: 'no'
+                },
+                {
+                    value: 3,
+                    label: 'no'
+                },
+                {
+                    value: 4,
+                    label: 'no'
+                },
+                {
+                    value: 5,
+                    label: 'no'
+                },
+                {
+                    value: 6,
+                    label: 'no'
+                },
+                {
+                    value: 7,
+                    label: 'no'
+                },
+            ]
+        };
         
         constructor() {
             this.decimal = 0;
@@ -64,12 +101,15 @@ requirejs(['Tools'], function (Tools) {
 
             var oButtonYes = this.makeLabelButton(LabelMaker.oLabels().yes);
             var oButtonNo = this.makeLabelButton(LabelMaker.oLabels().no);
-
+            
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
 
+            var oButtonSave = this.makeSaveButton();
+
             document.body.insertBefore(oPictureNavigator, null);
             document.body.insertBefore(oLabelControl, null);
+            document.body.insertBefore(oButtonSave, null);
 
         }
 
@@ -126,11 +166,25 @@ requirejs(['Tools'], function (Tools) {
 
             var sLabel = iLabel === LabelMaker.oLabels().yes ? 'yes' : 'no';
 
-            var sButtonClass = `labelbutton`;
+            var sButtonClass = 'labelbutton';
             var sButtonId = `labelbutton${sLabel}`;
             Tools.setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
             oButton.onclick = this.setLabel.bind(this, iLabel);
+
+            return oButton;
+
+        }
+
+        makeSaveButton() {
+
+            var oButton = document.createElement('button');
+
+            var sButtonClass = 'savebutton';
+            var sButtonId = 'savebutton';
+            Tools.setClass(oButton, sButtonClass);
+            oButton.setAttribute('id', sButtonId);
+            oButton.onclick = this.saveLabels.bind(this);
 
             return oButton;
 
@@ -164,6 +218,12 @@ requirejs(['Tools'], function (Tools) {
         }
 
         setLabel(iLabel) {
+
+        }
+
+        saveLabels() {
+
+            // save document
 
         }
 

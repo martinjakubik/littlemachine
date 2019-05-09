@@ -63,3 +63,15 @@
 #labelbuttonno::before {
     content: 'no';
 }
+
+.savebutton {
+    background-color: #fafafa;
+    height: 1.2em;
+    font-size: 48pt;
+    margin: 1em .1em;
+    width: 3em;
+}
+
+.savebutton::before {
+    content: 'save';
+}
