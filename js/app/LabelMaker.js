@@ -3,36 +3,120 @@ requirejs(['Tools'], function (Tools) {
 
     'use strict';
 
-    var LabelMaker = function () {
-        makeMainView();
-        var sBinary = '111111000';
-        addPicture(sBinary);
-    };
-    
-    var makeMainView = function () {
-        
-        var oLabelMakerView = document.createElement('div');
-        Tools.setClass(oLabelMakerView, 'labelmaker');
-        oLabelMakerView.setAttribute('id', 'labelmaker');
-    
-        document.body.insertBefore(oLabelMakerView, null);
-    
-    };
+    var MAX_EXPONENT = 3;
+    var MAX_NUMBER_OF_BOXES = 65536;
+    var BOX_SIZE = 3;
 
-    var addPicture = function (sBinary) {
-        
-        var sFileName = `../boxes9/${sBinary}.png`;
-        var oImg = document.createElement('img');
-        Tools.setClass(oImg, 'png');
-        oImg.setAttribute('id', 'png');
-        oImg.setAttribute('src', sFileName);
-    
-        var oLabelMakerView = document.getElementById('labelmaker');
+    var PICTURE_CANVAS_WIDTH = 3;
+    var PICTURE_CANVAS_HEIGHT = 3;
+    var DRAW_BLOCK_SIZE = 18;
 
-        oLabelMakerView.insertBefore(oImg, null);
+    var PICTURE_CANVAS_ID = 'picturecanvas';
+
+    class LabelMaker {
+
+        constructor() {
+        }
+
+        makeCanvas() {
+
+            var oCanvas = document.createElement('canvas');
     
-    };
+            oCanvas.setAttribute('id', PICTURE_CANVAS_ID);
+            oCanvas.setAttribute('width', PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE);
+            oCanvas.setAttribute('height', PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+            document.body.insertBefore(oCanvas, null);
+
+        }
+
+        makeMainView() {
+
+            this.makeCanvas();
+
+            var oLabelMakerView = document.createElement('div');
+
+            Tools.setClass(oLabelMakerView, 'labelmaker');
+            oLabelMakerView.setAttribute('id', 'labelmaker');
+            document.body.insertBefore(oLabelMakerView, null);
+
+            var oCanvas = document.getElementById( PICTURE_CANVAS_ID ) ;
+
+            this.context = oCanvas.getContext("2d");
+            this.context.fillStyle = "black";
+            this.context.fillRect(0, 0, PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE, PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+        }
+
+        addPictures() {
+            var i = 13;
+            var sBinary = convertDecimalToBinary(i, BOX_SIZE);
+            this.drawAsSquare(sBinary);
+        };
+
+        drawAsSquare(sBinary) {
+            
+            var iBoxLength = BOX_SIZE ** 2;
+
+            if (sBinary.length < iBoxLength) {
+                return;
+            }
+
+            var sColor = '';
+            var iColor = 0;
+
+            var x = 0;
+            var y = 0;
+            for (var i = 0; i < iBoxLength; i++) {
+                x = i % BOX_SIZE;
+                y = Math.floor(i / BOX_SIZE);
+                sColor = sBinary.substring(i, i + 1);
+                iColor = parseInt(sColor);
+                this.drawPixel(x, y, iColor);
+            }        
+        };
+
+        drawPixel(x, y, iColor) {
+            if (iColor === 0) {
+                this.context.fillStyle = 'black' ;
+            } else {
+                this.context.fillStyle = 'white' ;
+            }
+            this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, (x + 1) * DRAW_BLOCK_SIZE, (y + 1) * DRAW_BLOCK_SIZE);
+        }
+
+    }
+    
+
+    /**
+     * converts a decimal to a binary
+     * @param {int} iDecimal 
+     * @param {int} iPadSize 
+     * @returns the binary as a string
+     */
+    var convertDecimalToBinary = function (iDecimal, iPadSize) {
+        var sBinary = '';
+
+        if (iPadSize ** 2 > MAX_EXPONENT) {
+            iPadSize = MAX_EXPONENT;
+        }
+
+        var iMaxPosition = (iPadSize ** 2) - 1;
+        var iRemainder = iDecimal;
+        for (var iExponent = iMaxPosition; iExponent >= 0; iExponent--) {
+            var iPower = 2 ** iExponent;
+            if (iPower <= iRemainder) {
+                sBinary += '1';
+                iRemainder = iRemainder - iPower;
+            } else {
+                sBinary += '0';
+            }
+        }
+
+        return sBinary;
+    }
 
     var oLabelMaker = new LabelMaker();
+
+    oLabelMaker.makeMainView();
+    oLabelMaker.addPictures();
 
 })
