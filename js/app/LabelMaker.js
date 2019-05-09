@@ -135,6 +135,17 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        movePicture(iValue) {
+
+                if (this.decimal + iIncrement >= MIN_DECIMAL && this.decimal + iIncrement < MAX_DECIMAL) {
+                    this.decimal = this.decimal + iIncrement;
+                }
+
+            this.renderPicture();
+            this.navigationField.setAttribute('value', this.decimal);
+
+        }
+
         incrementPicture(iIncrement) {
 
             if (Math.abs(iIncrement) === 1) {
