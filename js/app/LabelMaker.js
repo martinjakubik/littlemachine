@@ -235,15 +235,15 @@ requirejs(['Tools'], function (Tools) {
         incrementPicture(iIncrement) {
 
             if (Math.abs(iIncrement) === 1) {
-                if (this.decimal + iIncrement >= MIN_DECIMAL && this.decimal + iIncrement < MAX_DECIMAL) {
+                if (MIN_DECIMAL <= this.decimal + iIncrement && this.decimal + iIncrement < MAX_DECIMAL) {
                     this.decimal = this.decimal + iIncrement;
                     this.navigationField.value = this.decimal;
+
+                    this.renderPicture();
+                    this.renderDotColors();
                 }
             }
 
-            this.renderPicture();
-            this.renderDotColors();
-            this.navigationField.setAttribute('value', this.decimal);
 
         }
 
@@ -271,7 +271,7 @@ requirejs(['Tools'], function (Tools) {
         };
 
         drawAsSquare(sBinary) {
-            
+
             var iBoxLength = BOX_SIZE ** 2;
 
             if (sBinary.length < iBoxLength) {
@@ -289,16 +289,19 @@ requirejs(['Tools'], function (Tools) {
                 sColor = sBinary.substring(i, i + 1);
                 iColor = parseInt(sColor);
                 this.drawPixel(x, y, iColor);
-            }        
+            }
+
         };
 
         drawPixel(x, y, iColor) {
+
             if (iColor === 0) {
                 this.context.fillStyle = 'black' ;
             } else {
                 this.context.fillStyle = 'white' ;
             }
             this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, (x + 1) * DRAW_BLOCK_SIZE, (y + 1) * DRAW_BLOCK_SIZE);
+
         }
 
     }
