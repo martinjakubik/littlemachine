@@ -18,59 +18,39 @@ requirejs(['Tools'], function (Tools) {
 
     class LabelMaker {
 
-        static oSides() {
+        static sides() {
             return {
                 left: 0,
                 right: 1
             }
         };
 
-        static oLabels() {
+        static labels() {
             return {
                 yes: 0,
                 no: 1
             }
         };
 
-        labels = {
-            list: [
-                {
-                    value: 0,
-                    label: 'no'
-                },
-                {
-                    value: 1,
-                    label: 'no'
-                },
-                {
-                    value: 2,
-                    label: 'no'
-                },
-                {
-                    value: 3,
-                    label: 'no'
-                },
-                {
-                    value: 4,
-                    label: 'no'
-                },
-                {
-                    value: 5,
-                    label: 'no'
-                },
-                {
-                    value: 6,
-                    label: 'no'
-                },
-                {
-                    value: 7,
-                    label: 'no'
-                },
-            ]
-        };
+        static labellist = [
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no',
+            'no'
+        ];
         
         constructor() {
             this.decimal = 0;
+            this.labellist = LabelMaker.labellist;
         }
 
         renderMainView() {
@@ -86,9 +66,9 @@ requirejs(['Tools'], function (Tools) {
             oPictureNavigator.setAttribute('id', 'picturenavigator');
             Tools.setClass(oPictureNavigator, 'picturenavigator');
 
-            var oButtonLeft = this.makeNavigationButton(LabelMaker.oSides().left);
+            var oButtonLeft = this.makeNavigationButton(LabelMaker.sides().left);
             var oCanvas = this.makeCanvas();
-            var oButtonRight = this.makeNavigationButton(LabelMaker.oSides().right);
+            var oButtonRight = this.makeNavigationButton(LabelMaker.sides().right);
 
             oPictureNavigator.insertBefore(oButtonLeft, null);
             oPictureNavigator.insertBefore(oCanvas, null);
@@ -99,8 +79,8 @@ requirejs(['Tools'], function (Tools) {
             oLabelControl.setAttribute('id', 'labelcontrol');
             Tools.setClass(oLabelControl, 'labelcontrol');
 
-            var oButtonYes = this.makeLabelButton(LabelMaker.oLabels().yes);
-            var oButtonNo = this.makeLabelButton(LabelMaker.oLabels().no);
+            var oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
+            var oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
             
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
@@ -133,8 +113,8 @@ requirejs(['Tools'], function (Tools) {
 
             var oButton = document.createElement('button');
 
-            var sSide = iSide === LabelMaker.oSides().left ? 'left' : 'right';
-            var iIncrement = iSide === LabelMaker.oSides().left ? -1 : 1;
+            var sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
+            var iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
 
             var sButtonClass = 'navigationbutton';
             var sButtonId = `navigationbutton${sSide}`;
@@ -164,7 +144,7 @@ requirejs(['Tools'], function (Tools) {
 
             var oButton = document.createElement('button');
 
-            var sLabel = iLabel === LabelMaker.oLabels().yes ? 'yes' : 'no';
+            var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
 
             var sButtonClass = 'labelbutton';
             var sButtonId = `labelbutton${sLabel}`;
@@ -219,11 +199,15 @@ requirejs(['Tools'], function (Tools) {
 
         setLabel(iLabel) {
 
+            var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+            this.labellist[this.decimal] = sLabel;
+
         }
 
         saveLabels() {
 
-            // save document
+            // saves labellist to file
+            console.log(this.labellist);
 
         }
 
