@@ -12,7 +12,7 @@ requirejs(['Tools'], function (Tools) {
 
     var PICTURE_CANVAS_WIDTH = 3;
     var PICTURE_CANVAS_HEIGHT = 3;
-    var DRAW_BLOCK_SIZE = 18;
+    var DRAW_BLOCK_SIZE = 48;
 
     var PICTURE_CANVAS_ID = 'picturecanvas';
 

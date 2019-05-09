@@ -9,9 +9,12 @@
 }
 
 .navigationbutton {
-    background-color: gray;
-    height: 5em;
-    width: 5em;
+    background-color: #fafafa;
+    height: 1.2em;
+    width: 1.2em;
+    font-size: 48pt;
+    color: #6a6a6a;
+    vertical-align: middle;
 }
 
 #navigationbuttonleft::before {
