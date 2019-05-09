@@ -7,6 +7,9 @@ requirejs(['Tools'], function (Tools) {
     var MAX_NUMBER_OF_BOXES = 65536;
     var BOX_SIZE = 3;
 
+    var MIN_DECIMAL = 0;
+    var MAX_DECIMAL = MAX_NUMBER_OF_BOXES;
+
     var PICTURE_CANVAS_WIDTH = 3;
     var PICTURE_CANVAS_HEIGHT = 3;
     var DRAW_BLOCK_SIZE = 18;
@@ -24,7 +27,7 @@ requirejs(['Tools'], function (Tools) {
 
         
         constructor() {
-            this.iSide = LabelMaker.oSides().left;
+            this.decimal = 0;
         }
 
         renderMainView() {
@@ -72,19 +75,36 @@ requirejs(['Tools'], function (Tools) {
             var oButton = document.createElement('button');
 
             var sSide = iSide === LabelMaker.oSides().left ? 'left' : 'right';
+            var iIncrement = iSide === LabelMaker.oSides().left ? -1 : 1;
+
             var sButtonClass = `navigationbutton`;
             var sButtonId = `navigationbutton${sSide}`;
             Tools.setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
+            oButton.onclick = this.incrementPicture.bind(this, iIncrement);
 
             return oButton;
 
         }
 
+        incrementPicture(iIncrement) {
+
+            if (Math.abs(iIncrement) === 1) {
+                if (this.decimal + iIncrement >= MIN_DECIMAL && this.decimal + iIncrement < MAX_DECIMAL) {
+                    this.decimal = this.decimal + iIncrement;
+                }
+            }
+
+            this.renderPicture();
+
+        }
+
         renderPicture() {
-            var i = 13;
+
+            var i = this.decimal;
             var sBinary = convertDecimalToBinary(i, BOX_SIZE);
             this.drawAsSquare(sBinary);
+
         };
 
         drawAsSquare(sBinary) {
