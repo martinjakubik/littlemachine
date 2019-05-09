@@ -38,6 +38,7 @@ requirejs(['Tools'], function (Tools) {
 
         renderMainView() {
 
+            this.navigationField = this.makeNavigationField();
             this.renderPictureNavigator();
 
         }
@@ -51,21 +52,22 @@ requirejs(['Tools'], function (Tools) {
             var oButtonLeft = this.makeNavigationButton(LabelMaker.oSides().left);
             var oCanvas = this.makeCanvas();
             var oButtonRight = this.makeNavigationButton(LabelMaker.oSides().right);
-            
+
             oPictureNavigator.insertBefore(oButtonLeft, null);
             oPictureNavigator.insertBefore(oCanvas, null);
             oPictureNavigator.insertBefore(oButtonRight, null);
-            
+            oPictureNavigator.insertBefore(this.navigationField, null);
+
             var oLabelControl = document.createElement('div');
             oLabelControl.setAttribute('id', 'labelcontrol');
             Tools.setClass(oLabelControl, 'labelcontrol');
-            
+
             var oButtonYes = this.makeLabelButton(LabelMaker.oLabels().yes);
             var oButtonNo = this.makeLabelButton(LabelMaker.oLabels().no);
 
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
-            
+
             document.body.insertBefore(oPictureNavigator, null);
             document.body.insertBefore(oLabelControl, null);
 
@@ -94,13 +96,26 @@ requirejs(['Tools'], function (Tools) {
             var sSide = iSide === LabelMaker.oSides().left ? 'left' : 'right';
             var iIncrement = iSide === LabelMaker.oSides().left ? -1 : 1;
 
-            var sButtonClass = `navigationbutton`;
+            var sButtonClass = 'navigationbutton';
             var sButtonId = `navigationbutton${sSide}`;
             Tools.setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
             oButton.onclick = this.incrementPicture.bind(this, iIncrement);
 
             return oButton;
+
+        }
+
+        makeNavigationField() {
+
+            var oField = document.createElement('input');
+
+            var sFieldClass = 'navigationfield';
+            var sFieldId = 'navigationfield';
+            Tools.setClass(oField, sFieldClass);
+            oField.setAttribute('id', sFieldId);
+
+            return oField;
 
         }
 
@@ -129,6 +144,7 @@ requirejs(['Tools'], function (Tools) {
             }
 
             this.renderPicture();
+            this.navigationField.setAttribute('value', this.decimal);
 
         }
 

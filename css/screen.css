@@ -1,5 +1,6 @@
 .picturenavigator {
     margin: 10% 0 0 30%;
+    width: 26em;
 }
 
 #picturecanvas {
@@ -15,6 +16,15 @@
     font-size: 48pt;
     color: #6a6a6a;
     vertical-align: middle;
+}
+
+.navigationfield {
+    position: relative;
+    font-size: 18pt;
+    text-align: center;
+    top: 1em;
+    left: 6em;
+    width: 3em;
 }
 
 #navigationbuttonleft::before {
