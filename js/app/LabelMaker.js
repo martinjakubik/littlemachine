@@ -257,8 +257,15 @@ requirejs(['Tools'], function (Tools) {
 
         saveLabels() {
 
-            // saves labellist to file
+            // saves labellist to a file
             saveJsonToFile(this.labellist, 'labellist.json');
+
+        }
+
+        loadLabels() {
+
+            // loads labellist from a file
+            loadJsonFromFile(this.labellist, 'labellist.json');
 
         }
 
@@ -377,6 +384,18 @@ requirejs(['Tools'], function (Tools) {
             document.body.removeChild(oAnchorElement);
             window.URL.revokeObjectURL(sUrl);
         }, 0);
+
+    }
+
+    /**
+     * loads json data from a file
+     * @param {*} sFilename _
+     * @returns {*} aData array of data
+     */
+    var loadJsonFromFile = function (sFilename) {
+
+        var aData = [];
+        return aData;
 
     }
 
