@@ -95,3 +95,12 @@ button {
 .savebutton::before {
     content: 'save';
 }
+
+.loadbutton {
+    margin: 1em 5em;
+    width: 3em;
+}
+
+.loadbutton::before {
+    content: 'load';
+}

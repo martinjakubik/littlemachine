@@ -15,3 +15,5 @@ public
 build
 
 js/lib
+
+html/labellists/*.json

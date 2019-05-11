@@ -103,9 +103,11 @@ requirejs(['Tools'], function (Tools) {
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
 
+            var oButtonLoad = this.makeLoadButton();
             var oButtonSave = this.makeSaveButton();
 
             document.body.insertBefore(oLabelControl, null);
+            document.body.insertBefore(oButtonLoad, null);
             document.body.insertBefore(oButtonSave, null);
 
         }
@@ -204,6 +206,20 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        makeLoadButton() {
+
+            var oButton = document.createElement('button');
+
+            var sButtonClass = 'loadbutton';
+            var sButtonId = 'loadbutton';
+            Tools.setClass(oButton, sButtonClass);
+            oButton.setAttribute('id', sButtonId);
+            oButton.onclick = this.loadLabels.bind(this);
+
+            return oButton;
+
+        }
+
         makeSaveButton() {
 
             var oButton = document.createElement('button');
@@ -255,17 +271,17 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        loadLabels() {
+
+            // loads labellist from a file
+            loadJsonFromFile('labellist.json');
+
+        }
+
         saveLabels() {
 
             // saves labellist to a file
             saveJsonToFile(this.labellist, 'labellist.json');
-
-        }
-
-        loadLabels() {
-
-            // loads labellist from a file
-            loadJsonFromFile(this.labellist, 'labellist.json');
 
         }
 
@@ -312,7 +328,6 @@ requirejs(['Tools'], function (Tools) {
         }
 
     }
-    
 
     /**
      * converts a decimal to a binary
@@ -340,6 +355,23 @@ requirejs(['Tools'], function (Tools) {
         }
 
         return sBinary;
+    }
+
+    /**
+     * loads json data from a file
+     * @param {*} sFilename _
+     * @returns {*} aData array of data
+     */
+    var loadJsonFromFile = function (sFilename) {
+
+        var aData = [];
+
+        fetch(sFilename)
+            .then(oResponse => oResponse.json())
+            .then(sJsonResponse => console.log(sJsonResponse));
+
+        return aData;
+
     }
 
     /**
@@ -384,18 +416,6 @@ requirejs(['Tools'], function (Tools) {
             document.body.removeChild(oAnchorElement);
             window.URL.revokeObjectURL(sUrl);
         }, 0);
-
-    }
-
-    /**
-     * loads json data from a file
-     * @param {*} sFilename _
-     * @returns {*} aData array of data
-     */
-    var loadJsonFromFile = function (sFilename) {
-
-        var aData = [];
-        return aData;
 
     }
 
