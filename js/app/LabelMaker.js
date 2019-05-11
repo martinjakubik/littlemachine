@@ -5,7 +5,7 @@ requirejs(['Tools'], function (Tools) {
 
     var MAX_EXPONENT = 4096;
     var MAX_NUMBER_OF_BOXES = 65536;
-    var BOX_SIZE = 4;
+    var BOX_SIZE = 3;
 
     var MIN_DECIMAL = 0;
     var MAX_DECIMAL = MAX_NUMBER_OF_BOXES;
@@ -258,7 +258,7 @@ requirejs(['Tools'], function (Tools) {
         saveLabels() {
 
             // saves labellist to file
-            console.log(this.labellist);
+            saveJsonToFile(this.labellist, 'labellist.json');
 
         }
 
@@ -333,6 +333,51 @@ requirejs(['Tools'], function (Tools) {
         }
 
         return sBinary;
+    }
+
+    /**
+     * saves json data to a file
+     * @param {*} aData array of data
+     * @param {*} sFilename _
+     */
+    var saveJsonToFile = function (aData, sFilename) {
+
+        var sType = 'application/json';
+
+        var sData = '';
+        for (var i = 0; i < aData.length; i++) {
+            var oDataElement = aData[i];
+            var oDataJson = {
+                index: i,
+                label: oDataElement
+            };
+            var sDataElement = JSON.stringify(oDataJson);
+            if (i < MAX_NUMBER_OF_BOXES) {
+                if (i === 0) {
+                    sData = '[' + sDataElement;
+                } else {
+                    sData = sData + ', ' + sDataElement;
+                }
+                if (i === aData.length - 1) {
+                    sData = sData + ']';
+                }
+            }
+        }
+
+        var oFile = new Blob([sData], {type: sType});
+        var oAnchorElement = document.createElement('a');
+        var sUrl = URL.createObjectURL(oFile);
+
+        oAnchorElement.href = sUrl;
+        oAnchorElement.download = sFilename;
+        document.body.appendChild(oAnchorElement);
+        oAnchorElement.click();
+
+        setTimeout(function() {
+            document.body.removeChild(oAnchorElement);
+            window.URL.revokeObjectURL(sUrl);
+        }, 0);
+
     }
 
     var oLabelMaker = new LabelMaker();
