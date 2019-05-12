@@ -393,11 +393,14 @@ requirejs(['Tools'], function (Tools) {
 
             if (sLabel === sCurrentLabel) {
                 this.labellist[this.decimal].label = 'unlabelled';
+                this.renderDotColors();
+                this.renderLabelCounts();
             } else {
                 this.labellist[this.decimal].label = sLabel;
+                this.renderDotColors();
+                this.renderLabelCounts();
+                this.incrementPicture(1);
             }
-            this.renderDotColors();
-            this.renderLabelCounts();
 
         }
 
