@@ -340,7 +340,13 @@ requirejs(['Tools'], function (Tools) {
         setLabel(iLabel) {
 
             var sLabel = LabelMaker.getValidLabelString(iLabel);
-            this.labellist[this.decimal].label = sLabel;
+            var sCurrentLabel = this.labellist[this.decimal].label;
+
+            if (sLabel === sCurrentLabel) {
+                this.labellist[this.decimal].label = 'unlabelled';
+            } else {
+                this.labellist[this.decimal].label = sLabel;
+            }
             this.renderDotColors();
 
         }
