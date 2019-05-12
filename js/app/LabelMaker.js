@@ -166,9 +166,17 @@ requirejs(['Tools'], function (Tools) {
             oLabelDots.insertBefore(this.dotYes, null);
             oLabelDots.insertBefore(this.dotNo, null);
 
+            var oLabelCountGroupYes = this.makeLabelCountGroup('yes');
+            var oLabelCountGroupNo = this.makeLabelCountGroup('no');
+            var oLabelCountGroupUnlabelled = this.makeLabelCountGroup('unlabelled');
+
             oLabelControl.insertBefore(oLabelDots, null);
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
+
+            oLabelControl.insertBefore(oLabelCountGroupYes, null);
+            oLabelControl.insertBefore(oLabelCountGroupNo, null);
+            oLabelControl.insertBefore(oLabelCountGroupUnlabelled, null);
 
             document.body.insertBefore(oLabelControl, null);
 
@@ -199,6 +207,17 @@ requirejs(['Tools'], function (Tools) {
                 Tools.removeClass(this.dotYes, 'on');
                 Tools.removeClass(this.dotNo, 'on');
             }
+
+        }
+
+        /**
+         * renders the counts of all the labels
+         */
+        renderLabelCounts() {
+
+            this.labelCountYes.textContent = this.getLabelCount('yes');
+            this.labelCountNo.textContent = this.getLabelCount('no');
+            this.labelCountUnlabelled.textContent = this.getLabelCount('unlabelled');
 
         }
 
@@ -280,6 +299,30 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        makeLabelCountGroup(sLabelName) {
+
+            var labelCountGroup = document.createElement('div');
+            labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
+            Tools.setClass(labelCountGroup, 'labelcountgroup');
+
+            var labelCountLabel = document.createElement('span');
+            labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
+            Tools.setClass(labelCountLabel, 'labelcountname');
+            labelCountLabel.textContent = sLabelName;
+
+            var sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
+            this[sCamelCaseLabelName] = document.createElement('span');
+            this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
+            Tools.setClass(this[sCamelCaseLabelName], 'labelcount');
+            this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
+
+            labelCountGroup.insertBefore(labelCountLabel, null);
+            labelCountGroup.insertBefore(this[sCamelCaseLabelName], null);
+
+            return labelCountGroup;
+
+        }
+
         makeLoadButton() {
 
             var oButton = document.createElement('button');
@@ -354,6 +397,7 @@ requirejs(['Tools'], function (Tools) {
                 this.labellist[this.decimal].label = sLabel;
             }
             this.renderDotColors();
+            this.renderLabelCounts();
 
         }
 
@@ -430,6 +474,23 @@ requirejs(['Tools'], function (Tools) {
             }
             this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, (x + 1) * DRAW_BLOCK_SIZE, (y + 1) * DRAW_BLOCK_SIZE);
 
+        }
+
+        /**
+         * gets the count of labels for the given label
+         * @param {*} sLabel 
+         */
+        getLabelCount(sLabel) {
+
+            var iLabelCount = 0;
+            var sValidLabel = LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
+            for (var i = 0; i < this.labellist.length; i++) {
+                var oLabelData = this.labellist[i];
+                if (oLabelData.label === sValidLabel) {
+                    iLabelCount++;
+                }
+            }
+            return iLabelCount;
         }
 
     }

@@ -104,3 +104,19 @@ button {
 .loadbutton::before {
     content: 'load';
 }
+
+.labelcountname {
+    display: inline-block;
+    width: 8em;
+    text-align: right;
+    font-size: 18pt;
+    font-family: system-ui;
+    color: #6a6a6a;
+}
+
+.labelcount {
+    margin: 0 0 0 1em;
+    font-size: 18pt;
+    font-family: system-ui;
+    color: #6a6a6a;
+}
