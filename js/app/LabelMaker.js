@@ -31,6 +31,24 @@ requirejs(['Tools'], function (Tools) {
             }
         };
 
+        static getValidLabelString(iLabel) {
+
+            var sLabel = 'unlabelled';
+            var oValidLabels = LabelMaker.labels();
+            var aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
+            for (var i = 0; i < aValidLabelKeys.length; i++) {
+                var sValidLabelKey = aValidLabelKeys[i];
+                var iValidLabel = oValidLabels[sValidLabelKey];
+                if (iLabel === iValidLabel) {
+                    sLabel = sValidLabelKey;
+                    break;
+                }
+            }
+
+            return sLabel;
+
+        }
+
         static getMaxDecimalForBoxSize() {
             return 2 ** (BOX_SIZE ** 2);
         }
@@ -168,9 +186,12 @@ requirejs(['Tools'], function (Tools) {
             if (this.labellist[this.decimal].label === 'yes') {
                 Tools.removeClass(this.dotNo, 'on');
                 Tools.addClass(this.dotYes, 'on');
-            } else {
+            } else if (this.labellist[this.decimal].label === 'no') {
                 Tools.removeClass(this.dotYes, 'on');
                 Tools.addClass(this.dotNo, 'on');
+            } else {
+                Tools.removeClass(this.dotYes, 'on');
+                Tools.removeClass(this.dotNo, 'on');
             }
 
         }
@@ -318,7 +339,7 @@ requirejs(['Tools'], function (Tools) {
          */
         setLabel(iLabel) {
 
-            var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+            var sLabel = LabelMaker.getValidLabelString(iLabel);
             this.labellist[this.decimal].label = sLabel;
             this.renderDotColors();
 
