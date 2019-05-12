@@ -156,6 +156,14 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        renderPicture() {
+
+            var i = this.decimal;
+            var sBinary = convertDecimalToBinary(i, BOX_SIZE);
+            this.drawAsSquare(sBinary);
+
+        };
+
         makeCanvas() {
 
             var oCanvas = document.createElement('canvas');
@@ -262,6 +270,9 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * moves the picture to the decimal value in the navigation field
+         */
         movePicture() {
 
             var sValue = this.navigationField.value;
@@ -274,6 +285,10 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * moves the picture up or down by one decimal
+         * @param {*} iIncrement the value to move by: either 1 or -1
+         */
         incrementPicture(iIncrement) {
 
             if (Math.abs(iIncrement) === 1) {
@@ -286,6 +301,10 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * sets the label for the current picture
+         * @param {*} iLabel the label to set, as an enumerated value
+         */
         setLabel(iLabel) {
 
             var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
@@ -316,21 +335,19 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * saves the list of labels to a file
+         */
         saveLabels() {
 
-            // saves labellist to a file
             saveJsonToFile(this.labellist, 'labellist.json');
 
         }
 
-        renderPicture() {
-
-            var i = this.decimal;
-            var sBinary = convertDecimalToBinary(i, BOX_SIZE);
-            this.drawAsSquare(sBinary);
-
-        };
-
+        /**
+         * draws a binary value as a square
+         * @param {*} sBinary a string with a binary value
+         */
         drawAsSquare(sBinary) {
 
             var iBoxLength = BOX_SIZE ** 2;
@@ -354,6 +371,12 @@ requirejs(['Tools'], function (Tools) {
 
         };
 
+        /**
+         * draws one pixel at a given position with the given color
+         * @param {*} x an x position as an integer
+         * @param {*} y a y position as an integer
+         * @param {*} iColor a color with 0 = black; otherwise white
+         */
         drawPixel(x, y, iColor) {
 
             if (iColor === 0) {
@@ -450,6 +473,7 @@ requirejs(['Tools'], function (Tools) {
 
     }
 
+    // starts the label maker
     var oLabelMaker = new LabelMaker();
 
     oLabelMaker.renderMainView();
