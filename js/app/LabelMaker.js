@@ -105,6 +105,7 @@ requirejs(['Tools'], function (Tools) {
 
             this.renderPictureNavigator();
             this.renderLabelControl();
+            this.renderFileControl();
 
         }
 
@@ -169,10 +170,15 @@ requirejs(['Tools'], function (Tools) {
             oLabelControl.insertBefore(oButtonYes, null);
             oLabelControl.insertBefore(oButtonNo, null);
 
+            document.body.insertBefore(oLabelControl, null);
+
+        }
+
+        renderFileControl() {
+
             var oButtonLoad = this.makeLoadButton();
             var oButtonSave = this.makeSaveButton();
 
-            document.body.insertBefore(oLabelControl, null);
             document.body.insertBefore(oButtonLoad, null);
             document.body.insertBefore(oButtonSave, null);
 
