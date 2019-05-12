@@ -77,6 +77,9 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * main renderer: renders everything
+         */
         renderMainView() {
 
             this.navigationField = this.makeNavigationField();
@@ -86,7 +89,10 @@ requirejs(['Tools'], function (Tools) {
             this.renderLabelControl();
 
         }
-        
+
+        /**
+         * renders the picture, the navigation buttons and the navigation field
+         */
         renderPictureNavigator() {
             
             var oPictureNavigator = document.createElement('div');
@@ -106,6 +112,20 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * renders the picture as a box
+         */
+        renderPicture() {
+
+            var i = this.decimal;
+            var sBinary = convertDecimalToBinary(i, BOX_SIZE);
+            this.drawAsSquare(sBinary);
+
+        };
+
+        /**
+         * renders the labels and the buttons to set the labels
+         */
         renderLabelControl() {
 
             var oLabelControl = document.createElement('div');
@@ -140,6 +160,9 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        /**
+         * renders the colors on the labelling dots
+         */
         renderDotColors() {
 
             if (this.labellist[this.decimal].label === 'yes') {
@@ -155,14 +178,6 @@ requirejs(['Tools'], function (Tools) {
             }
 
         }
-
-        renderPicture() {
-
-            var i = this.decimal;
-            var sBinary = convertDecimalToBinary(i, BOX_SIZE);
-            this.drawAsSquare(sBinary);
-
-        };
 
         makeCanvas() {
 
