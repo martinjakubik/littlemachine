@@ -166,14 +166,10 @@ requirejs(['Tools'], function (Tools) {
         renderDotColors() {
 
             if (this.labellist[this.decimal].label === 'yes') {
-                Tools.removeClass(this.dotYes, 'off');
                 Tools.removeClass(this.dotNo, 'on');
                 Tools.addClass(this.dotYes, 'on');
-                Tools.addClass(this.dotNo, 'off');
             } else {
                 Tools.removeClass(this.dotYes, 'on');
-                Tools.removeClass(this.dotNo, 'off');
-                Tools.addClass(this.dotYes, 'off');
                 Tools.addClass(this.dotNo, 'on');
             }
 
