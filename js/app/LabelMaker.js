@@ -36,7 +36,11 @@ requirejs(['Tools'], function (Tools) {
 
             var aLabelList = [];
             for (var i = 0; i < (2 ** BOX_SIZE ** 2); i++) {
-                aLabelList.push('unlabelled');
+                var oLabel = {
+                    binary: convertDecimalToBinary(i, BOX_SIZE),
+                    label: 'unlabelled'
+                }
+                aLabelList.push(oLabel);
             }
             return aLabelList;
 
@@ -114,7 +118,7 @@ requirejs(['Tools'], function (Tools) {
 
         renderDotColors() {
 
-            if (this.labellist[this.decimal] === 'yes') {
+            if (this.labellist[this.decimal].label === 'yes') {
                 Tools.removeClass(this.dotYes, 'off');
                 Tools.removeClass(this.dotNo, 'on');
                 Tools.addClass(this.dotYes, 'on');
@@ -266,15 +270,30 @@ requirejs(['Tools'], function (Tools) {
         setLabel(iLabel) {
 
             var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
-            this.labellist[this.decimal] = sLabel;
+            this.labellist[this.decimal].label = sLabel;
             this.renderDotColors();
 
         }
 
+        /**
+         * loads the list of labels from a file
+         */
         loadLabels() {
 
-            // loads labellist from a file
-            loadJsonFromFile('labellist.json');
+            loadJsonFromFile('labellists/labellist.json')
+                .then(oResponse => {
+                    if (!oResponse.ok) {
+                        throw new Error(`http error ${oResponse.status}`);
+                    }
+                    return oResponse.json();
+                })
+                .then(sResponseJson => {
+                    this.labellist = sResponseJson;
+                    renderDotColors();
+                })
+                .catch(function() {
+                    this.dataError = true;
+                });
 
         }
 
@@ -336,13 +355,15 @@ requirejs(['Tools'], function (Tools) {
      * @returns the binary as a string
      */
     var convertDecimalToBinary = function (iDecimal, iPadSize) {
-        var sBinary = '';
 
-        if (iPadSize ** 2 > MAX_EXPONENT) {
-            iPadSize = MAX_EXPONENT;
+        var sBinary = '';
+        var iValidPadSize = iPadSize ? iPadSize : 1;
+
+        if (iValidPadSize ** 2 > MAX_EXPONENT) {
+            iValidPadSize = MAX_EXPONENT;
         }
 
-        var iMaxPosition = (iPadSize ** 2) - 1;
+        var iMaxPosition = (iValidPadSize ** 2) - 1;
         var iRemainder = iDecimal;
         for (var iExponent = iMaxPosition; iExponent >= 0; iExponent--) {
             var iPower = 2 ** iExponent;
@@ -355,22 +376,17 @@ requirejs(['Tools'], function (Tools) {
         }
 
         return sBinary;
+
     }
 
     /**
      * loads json data from a file
      * @param {*} sFilename _
-     * @returns {*} aData array of data
+     * @returns {Promise} a promise to an array of data
      */
     var loadJsonFromFile = function (sFilename) {
 
-        var aData = [];
-
-        fetch(sFilename)
-            .then(oResponse => oResponse.json())
-            .then(sJsonResponse => console.log(sJsonResponse));
-
-        return aData;
+        return fetch(sFilename);
 
     }
 
@@ -386,11 +402,7 @@ requirejs(['Tools'], function (Tools) {
         var sData = '';
         for (var i = 0; i < aData.length; i++) {
             var oDataElement = aData[i];
-            var oDataJson = {
-                index: i,
-                label: oDataElement
-            };
-            var sDataElement = JSON.stringify(oDataJson);
+            var sDataElement = JSON.stringify(oDataElement);
             if (i < MAX_NUMBER_OF_BOXES) {
                 if (i === 0) {
                     sData = '[' + sDataElement;
