@@ -8,7 +8,6 @@ requirejs(['Tools'], function (Tools) {
     var BOX_SIZE = 3;
 
     var MIN_DECIMAL = 0;
-    var MAX_DECIMAL = MAX_NUMBER_OF_BOXES;
 
     var PICTURE_CANVAS_WIDTH = BOX_SIZE;
     var PICTURE_CANVAS_HEIGHT = BOX_SIZE;
@@ -32,10 +31,35 @@ requirejs(['Tools'], function (Tools) {
             }
         };
 
+        static getMaxDecimalForBoxSize() {
+            return 2 ** (BOX_SIZE ** 2);
+        }
+
+        /**
+         * validates if a value is valid for the decimal
+         * @param {*} iNewDecimalValue a proposed decimal value
+         * @returns the closest valid decimal value
+         */
+        static getValidDecimalValue(iNewDecimalValue) {
+
+            if (MIN_DECIMAL <= iNewDecimalValue && iNewDecimalValue <= LabelMaker.getMaxDecimalForBoxSize()) {
+                return iNewDecimalValue;
+            }
+
+            if (iNewDecimalValue > LabelMaker.getMaxDecimalForBoxSize()) {
+                return LabelMaker.getMaxDecimalForBoxSize();
+            }
+
+            if (iNewDecimalValue < MIN_DECIMAL) {
+                return MIN_DECIMAL;
+            }
+
+        }
+
         static makeLabelList() {
 
             var aLabelList = [];
-            for (var i = 0; i < (2 ** BOX_SIZE ** 2); i++) {
+            for (var i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
                 var oLabel = {
                     binary: convertDecimalToBinary(i, BOX_SIZE),
                     label: 'unlabelled'
@@ -48,7 +72,7 @@ requirejs(['Tools'], function (Tools) {
 
         constructor() {
 
-            this.decimal = 0;
+            this.decimal = LabelMaker.getValidDecimalValue(0);
             this.labellist = LabelMaker.makeLabelList();
 
         }
@@ -243,9 +267,7 @@ requirejs(['Tools'], function (Tools) {
             var sValue = this.navigationField.value;
             var iValue = parseInt(sValue);
 
-            if (MIN_DECIMAL <= iValue && iValue < MAX_DECIMAL) {
-                this.decimal = iValue;
-            }
+            this.decimal = LabelMaker.getValidDecimalValue(iValue)
 
             this.renderPicture();
             this.renderDotColors();
@@ -255,15 +277,12 @@ requirejs(['Tools'], function (Tools) {
         incrementPicture(iIncrement) {
 
             if (Math.abs(iIncrement) === 1) {
-                if (MIN_DECIMAL <= this.decimal + iIncrement && this.decimal + iIncrement < MAX_DECIMAL) {
-                    this.decimal = this.decimal + iIncrement;
-                    this.navigationField.value = this.decimal;
+                this.decimal = LabelMaker.getValidDecimalValue(this.decimal + iIncrement);
+                this.navigationField.value = this.decimal;
 
-                    this.renderPicture();
-                    this.renderDotColors();
-                }
+                this.renderPicture();
+                this.renderDotColors();
             }
-
 
         }
 
