@@ -405,6 +405,24 @@ requirejs(['Tools'], function (Tools) {
         }
 
         /**
+         * gets the count of labels for the given label
+         * @param {*} sLabel 
+         */
+        getLabelCount(sLabel) {
+
+            var iLabelCount = 0;
+            var sValidLabel = LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
+            for (var i = 0; i < this.labellist.length; i++) {
+                var oLabelData = this.labellist[i];
+                if (oLabelData.label === sValidLabel) {
+                    iLabelCount++;
+                }
+            }
+            return iLabelCount;
+
+        }
+
+        /**
          * loads the list of labels from a file
          */
         loadLabels() {
@@ -478,23 +496,6 @@ requirejs(['Tools'], function (Tools) {
             }
             this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, (x + 1) * DRAW_BLOCK_SIZE, (y + 1) * DRAW_BLOCK_SIZE);
 
-        }
-
-        /**
-         * gets the count of labels for the given label
-         * @param {*} sLabel 
-         */
-        getLabelCount(sLabel) {
-
-            var iLabelCount = 0;
-            var sValidLabel = LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
-            for (var i = 0; i < this.labellist.length; i++) {
-                var oLabelData = this.labellist[i];
-                if (oLabelData.label === sValidLabel) {
-                    iLabelCount++;
-                }
-            }
-            return iLabelCount;
         }
 
     }
