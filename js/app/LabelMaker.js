@@ -415,9 +415,10 @@ requirejs(['Tools'], function (Tools) {
                 })
                 .then(sResponseJson => {
                     this.labellist = sResponseJson;
-                    renderDotColors();
+                    this.renderDotColors();
+                    this.renderLabelCounts();
                 })
-                .catch(function() {
+                .catch(oError => {
                     this.dataError = true;
                 });
 
