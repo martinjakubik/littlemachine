@@ -498,6 +498,18 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        moveToNextByLabelName(sLabelName) {
+
+            var iCurrentLabel = this.decimal;
+            for (var i = iCurrentLabel; i <= LabelMaker.getMaxDecimalForBoxSize(); i++) {
+                if(this.labellist[i].label === sLabelName) {
+                    this.navigationField.value = i;
+                    break;
+                }
+            }
+            movePicture();
+
+        }
     }
 
     /**
