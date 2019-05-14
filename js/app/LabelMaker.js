@@ -237,19 +237,32 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
-        makeNavigationButton(iSide) {
-
+        makeNavigationButton(iSide, sLabelName) {
+            
             var oButton = document.createElement('button');
-
+            
             var sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
-            var iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
 
-            var sButtonClass = 'navigationbutton';
-            var sButtonId = `navigationbutton${sSide}`;
+            if (sLabelName) {
+                
+                var sButtonClass = 'labelnamenavigationbutton';
+                var sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
+                oButton.onclick = this.moveToNextByLabelName.bind(this, sLabelName);
+                
+            } else {
+
+                var iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
+                var sButtonClass = 'navigationbutton';
+                var sButtonId = `navigationbutton${sSide}`;
+                oButton.onclick = this.incrementPicture.bind(this, iIncrement);
+                
+            }
             Tools.setClass(oButton, sButtonClass);
-            oButton.setAttribute('id', sButtonId);
-            oButton.onclick = this.incrementPicture.bind(this, iIncrement);
 
+            var sButtonSideClass = `navigationbutton${sSide}`;
+            Tools.addClass(oButton, sButtonSideClass);
+
+            oButton.setAttribute('id', sButtonId);
             return oButton;
 
         }
@@ -316,8 +329,11 @@ requirejs(['Tools'], function (Tools) {
             Tools.setClass(this[sCamelCaseLabelName], 'labelcount');
             this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
+            var oButtonNextUnlabelled = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
+
             labelCountGroup.insertBefore(labelCountLabel, null);
             labelCountGroup.insertBefore(this[sCamelCaseLabelName], null);
+            labelCountGroup.insertBefore(oButtonNextUnlabelled, null);
 
             return labelCountGroup;
 
@@ -501,13 +517,13 @@ requirejs(['Tools'], function (Tools) {
         moveToNextByLabelName(sLabelName) {
 
             var iCurrentLabel = this.decimal;
-            for (var i = iCurrentLabel; i <= LabelMaker.getMaxDecimalForBoxSize(); i++) {
+            for (var i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
                 if(this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
                 }
             }
-            movePicture();
+            this.movePicture();
 
         }
     }

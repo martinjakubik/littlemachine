@@ -30,11 +30,11 @@ button {
     margin: 1em 1em 1em 6em;
 }
 
-#navigationbuttonleft::before {
+.navigationbuttonleft::before {
     content: '<';
 }
 
-#navigationbuttonright::before {
+.navigationbuttonright::before {
     content: '>';
 }
 
@@ -119,4 +119,13 @@ button {
     font-size: 18pt;
     font-family: system-ui;
     color: #6a6a6a;
+}
+
+.labelnamenavigationbutton {
+    display: none;
+}
+
+.labelcountgroup:hover>.labelnamenavigationbutton {
+    display: inline-block;
+    font-size: 12pt;
 }
