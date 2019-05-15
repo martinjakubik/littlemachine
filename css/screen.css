@@ -126,8 +126,15 @@ button {
 .labelnamenavigationbutton {
     display: none;
     position: absolute;
-    right: 2em;
     width: 4em;
+}
+
+.labelnamenavigationbuttonright{
+    right: 0em;
+}
+
+.labelnamenavigationbuttonleft{
+    left: 0em;
 }
 
 .labelcountgroup:hover>.labelnamenavigationbutton {

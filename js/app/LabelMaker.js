@@ -247,7 +247,7 @@ requirejs(['Tools'], function (Tools) {
                 
                 var sButtonClass = 'labelnamenavigationbutton';
                 var sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
-                oButton.onclick = this.moveToNextByLabelName.bind(this, sLabelName);
+                oButton.onclick = this.moveToClosestByLabelName.bind(this, iSide, sLabelName);
                 
             } else {
 
@@ -260,7 +260,9 @@ requirejs(['Tools'], function (Tools) {
             Tools.setClass(oButton, sButtonClass);
 
             var sButtonSideClass = `navigationbutton${sSide}`;
+            var sButtonLabelNameSideClass = `labelnamenavigationbutton${sSide}`;
             Tools.addClass(oButton, sButtonSideClass);
+            Tools.addClass(oButton, sButtonLabelNameSideClass);
 
             oButton.setAttribute('id', sButtonId);
             return oButton;
@@ -329,11 +331,13 @@ requirejs(['Tools'], function (Tools) {
             Tools.setClass(this[sCamelCaseLabelName], 'labelcount');
             this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
-            var oButtonNextUnlabelled = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
+            var oButtonNextByLabel = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
+            var oButtonPreviousByLabel = this.makeNavigationButton(LabelMaker.sides().left, sLabelName);
 
+            labelCountGroup.insertBefore(oButtonPreviousByLabel, null);
             labelCountGroup.insertBefore(labelCountLabel, null);
             labelCountGroup.insertBefore(this[sCamelCaseLabelName], null);
-            labelCountGroup.insertBefore(oButtonNextUnlabelled, null);
+            labelCountGroup.insertBefore(oButtonNextByLabel, null);
 
             return labelCountGroup;
 
@@ -514,18 +518,29 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
-        moveToNextByLabelName(sLabelName) {
+        moveToClosestByLabelName(iSide, sLabelName) {
 
             var iCurrentLabel = this.decimal;
-            for (var i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
-                if(this.labellist[i].label === sLabelName) {
-                    this.navigationField.value = i;
-                    break;
+
+            if (iSide === LabelMaker.sides().right) {
+                for (var i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
+                    if(this.labellist[i].label === sLabelName) {
+                        this.navigationField.value = i;
+                        break;
+                    }
                 }
-            }
+            } else if (iSide === LabelMaker.sides().left) {
+                for (var i = iCurrentLabel - 1; i >= 0; i--) {
+                    if(this.labellist[i].label === sLabelName) {
+                        this.navigationField.value = i;
+                        break;
+                    }
+                }
+                }
             this.movePicture();
 
         }
+
     }
 
     /**
