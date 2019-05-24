@@ -41,9 +41,13 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
     }
     if (oData) {
         oData.forEach(oDatum => {
-            sBinary=oDatum.binary;
-            sLabel=oDatum.label==='yes' ? '1' : '0';
-            console.log(`${sBinary},${sLabel}`);
+            var sBinary = oDatum.binary;
+            var sBinaryCsv = '';
+            for(var i = 0; i < sBinary.length; i++) {
+                sBinaryCsv = sBinaryCsv + sBinary[i] + (i < sBinary.length - 1 ? ',' : '');
+            }
+            var sLabel = oDatum.label==='yes' ? '1' : '0';
+            console.log(`${sBinaryCsv},${sLabel}`);
         });
     }
 
