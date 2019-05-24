@@ -27,10 +27,22 @@ if (!sFilename) {
 
 // reads file
 const oOptions = 'utf-8';
-oFs.readFile(sFilename, oOptions, (oError, oData) => {
+oFs.readFile(sFilename, oOptions, (oError, sData) => {
 
     if (oError) {
         throw oError;
+    }
+
+    var oData = null;
+    try {
+        oData = JSON.parse(sData);
+    } catch (error) {
+        console.error(`syntax error while trying to pars JSON data from file ${sFilename}`)
+    }
+    if (oData) {
+        oData.forEach(oDatum => {
+            console.log(`${oDatum.binary},${oDatum.label}`);
+        });
     }
 
 });
