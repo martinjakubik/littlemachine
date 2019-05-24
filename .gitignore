@@ -2,13 +2,6 @@
 
 .DS_Store
 
-boxes.txt
-boxes*.txt
-
-boxes4
-boxes9/*
-boxes16/*
-
 node_modules
 public
 
@@ -16,5 +9,12 @@ build
 
 js/lib
 
-html/labellists/*.json
+labellists/boxes.txt
+labellists/boxes*.txt
 labellists/*.csv
+
+labellists/png4
+labellists/png9/*
+labellists/png16/*
+
+html/labellists/*.json
