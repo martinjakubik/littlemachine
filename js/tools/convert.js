@@ -41,7 +41,9 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
     }
     if (oData) {
         oData.forEach(oDatum => {
-            console.log(`${oDatum.binary},${oDatum.label}`);
+            sBinary=oDatum.binary;
+            sLabel=oDatum.label==='yes' ? '1' : '0';
+            console.log(`${sBinary},${sLabel}`);
         });
     }
 
