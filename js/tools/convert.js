@@ -46,6 +46,3 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
     }
 
 });
-
-console.log('reading file \"' + sFilename + '\"');
-
