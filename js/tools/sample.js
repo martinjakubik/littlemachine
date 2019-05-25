@@ -1,18 +1,18 @@
 const args = require('./args.js');
 
-var oFs = require('fs');
+let oFs = require('fs');
 
 const sArg_filename = 'inputfile';
 const sArg_samplesize = 'samplesize';
-var sFilename = null;
-var nSampleSize = null;
+let sFilename = null;
+let nSampleSize = null;
 
 // gets args
-var aArguments = args.getArgs();
-var aArgumentKeys = Object.keys(args.getArgs());
+let aArguments = args.getArgs();
+let aArgumentKeys = Object.keys(args.getArgs());
 aArgumentKeys.forEach(sArgKey => {
     if (aArguments.hasOwnProperty(sArgKey)) {
-        var oArg = aArguments[sArgKey];
+        let oArg = aArguments[sArgKey];
 
         if (sArgKey === sArg_filename) {
             sFilename = oArg;
@@ -81,7 +81,7 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
         throw oError;
     }
 
-    var oData = null;
+    let oData = null;
     try {
         oData = JSON.parse(sData);
     } catch (error) {

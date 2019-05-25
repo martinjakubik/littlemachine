@@ -1,16 +1,16 @@
 const args = require('./args.js');
 
-var oFs = require('fs');
+let oFs = require('fs');
 
 const sArg_filename = 'inputfile';
-var sFilename = null;
+let sFilename = null;
 
 // gets args
-var aArguments = args.getArgs();
-var aArgumentKeys = Object.keys(args.getArgs());
+let aArguments = args.getArgs();
+let aArgumentKeys = Object.keys(args.getArgs());
 aArgumentKeys.forEach(sArgKey => {
     if (aArguments.hasOwnProperty(sArgKey)) {
-        var oArg = aArguments[sArgKey];
+        let oArg = aArguments[sArgKey];
 
         if (sArgKey === sArg_filename) {
             sFilename = oArg;
@@ -31,7 +31,7 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
         throw oError;
     }
 
-    var oData = null;
+    let oData = null;
     try {
         oData = JSON.parse(sData);
     } catch (error) {
@@ -39,12 +39,12 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
     }
     if (oData) {
         oData.forEach(oDatum => {
-            var sBinary = oDatum.binary;
-            var sBinaryCsv = '';
-            for(var i = 0; i < sBinary.length; i++) {
+            let sBinary = oDatum.binary;
+            let sBinaryCsv = '';
+            for(let i = 0; i < sBinary.length; i++) {
                 sBinaryCsv = sBinaryCsv + sBinary[i] + (i < sBinary.length - 1 ? ',' : '');
             }
-            var sLabel = oDatum.label==='yes' ? '1' : '0';
+            let sLabel = oDatum.label==='yes' ? '1' : '0';
             console.log(`${sBinaryCsv},${sLabel}`);
         });
     }
