@@ -3,7 +3,9 @@ const args = require('./args.js');
 var oFs = require('fs');
 
 const sArg_filename = 'inputfile';
+const sArg_samplesize = 'samplesize';
 var sFilename = null;
+var nSampleSize = null;
 
 // gets args
 var aArguments = args.getArgs();
@@ -14,6 +16,8 @@ aArgumentKeys.forEach(sArgKey => {
 
         if (sArgKey === sArg_filename) {
             sFilename = oArg;
+        } else if (sArgKey === sArg_samplesize) {
+            nSampleSize = oArg;
         }
     };
 });
@@ -21,6 +25,10 @@ aArgumentKeys.forEach(sArgKey => {
 // if no filename given, end
 if (!sFilename) {
     return;
+}
+
+if (!nSampleSize) {
+    nSampleSize = 5000;
 }
 
 let getIndexesOfPositives = function (oIndexes, oData, nNumberOfSamples) {
@@ -34,7 +42,7 @@ let getIndexesOfPositives = function (oIndexes, oData, nNumberOfSamples) {
 
 };
 
-let getRandomIndexesOfNegatives = function (oIndexes, oData, nNumberOfSamples) {
+let makeRandomIndexesOfNegatives = function (oIndexes, oData, nNumberOfSamples) {
 
     let nDataSize = Object.keys(oData).length;
     let nStartingSizeOfIndexes = Object.keys(oIndexes).length;
@@ -80,14 +88,14 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
         console.error(`syntax error while trying to parse JSON data from file ${sFilename}`)
     }
     if (oData) {
-        const nNumberOfSamples = 5000;
+        const nNumberOfSamples = nSampleSize;
         let oIndexes = {};
 
         // gets all positives
         getIndexesOfPositives(oIndexes, oData, nNumberOfSamples);
 
         // gets a random set of negatives
-        getRandomIndexesOfNegatives(oIndexes, oData, nNumberOfSamples);
+        makeRandomIndexesOfNegatives(oIndexes, oData, nNumberOfSamples);
 
         let aIndexKeys = Object.keys(oIndexes);
         aIndexKeys.forEach(sKey => {
