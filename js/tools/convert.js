@@ -1,8 +1,6 @@
 const args = require('./args.js');
 
 var oFs = require('fs');
-var oPath = require('path');
-var sBaseDirectory = '.';
 
 const sArg_filename = 'inputfile';
 var sFilename = null;
@@ -37,7 +35,7 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
     try {
         oData = JSON.parse(sData);
     } catch (error) {
-        console.error(`syntax error while trying to pars JSON data from file ${sFilename}`)
+        console.error(`syntax error while trying to parse JSON data from file ${sFilename}`)
     }
     if (oData) {
         oData.forEach(oDatum => {
