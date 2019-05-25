@@ -1,7 +1,7 @@
 %% Initialization
 clear ; close all; clc
 
-data = load('labellist-faces-upright-16.csv');
+data = load('labellist-faces-upright-16-training.csv');
 X = data(:, [1:16]); y = data(:, 17);
 
 % sets up the parameters
