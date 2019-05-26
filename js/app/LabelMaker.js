@@ -421,11 +421,15 @@ requirejs(['Tools'], function (Tools) {
                 this.labellist[this.decimal].label = 'unlabelled';
                 this.renderDotColors();
                 this.renderLabelCounts();
-            } else {
+            } else if (sLabel === 'no') {
                 this.labellist[this.decimal].label = sLabel;
                 this.renderDotColors();
                 this.renderLabelCounts();
                 this.incrementPicture(1);
+            } else {
+                this.labellist[this.decimal].label = sLabel;
+                this.renderDotColors();
+                this.renderLabelCounts();
             }
 
         }
