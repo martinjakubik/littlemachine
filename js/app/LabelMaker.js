@@ -129,6 +129,11 @@ requirejs(['Tools'], function (Tools) {
 
             document.body.insertBefore(oPictureNavigator, null);
 
+            this.canvasPosition = {
+                top: oCanvas.offsetTop,
+                left: oCanvas.offsetLeft
+            };
+
         }
 
         /**
@@ -228,6 +233,7 @@ requirejs(['Tools'], function (Tools) {
             oCanvas.setAttribute('id', PICTURE_CANVAS_ID);
             oCanvas.setAttribute('width', PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE);
             oCanvas.setAttribute('height', PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+            oCanvas.addEventListener('click', this.drawAt.bind(this), false);
 
             this.context = oCanvas.getContext("2d");
             this.context.fillStyle = "black";
@@ -514,8 +520,8 @@ requirejs(['Tools'], function (Tools) {
             } else {
                 this.context.fillStyle = 'white' ;
             }
-            this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, (x + 1) * DRAW_BLOCK_SIZE, (y + 1) * DRAW_BLOCK_SIZE);
-
+            this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, DRAW_BLOCK_SIZE, DRAW_BLOCK_SIZE);
+            
         }
 
         moveToClosestByLabelName(iSide, sLabelName) {
@@ -540,6 +546,48 @@ requirejs(['Tools'], function (Tools) {
             this.movePicture();
 
         }
+
+        drawAt(oEvent) {
+
+            var x = oEvent.pageX - this.canvasPosition.left;
+            var y = oEvent.pageY - this.canvasPosition.top;
+
+            var nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
+            var nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
+
+            // converts x, y coordinate to 0 .. 16
+            var nPositionInBinaryString = (nBlockX) + (nBlockY * BOX_SIZE);
+            var iNewColor = 0;
+            var sOldBinaryNumber = this.labellist[this.decimal].binary;
+            var sPixelColor = sOldBinaryNumber.charAt(nPositionInBinaryString);
+            if (sPixelColor === '0') {
+                iNewColor = 1;
+            } else {
+                iNewColor = 0;
+            }
+            var sNewBinaryNumber = sOldBinaryNumber.substring(0, nPositionInBinaryString) + iNewColor + sOldBinaryNumber.substring(nPositionInBinaryString + 1);
+
+            var nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
+            this.navigationField.value = nDecimal;
+            this.movePicture();
+            
+            this.drawPixel(nBlockX, nBlockY, iNewColor);
+
+        }
+
+    }
+
+    var convertBinaryToDecimal = function (sBinary) {
+
+        var nDecimal = 0;
+
+        for (var i = sBinary.length - 1; i >= 0; i--) {
+            var nExponent = 15 - i;
+            var nDigit = sBinary.charAt(i);
+            nDecimal = nDecimal + (2 ** nExponent) * nDigit;
+        }
+
+        return nDecimal;
 
     }
 
