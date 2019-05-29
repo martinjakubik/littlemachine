@@ -1,9 +1,16 @@
+body {
+    background-color: #000000;
+}
+
 button {
-    background-color: #fafafa;
+    background-color: #000000;
     height: 1.4em;
     width: 1.4em;
-    font-size: 48pt;
-    color: #6a6a6a;
+    border: 2px solid #00ff00;
+    border-radius: 0.1em;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4em;
 }
 
 .picturenavigator {
@@ -15,7 +22,8 @@ button {
     position: relative;
     top: 0.4em;
     margin: 0 1em 0 1em;
-    border: 1px solid black;
+    border: 2px solid #00ff00;
+    border-radius: 0.4em;
 }
 
 .navigationbutton {
@@ -24,10 +32,14 @@ button {
 }
 
 .navigationfield {
-    font-size: 18pt;
-    text-align: center;
+    background-color: #000000;
+    color: #00ff00;
     width: 5em;
     margin: 1em 1em 1em 6em;
+    border: 2px solid #00ff00;
+    border-radius: 0.1em;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 .navigationbuttonleft::before {
@@ -111,16 +123,16 @@ button {
     display: inline-block;
     width: 8em;
     text-align: right;
-    font-size: 18pt;
-    font-family: system-ui;
-    color: #6a6a6a;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00;
 }
 
 .labelcount {
     margin: 0 0 0 1em;
-    font-size: 18pt;
-    font-family: system-ui;
-    color: #6a6a6a;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00;
 }
 
 .labelnamenavigationbutton {

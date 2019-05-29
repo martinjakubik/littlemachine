@@ -497,7 +497,7 @@ requirejs(['Tools'], function (Tools) {
             }
 
             var sColor = '';
-            var iColor = 0;
+            var iState = 0;
 
             var x = 0;
             var y = 0;
@@ -505,8 +505,8 @@ requirejs(['Tools'], function (Tools) {
                 x = i % BOX_SIZE;
                 y = Math.floor(i / BOX_SIZE);
                 sColor = sBinary.substring(i, i + 1);
-                iColor = parseInt(sColor);
-                this.drawPixel(x, y, iColor);
+                iState = parseInt(sColor);
+                this.drawPixel(x, y, iState);
             }
 
         };
@@ -515,17 +515,81 @@ requirejs(['Tools'], function (Tools) {
          * draws one pixel at a given position with the given color
          * @param {*} x an x position as an integer
          * @param {*} y a y position as an integer
-         * @param {*} iColor a color with 0 = black; otherwise white
+         * @param {*} iState flag indicating that pixel is on if 1; otherwise off
          */
-        drawPixel(x, y, iColor) {
-
-            if (iColor === 0) {
-                this.context.fillStyle = 'black' ;
+        drawPixel(x, y, iState) {
+            if (iState === 0) {
+                this.drawPixelOff(x, y);
             } else {
-                this.context.fillStyle = 'white' ;
-            }
-            this.context.fillRect(x * DRAW_BLOCK_SIZE, y * DRAW_BLOCK_SIZE, DRAW_BLOCK_SIZE, DRAW_BLOCK_SIZE);
-            
+                this.drawPixelOn(x, y);
+            }           
+        }
+        
+        drawPixelOn(x, y) {
+
+            this.context.fillStyle = 'green' ;
+            this.context.strokeStyle = 'green';
+
+            this.drawPixelOutline(x, y);
+
+        }
+        
+        drawPixelOff(x, y) {
+
+            this.context.fillStyle = 'black' ;
+            this.context.strokeStyle = 'black';
+
+            this.drawPixelOutline(x, y);
+
+       }
+
+        drawPixelOutline(x, y) {
+
+            const nCorner = 4;
+            const nBorderWidth = 1;
+
+            var outline = {
+                top: {
+                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth
+                },
+                right: {
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner
+                },
+                bottom: {
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth
+                },
+                left: {
+                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth,
+                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner
+                }
+            };
+
+            this.context.beginPath();
+            this.context.moveTo(outline.top.x1, outline.top.y1);
+            this.context.lineTo(outline.top.x2, outline.top.y2);
+            this.context.moveTo(outline.right.x1, outline.right.y1);
+            this.context.lineTo(outline.right.x2, outline.right.y2);
+            this.context.moveTo(outline.bottom.x1, outline.bottom.y1);
+            this.context.lineTo(outline.bottom.x2, outline.bottom.y2);
+            this.context.moveTo(outline.left.x1, outline.left.y1);
+            this.context.lineTo(outline.left.x2, outline.left.y2);
+            this.context.closePath();
+
+            this.context.stroke();
+
+            this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
+
         }
 
         moveToClosestByLabelName(iSide, sLabelName) {
@@ -561,21 +625,21 @@ requirejs(['Tools'], function (Tools) {
 
             // converts x, y coordinate to 0 .. 16
             var nPositionInBinaryString = (nBlockX) + (nBlockY * BOX_SIZE);
-            var iNewColor = 0;
+            var iNewState = 0;
             var sOldBinaryNumber = this.labellist[this.decimal].binary;
             var sPixelColor = sOldBinaryNumber.charAt(nPositionInBinaryString);
             if (sPixelColor === '0') {
-                iNewColor = 1;
+                iNewState = 1;
             } else {
-                iNewColor = 0;
+                iNewState = 0;
             }
-            var sNewBinaryNumber = sOldBinaryNumber.substring(0, nPositionInBinaryString) + iNewColor + sOldBinaryNumber.substring(nPositionInBinaryString + 1);
+            var sNewBinaryNumber = sOldBinaryNumber.substring(0, nPositionInBinaryString) + iNewState + sOldBinaryNumber.substring(nPositionInBinaryString + 1);
 
             var nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
             this.navigationField.value = nDecimal;
             this.movePicture();
             
-            this.drawPixel(nBlockX, nBlockY, iNewColor);
+            this.drawPixel(nBlockX, nBlockY, iNewState);
 
         }
 
