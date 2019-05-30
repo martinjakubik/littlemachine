@@ -88,37 +88,37 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        static borderWidth = 1;
+
         static oOutline(x ,y) {
             const nCorner = 4;
-            const nBorderWidth = 1;
 
             return {
                 x: x,
                 y: y,
-                borderWidth : nBorderWidth,
                 path: [{
-                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth
+                    x1: x * DRAW_BLOCK_SIZE + LabelMaker.borderWidth + nCorner,
+                    y1: y * DRAW_BLOCK_SIZE + LabelMaker.borderWidth,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth - nCorner,
+                    y2: y * DRAW_BLOCK_SIZE + LabelMaker.borderWidth
                 },
                 {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth,
+                    y1: y * DRAW_BLOCK_SIZE + LabelMaker.borderWidth + nCorner,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth - nCorner
                 },
                 {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth - nCorner,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth,
+                    x2: x * DRAW_BLOCK_SIZE + LabelMaker.borderWidth + nCorner,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth
                 },
                 {
-                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth,
-                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner
+                    x1: x * DRAW_BLOCK_SIZE + LabelMaker.borderWidth,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - LabelMaker.borderWidth - nCorner,
+                    x2: x * DRAW_BLOCK_SIZE + LabelMaker.borderWidth,
+                    y2: y * DRAW_BLOCK_SIZE + LabelMaker.borderWidth + nCorner
                 }
             ]};
         };
@@ -566,7 +566,9 @@ requirejs(['Tools'], function (Tools) {
             this.context.strokeStyle = 'green';
 
             this.drawPixelOutline(LabelMaker.oOutline(x, y));
-
+            
+            var nBorderWidth = LabelMaker.borderWidth;
+            this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
         }
         
         drawPixelOff(x, y) {
@@ -576,7 +578,10 @@ requirejs(['Tools'], function (Tools) {
 
             this.drawPixelOutline(LabelMaker.oOutline(x, y));
 
-       }
+            var nBorderWidth = LabelMaker.borderWidth;
+            this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
+
+       }     
 
         drawPixelOutline(oOutline) {
 
@@ -584,17 +589,11 @@ requirejs(['Tools'], function (Tools) {
             oOutline.path.forEach(oEdge => {
                 this.context.moveTo(oEdge.x1, oEdge.y1);
                 this.context.lineTo(oEdge.x2, oEdge.y2);
-            })
+            })    
             this.context.closePath();
             this.context.stroke();
 
-            var x = oOutline.x;
-            var y = oOutline.y;
-            var nBorderWidth = oOutline.borderWidth;
-
-            this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
-
-        }
+        }    
 
         moveToClosestByLabelName(iSide, sLabelName) {
 
