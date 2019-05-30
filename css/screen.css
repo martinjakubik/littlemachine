@@ -153,3 +153,9 @@ button {
     display: inline-block;
     font-size: 12pt;
 }
+
+p {
+    color: green;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}

@@ -258,6 +258,11 @@ requirejs(['Tools'], function (Tools) {
             oLabelControl.insertBefore(oLabelCountGroupNo, null);
             oLabelControl.insertBefore(oLabelCountGroupUnlabelled, null);
 
+            var oTrainingAccuracyText = document.createElement('p');
+            oTrainingAccuracyText.innerText = 'Training Set Accuracy: 0.620000';
+
+            oLabelControl.insertBefore(oTrainingAccuracyText, null);
+
             document.body.insertBefore(oLabelControl, null);
 
         }
