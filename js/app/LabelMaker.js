@@ -88,6 +88,41 @@ requirejs(['Tools'], function (Tools) {
 
         }
 
+        static oOutline(x ,y) {
+            const nCorner = 4;
+            const nBorderWidth = 1;
+
+            return {
+                x: x,
+                y: y,
+                borderWidth : nBorderWidth,
+                path: [{
+                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth
+                },
+                {
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner
+                },
+                {
+                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
+                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
+                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth
+                },
+                {
+                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth,
+                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
+                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth,
+                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner
+                }
+            ]};
+        };
+
         constructor() {
 
             this.decimal = LabelMaker.getValidDecimalValue(0);
@@ -530,7 +565,7 @@ requirejs(['Tools'], function (Tools) {
             this.context.fillStyle = 'green' ;
             this.context.strokeStyle = 'green';
 
-            this.drawPixelOutline(x, y);
+            this.drawPixelOutline(LabelMaker.oOutline(x, y));
 
         }
         
@@ -539,54 +574,23 @@ requirejs(['Tools'], function (Tools) {
             this.context.fillStyle = 'black' ;
             this.context.strokeStyle = 'black';
 
-            this.drawPixelOutline(x, y);
+            this.drawPixelOutline(LabelMaker.oOutline(x, y));
 
        }
 
-        drawPixelOutline(x, y) {
-
-            const nCorner = 4;
-            const nBorderWidth = 1;
-
-            var outline = {
-                top: {
-                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth
-                },
-                right: {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    y1: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner
-                },
-                bottom: {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth,
-                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth + nCorner,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth
-                },
-                left: {
-                    x1: x * DRAW_BLOCK_SIZE + nBorderWidth,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - nBorderWidth - nCorner,
-                    x2: x * DRAW_BLOCK_SIZE + nBorderWidth,
-                    y2: y * DRAW_BLOCK_SIZE + nBorderWidth + nCorner
-                }
-            };
+        drawPixelOutline(oOutline) {
 
             this.context.beginPath();
-            this.context.moveTo(outline.top.x1, outline.top.y1);
-            this.context.lineTo(outline.top.x2, outline.top.y2);
-            this.context.moveTo(outline.right.x1, outline.right.y1);
-            this.context.lineTo(outline.right.x2, outline.right.y2);
-            this.context.moveTo(outline.bottom.x1, outline.bottom.y1);
-            this.context.lineTo(outline.bottom.x2, outline.bottom.y2);
-            this.context.moveTo(outline.left.x1, outline.left.y1);
-            this.context.lineTo(outline.left.x2, outline.left.y2);
+            oOutline.path.forEach(oEdge => {
+                this.context.moveTo(oEdge.x1, oEdge.y1);
+                this.context.lineTo(oEdge.x2, oEdge.y2);
+            })
             this.context.closePath();
-
             this.context.stroke();
+
+            var x = oOutline.x;
+            var y = oOutline.y;
+            var nBorderWidth = oOutline.borderWidth;
 
             this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
 
