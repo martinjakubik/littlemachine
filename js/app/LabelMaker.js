@@ -123,68 +123,37 @@ requirejs(['Tools'], function (Tools) {
             ]};
         };
 
-        static oSquiggle(x ,y) {
-            var iSpace1 = DRAW_BLOCK_SIZE / 6;
-            var iSpace2 = DRAW_BLOCK_SIZE / 12;
+        static oInterlace1(x ,y) {
+            var iSpace1 = DRAW_BLOCK_SIZE / 8;
+            var iSpace2 = DRAW_BLOCK_SIZE / 8;
             var aPath = [];
             var oPoint = {};
             for (var i = 1; i < 4; i++) {
                 oPoint = {
                     x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - ((2 * i - 1) * iSpace1),
-                    x2: x * DRAW_BLOCK_SIZE + (i * iSpace1),
-                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    x1: x * DRAW_BLOCK_SIZE + (i * iSpace1),
-                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                    x2: x * DRAW_BLOCK_SIZE + (i * iSpace1) + iSpace1,
-                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    x1: x * DRAW_BLOCK_SIZE + (i * iSpace1) + iSpace1,
-                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                    x2: x * DRAW_BLOCK_SIZE + iSpace2,
-                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - (i * iSpace1) - iSpace1
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - (i * iSpace1) - iSpace1,
-                    x2: x * DRAW_BLOCK_SIZE + iSpace2,
-                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - ((2 * i - 1) * iSpace1)
+                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
+                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
+                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2
                 };
                 aPath.push(oPoint);
             }
+            return {
+                x: x,
+                y: y,
+                path: aPath};
+        };
+
+        static oInterlace2(x ,y) {
+            var iSpace1 = DRAW_BLOCK_SIZE / 8;
+            var iSpace2 = DRAW_BLOCK_SIZE / 8;
+            var aPath = [];
+            var oPoint = {};
             for (var i = 1; i < 4; i++) {
                 oPoint = {
-                    y1: y * DRAW_BLOCK_SIZE + iSpace2,
-                    x1: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - ((2 * i - 1) * iSpace1),
-                    y2: y * DRAW_BLOCK_SIZE + (i * iSpace1),
-                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    y1: y * DRAW_BLOCK_SIZE + (i * iSpace1),
-                    x1: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                    y2: y * DRAW_BLOCK_SIZE + (i * iSpace1) + iSpace1,
-                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    y1: y * DRAW_BLOCK_SIZE + (i * iSpace1) + iSpace1,
-                    x1: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                    y2: y * DRAW_BLOCK_SIZE + iSpace2,
-                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - (i * iSpace1) - iSpace1
-                };
-                aPath.push(oPoint);
-                oPoint = {
-                    y1: y * DRAW_BLOCK_SIZE + iSpace2,
-                    x1: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - (i * iSpace1) - iSpace1,
-                    y2: y * DRAW_BLOCK_SIZE + iSpace2,
-                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - ((2 * i - 1) * iSpace1)
+                    x1: x * DRAW_BLOCK_SIZE + iSpace2,
+                    y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
+                    x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
+                    y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4
                 };
                 aPath.push(oPoint);
             }
@@ -344,6 +313,8 @@ requirejs(['Tools'], function (Tools) {
             this.context = oCanvas.getContext("2d");
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE, PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
+
+            this.context.lineWidth = '2';
 
             return oCanvas;
 
@@ -633,26 +604,29 @@ requirejs(['Tools'], function (Tools) {
         
         drawPixelOn(x, y) {
 
-            this.context.fillStyle = 'green' ;
             this.context.strokeStyle = 'green';
+            this.context.lineWidth = '2';
 
             this.drawShape(LabelMaker.oOutline(x, y));
-            this.drawShape(LabelMaker.oSquiggle(x, y));
+
+            this.context.lineWidth = '6';
+            this.drawShape(LabelMaker.oInterlace1(x, y));
+
+            this.context.strokeStyle = '#004000';
+            this.drawShape(LabelMaker.oInterlace2(x, y));
             
-            // var nBorderWidth = LabelMaker.borderWidth;
-            // this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
         }
         
         drawPixelOff(x, y) {
             
-            this.context.fillStyle = 'black' ;
             this.context.strokeStyle = 'black';
             
+            this.context.lineWidth = '2';
             this.drawShape(LabelMaker.oOutline(x, y));
-            this.drawShape(LabelMaker.oSquiggle(x, y));
 
-            // var nBorderWidth = LabelMaker.borderWidth;
-            // this.context.fillRect(x * DRAW_BLOCK_SIZE + nBorderWidth, y * DRAW_BLOCK_SIZE + nBorderWidth, DRAW_BLOCK_SIZE - (2 * nBorderWidth), DRAW_BLOCK_SIZE - (2 * nBorderWidth));
+            this.context.lineWidth = '6';
+            this.drawShape(LabelMaker.oInterlace1(x, y));
+            this.drawShape(LabelMaker.oInterlace2(x, y));
 
        }     
 
