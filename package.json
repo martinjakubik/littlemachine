@@ -7,7 +7,5 @@
     "kierki": "^1.2.1",
     "load-grunt-tasks": "^3.5.0"
   },
-  "dependencies": {
-    "npm-check-updates": "^7.0.2"
-  }
+  "dependencies": {}
 }
