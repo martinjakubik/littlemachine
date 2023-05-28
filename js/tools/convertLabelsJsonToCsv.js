@@ -46,7 +46,12 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
             for (let i = 0; i < sBinary.length; i++) {
                 sBinaryCsv = sBinaryCsv + sBinary[i] + (i < sBinary.length - 1 ? ',' : '');
             }
-            let sLabel = oDatum.label === 'yes' ? '1' : '0';
+            let sLabel = -1;
+            if (oDatum.label === 'yes') {
+                sLabel = 1;
+            } else if (oDatum.label === 'no') {
+                sLabel = 0;
+            }
             console.log(`${sBinaryCsv},${sLabel}`);
         });
     }
