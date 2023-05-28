@@ -1,14 +1,14 @@
-var MAX_EXPONENT = 4096;
-var MAX_NUMBER_OF_BOXES = 65536;
-var BOX_SIZE = 4;
+const MAX_EXPONENT = 4096;
+const MAX_NUMBER_OF_BOXES = 65536;
+const BOX_SIZE = 4;
 
-var MIN_DECIMAL = 0;
+const MIN_DECIMAL = 0;
 
-var PICTURE_CANVAS_WIDTH = BOX_SIZE;
-var PICTURE_CANVAS_HEIGHT = BOX_SIZE;
-var DRAW_BLOCK_SIZE = 48;
+const PICTURE_CANVAS_WIDTH = BOX_SIZE;
+const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
+const DRAW_BLOCK_SIZE = 48;
 
-var PICTURE_CANVAS_ID = 'picturecanvas';
+const PICTURE_CANVAS_ID = 'picturecanvas';
 
 class LabelMaker {
 
@@ -458,6 +458,7 @@ class LabelMaker {
         var sButtonClass = 'loadbutton';
         var sButtonId = 'loadbutton';
         LabelMaker.setClass(oButton, sButtonClass);
+        oButton.disabled = true;
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.loadLabels.bind(this);
 
