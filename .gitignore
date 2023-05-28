@@ -17,6 +17,6 @@ labellists/png4
 labellists/png9/*
 labellists/png16/*
 
-dev/npmaudit
+dev
 
 html/labellists/*.json
