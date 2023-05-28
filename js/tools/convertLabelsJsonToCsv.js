@@ -1,13 +1,14 @@
-const args = require('./args.js');
+import { getArgs } from './args.js'
 
-let oFs = require('fs');
+import * as oFs from 'fs';
+
 
 const sArg_filename = 'inputfile';
 let sFilename = null;
 
 // gets args
-let aArguments = args.getArgs();
-let aArgumentKeys = Object.keys(args.getArgs());
+let aArguments = getArgs();
+let aArgumentKeys = Object.keys(getArgs());
 aArgumentKeys.forEach(sArgKey => {
     if (aArguments.hasOwnProperty(sArgKey)) {
         let oArg = aArguments[sArgKey];
@@ -20,7 +21,8 @@ aArgumentKeys.forEach(sArgKey => {
 
 // if no filename given, end
 if (!sFilename) {
-    return;
+    console.log('no file given; exiting');
+    process.exit();
 }
 
 // reads file

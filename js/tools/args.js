@@ -1,4 +1,4 @@
-exports.getArgs = function () {
+const getArgs = function () {
 
     // thanks to this answer: https://stackoverflow.com/a/54098693/203797
     // by https://stackoverflow.com/users/4139335/michael-warner
@@ -26,5 +26,6 @@ exports.getArgs = function () {
     });
 
     return oArguments;
+}
 
-};
+export { getArgs };
