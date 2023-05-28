@@ -68,7 +68,7 @@ printDot = arguments.printDot
 numberOfBoxes = 2 ** (boxSize ** 2)
 
 if numberOfBoxes > MAX_NUMBER_OF_BOXES:
-    print 'too many boxes. try less than', MAX_NUMBER_OF_BOXES
+    print ('too many boxes. try less than', MAX_NUMBER_OF_BOXES)
     raise SystemExit(1)
 
 for index in range(numberOfBoxes):
