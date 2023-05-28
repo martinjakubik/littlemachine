@@ -12,6 +12,7 @@ js/lib
 labellists/boxes.txt
 labellists/boxes*.txt
 labellists/*.csv
+labellists/*.json
 
 labellists/png4
 labellists/png9/*
