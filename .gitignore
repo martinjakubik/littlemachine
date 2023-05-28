@@ -18,6 +18,8 @@ labellists/png4
 labellists/png9/*
 labellists/png16/*
 
+octave/labellist-*.csv
+
 dev
 
 html/labellists/*.json
