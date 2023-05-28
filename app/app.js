@@ -292,7 +292,6 @@ class LabelMaker {
         var oButtonLoad = this.makeLoadButton();
         var oButtonSave = this.makeSaveButton();
 
-        document.body.insertBefore(oButtonLoad, null);
         document.body.insertBefore(oButtonSave, null);
 
     }
@@ -458,7 +457,6 @@ class LabelMaker {
         var sButtonClass = 'loadbutton';
         var sButtonId = 'loadbutton';
         LabelMaker.setClass(oButton, sButtonClass);
-        oButton.disabled = true;
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.loadLabels.bind(this);
 
