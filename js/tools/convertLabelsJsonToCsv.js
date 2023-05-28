@@ -3,8 +3,10 @@ import { getArgs } from './args.js'
 import * as oFs from 'fs';
 
 
-const sArg_filename = 'inputfile';
+const sArg_filename = 'inputFile';
+const sArg_keepUnlabelled = 'keepUnlabelled';
 let sFilename = null;
+let bKeepUnlabelled = false;
 
 // gets args
 let aArguments = getArgs();
@@ -15,6 +17,9 @@ aArgumentKeys.forEach(sArgKey => {
 
         if (sArgKey === sArg_filename) {
             sFilename = oArg;
+        }
+        if (sArgKey === sArg_keepUnlabelled) {
+            bKeepUnlabelled = true;
         }
     };
 });
@@ -52,7 +57,11 @@ oFs.readFile(sFilename, oOptions, (oError, sData) => {
             } else if (oDatum.label === 'no') {
                 sLabel = 0;
             }
-            console.log(`${sBinaryCsv},${sLabel}`);
+            if (bKeepUnlabelled) {
+                console.log(`${sBinaryCsv},${sLabel}`);
+            } else if (sLabel != -1) {
+                console.log(`${sBinaryCsv},${sLabel}`);
+            }
         });
     }
 
