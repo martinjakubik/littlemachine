@@ -7,8 +7,10 @@
     "grunt-contrib-copy": "^1.0.0",
     "load-grunt-tasks": "^3.5.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "learnhypertext": "^2.0.3"
+  },
   "scripts": {
-      "start": "node dev/server.js"
+    "start": "node dev/server.js"
   }
 }
