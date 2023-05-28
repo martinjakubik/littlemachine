@@ -1,6 +1,7 @@
 import sys
 import argparse
 from  makepng import *
+from pathlib import Path
 
 MAX_EXPONENT = 64
 MAX_NUMBER_OF_BOXES = 65536
@@ -53,7 +54,13 @@ def printFace(boxSize, binary, printDot):
     size = boxSize ** 2
     sys.stdout.write(binary + '\n\n')
 
-    with open('boxes' + str(size) + '/' + binary +  '.png', 'wb') as f:
+    boxPathDirectory = Path('labelists/png' + str(size))
+    boxPath = boxPathDirectory / (binary + '.png')
+
+    if not boxPathDirectory.exists() or not boxPathDirectory.is_dir():
+        boxPathDirectory.mkdir(parents = True)
+
+    with boxPath.open(mode = 'wb') as f:
         f.write(makeGrayPNG(data, boxSize, boxSize))
 
 commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
