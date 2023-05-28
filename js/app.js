@@ -4,8 +4,7 @@
 requirejs.config({
     baseUrl: '../js/app',
     paths: {
-        lib: '../lib',
-        Tools: '../lib/kierki/js/Tools'
+        lib: '../lib'
     }
 });
 

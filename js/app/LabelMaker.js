@@ -1,5 +1,5 @@
 /* global require */
-requirejs(['Tools'], function (Tools) {
+requirejs(['], function () {
 
     'use strict';
 
@@ -163,6 +163,31 @@ requirejs(['Tools'], function (Tools) {
                 path: aPath};
         };
 
+        static addClass (oView, sClass) {
+            var sClasses = oView.getAttribute('class');
+    
+            if (sClasses.indexOf(sClass) < 0) {
+                oView.setAttribute('class', oView.getAttribute('class') + ' ' + sClass);
+            }
+        };
+    
+        static setClass (oView, sClass) {
+            oView.setAttribute('class', sClass);
+        };
+    
+        static removeClass (oView, sClass) {
+            var sCurrentClasses = oView.getAttribute('class');
+            var nStartIndex = sCurrentClasses.indexOf(sClass);
+            var nEndIndex = nStartIndex + sClass.length;
+            var sUpdatedClasses;
+    
+            if (nStartIndex > 0 && nEndIndex <= sCurrentClasses.length) {
+                sUpdatedClasses = (sCurrentClasses.substr(0, nStartIndex) + ' ' +
+                    sCurrentClasses.substr(nEndIndex)).trim();
+                oView.setAttribute('class', sUpdatedClasses);
+            }
+        };
+        
         constructor() {
 
             this.decimal = LabelMaker.getValidDecimalValue(0);
@@ -191,7 +216,7 @@ requirejs(['Tools'], function (Tools) {
             
             var oPictureNavigator = document.createElement('div');
             oPictureNavigator.setAttribute('id', 'picturenavigator');
-            Tools.setClass(oPictureNavigator, 'picturenavigator');
+            setClass(oPictureNavigator, 'picturenavigator');
 
             var oButtonLeft = this.makeNavigationButton(LabelMaker.sides().left);
             var oCanvas = this.makeCanvas();
@@ -229,11 +254,11 @@ requirejs(['Tools'], function (Tools) {
 
             var oLabelControl = document.createElement('div');
             oLabelControl.setAttribute('id', 'labelcontrol');
-            Tools.setClass(oLabelControl, 'labelcontrol');
+            setClass(oLabelControl, 'labelcontrol');
 
             var oLabelDots = document.createElement('div');
             oLabelDots.setAttribute('id', 'labeldots');
-            Tools.setClass(oLabelDots, 'labeldots');
+            setClass(oLabelDots, 'labeldots');
 
             this.dotYes = this.makeLabelDot(LabelMaker.labels().yes);
             this.dotNo = this.makeLabelDot(LabelMaker.labels().no);
@@ -283,14 +308,14 @@ requirejs(['Tools'], function (Tools) {
         renderDotColors() {
 
             if (this.labellist[this.decimal].label === 'yes') {
-                Tools.removeClass(this.dotNo, 'on');
-                Tools.addClass(this.dotYes, 'on');
+                removeClass(this.dotNo, 'on');
+                addClass(this.dotYes, 'on');
             } else if (this.labellist[this.decimal].label === 'no') {
-                Tools.removeClass(this.dotYes, 'on');
-                Tools.addClass(this.dotNo, 'on');
+                removeClass(this.dotYes, 'on');
+                addClass(this.dotNo, 'on');
             } else {
-                Tools.removeClass(this.dotYes, 'on');
-                Tools.removeClass(this.dotNo, 'on');
+                removeClass(this.dotYes, 'on');
+                removeClass(this.dotNo, 'on');
             }
 
         }
@@ -345,12 +370,12 @@ requirejs(['Tools'], function (Tools) {
                 oButton.onclick = this.incrementPicture.bind(this, iIncrement);
                 
             }
-            Tools.setClass(oButton, sButtonClass);
+            setClass(oButton, sButtonClass);
 
             var sButtonSideClass = `navigationbutton${sSide}`;
             var sButtonLabelNameSideClass = `labelnamenavigationbutton${sSide}`;
-            Tools.addClass(oButton, sButtonSideClass);
-            Tools.addClass(oButton, sButtonLabelNameSideClass);
+            addClass(oButton, sButtonSideClass);
+            addClass(oButton, sButtonLabelNameSideClass);
 
             oButton.setAttribute('id', sButtonId);
             return oButton;
@@ -363,7 +388,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sFieldClass = 'navigationfield';
             var sFieldId = 'navigationfield';
-            Tools.setClass(oField, sFieldClass);
+            setClass(oField, sFieldClass);
             oField.setAttribute('id', sFieldId);
             oField.onchange = this.movePicture.bind(this);
 
@@ -379,7 +404,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sDotClass = 'labeldot';
             var sDotId = `labeldot${sLabel}`;
-            Tools.setClass(oDot, sDotClass);
+            setClass(oDot, sDotClass);
             oDot.setAttribute('id', sDotId);
 
             return oDot;
@@ -394,7 +419,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sButtonClass = 'labelbutton';
             var sButtonId = `labelbutton${sLabel}`;
-            Tools.setClass(oButton, sButtonClass);
+            setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
             oButton.onclick = this.setLabel.bind(this, iLabel);
 
@@ -406,17 +431,17 @@ requirejs(['Tools'], function (Tools) {
 
             var labelCountGroup = document.createElement('div');
             labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
-            Tools.setClass(labelCountGroup, 'labelcountgroup');
+            setClass(labelCountGroup, 'labelcountgroup');
 
             var labelCountLabel = document.createElement('span');
             labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
-            Tools.setClass(labelCountLabel, 'labelcountname');
+            setClass(labelCountLabel, 'labelcountname');
             labelCountLabel.textContent = sLabelName;
 
             var sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
             this[sCamelCaseLabelName] = document.createElement('span');
             this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
-            Tools.setClass(this[sCamelCaseLabelName], 'labelcount');
+            setClass(this[sCamelCaseLabelName], 'labelcount');
             this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
             var oButtonNextByLabel = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
@@ -437,7 +462,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sButtonClass = 'loadbutton';
             var sButtonId = 'loadbutton';
-            Tools.setClass(oButton, sButtonClass);
+            setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
             oButton.onclick = this.loadLabels.bind(this);
 
@@ -451,7 +476,7 @@ requirejs(['Tools'], function (Tools) {
 
             var sButtonClass = 'savebutton';
             var sButtonId = 'savebutton';
-            Tools.setClass(oButton, sButtonClass);
+            setClass(oButton, sButtonClass);
             oButton.setAttribute('id', sButtonId);
             oButton.onclick = this.saveLabels.bind(this);
 
