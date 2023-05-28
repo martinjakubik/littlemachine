@@ -2,11 +2,6 @@
   "name": "labelmaker",
   "version": "0.0.1",
   "type": "module",
-  "devDependencies": {
-    "grunt": ">=1.5.3",
-    "grunt-contrib-copy": "^1.0.0",
-    "load-grunt-tasks": "^3.5.0"
-  },
   "dependencies": {
     "learnhypertext": "^2.0.3"
   },
