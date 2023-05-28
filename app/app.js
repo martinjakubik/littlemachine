@@ -80,7 +80,7 @@ class LabelMaker {
 
     static borderWidth = 1;
 
-    static oOutline(x ,y) {
+    static oOutline(x, y) {
         const nCorner = 4;
 
         return {
@@ -110,10 +110,11 @@ class LabelMaker {
                 x2: x * DRAW_BLOCK_SIZE + LabelMaker.borderWidth,
                 y2: y * DRAW_BLOCK_SIZE + LabelMaker.borderWidth + nCorner
             }
-        ]};
+            ]
+        };
     };
 
-    static oInterlace1(x ,y) {
+    static oInterlace1(x, y) {
         const iSpace1 = DRAW_BLOCK_SIZE / 8;
         const iSpace2 = DRAW_BLOCK_SIZE / 8;
         const aPath = [];
@@ -130,10 +131,11 @@ class LabelMaker {
         return {
             x: x,
             y: y,
-            path: aPath};
+            path: aPath
+        };
     };
 
-    static oInterlace2(x ,y) {
+    static oInterlace2(x, y) {
         const iSpace1 = DRAW_BLOCK_SIZE / 8;
         const iSpace2 = DRAW_BLOCK_SIZE / 8;
         const aPath = [];
@@ -150,10 +152,11 @@ class LabelMaker {
         return {
             x: x,
             y: y,
-            path: aPath};
+            path: aPath
+        };
     };
 
-    static addClass (oView, sClass) {
+    static addClass(oView, sClass) {
         const sClasses = oView.getAttribute('class');
 
         if (sClasses.indexOf(sClass) < 0) {
@@ -161,11 +164,11 @@ class LabelMaker {
         }
     };
 
-    static setClass (oView, sClass) {
+    static setClass(oView, sClass) {
         oView.setAttribute('class', sClass);
     };
 
-    static removeClass (oView, sClass) {
+    static removeClass(oView, sClass) {
         const sCurrentClasses = oView.getAttribute('class');
         const nStartIndex = sCurrentClasses.indexOf(sClass);
         const nEndIndex = nStartIndex + sClass.length;
@@ -177,7 +180,7 @@ class LabelMaker {
             oView.setAttribute('class', sUpdatedClasses);
         }
     };
-    
+
     constructor() {
 
         this.decimal = LabelMaker.getValidDecimalValue(0);
@@ -197,7 +200,7 @@ class LabelMaker {
     }
 
     renderPictureNavigator() {
-        
+
         const oPictureNavigator = document.createElement('div');
         oPictureNavigator.setAttribute('id', 'picturenavigator');
         LabelMaker.setClass(oPictureNavigator, 'picturenavigator');
@@ -322,26 +325,26 @@ class LabelMaker {
     }
 
     makeNavigationButton(iSide, sLabelName) {
-        
+
         const oButton = document.createElement('button');
-        
+
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
 
         let sButtonClass;
         let sButtonId;
         if (sLabelName) {
-            
+
             sButtonClass = 'labelnamenavigationbutton';
             sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
             oButton.onclick = this.moveToClosestByLabelName.bind(this, iSide, sLabelName);
-            
+
         } else {
 
             const iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
             sButtonClass = 'navigationbutton';
             sButtonId = `navigationbutton${sSide}`;
             oButton.onclick = this.incrementPicture.bind(this, iIncrement);
-            
+
         }
         LabelMaker.setClass(oButton, sButtonClass);
 
@@ -571,9 +574,9 @@ class LabelMaker {
             this.drawPixelOff(x, y);
         } else {
             this.drawPixelOn(x, y);
-        }           
+        }
     }
-    
+
     drawPixelOn(x, y) {
 
         this.context.strokeStyle = 'green';
@@ -586,13 +589,13 @@ class LabelMaker {
 
         this.context.strokeStyle = '#004000';
         this.drawShape(LabelMaker.oInterlace2(x, y));
-        
+
     }
-    
+
     drawPixelOff(x, y) {
-        
+
         this.context.strokeStyle = 'black';
-        
+
         this.context.lineWidth = '2';
         this.drawShape(LabelMaker.oOutline(x, y));
 
@@ -600,7 +603,7 @@ class LabelMaker {
         this.drawShape(LabelMaker.oInterlace1(x, y));
         this.drawShape(LabelMaker.oInterlace2(x, y));
 
-   }     
+    }
 
     drawShape(oOutline) {
 
@@ -608,11 +611,11 @@ class LabelMaker {
         oOutline.path.forEach(oEdge => {
             this.context.moveTo(oEdge.x1, oEdge.y1);
             this.context.lineTo(oEdge.x2, oEdge.y2);
-        })    
+        })
         this.context.closePath();
         this.context.stroke();
 
-    }    
+    }
 
     moveToClosestByLabelName(iSide, sLabelName) {
 
@@ -620,19 +623,19 @@ class LabelMaker {
 
         if (iSide === LabelMaker.sides().right) {
             for (let i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
-                if(this.labellist[i].label === sLabelName) {
+                if (this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
                 }
             }
         } else if (iSide === LabelMaker.sides().left) {
             for (let i = iCurrentLabel - 1; i >= 0; i--) {
-                if(this.labellist[i].label === sLabelName) {
+                if (this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
                 }
             }
-            }
+        }
         this.movePicture();
 
     }
@@ -660,7 +663,7 @@ class LabelMaker {
         const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
         this.navigationField.value = nDecimal;
         this.movePicture();
-        
+
         this.drawPixel(nBlockX, nBlockY, iNewState);
 
     }
@@ -732,7 +735,7 @@ var saveJsonToFile = function (aData, sFilename) {
         }
     }
 
-    var oFile = new Blob([sData], {type: sType});
+    var oFile = new Blob([sData], { type: sType });
     var oAnchorElement = document.createElement('a');
     var sUrl = URL.createObjectURL(oFile);
 
@@ -741,7 +744,7 @@ var saveJsonToFile = function (aData, sFilename) {
     document.body.appendChild(oAnchorElement);
     oAnchorElement.click();
 
-    setTimeout(function() {
+    setTimeout(function () {
         document.body.removeChild(oAnchorElement);
         window.URL.revokeObjectURL(sUrl);
     }, 0);
