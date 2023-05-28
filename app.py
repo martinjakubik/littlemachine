@@ -54,7 +54,7 @@ def printFace(boxSize, binary, printDot):
     size = boxSize ** 2
     sys.stdout.write(binary + '\n\n')
 
-    boxPathDirectory = Path('labelists/png' + str(size))
+    boxPathDirectory = Path('labellists/png' + str(size))
     boxPath = boxPathDirectory / (binary + '.png')
 
     if not boxPathDirectory.exists() or not boxPathDirectory.is_dir():
