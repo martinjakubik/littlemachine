@@ -48,11 +48,6 @@ class LabelMaker {
         return 2 ** (BOX_SIZE ** 2);
     }
 
-    /**
-     * validates if a value is valid for the decimal
-     * @param {*} iNewDecimalValue a proposed decimal value
-     * @returns the closest valid decimal value
-     */
     static getValidDecimalValue(iNewDecimalValue) {
 
         if (MIN_DECIMAL <= iNewDecimalValue && iNewDecimalValue <= LabelMaker.getMaxDecimalForBoxSize()) {
@@ -190,9 +185,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * main renderer: renders everything
-     */
     renderMainView() {
 
         this.navigationField = this.makeNavigationField();
@@ -204,9 +196,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * renders the picture, the navigation buttons and the navigation field
-     */
     renderPictureNavigator() {
         
         const oPictureNavigator = document.createElement('div');
@@ -231,9 +220,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * renders the picture as a box
-     */
     renderPicture() {
 
         const i = this.decimal;
@@ -242,9 +228,6 @@ class LabelMaker {
 
     };
 
-    /**
-     * renders the labels and the buttons to set the labels
-     */
     renderLabelControl() {
 
         const oLabelControl = document.createElement('div');
@@ -296,9 +279,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * renders the colors on the labelling dots
-     */
     renderDotColors() {
 
         if (this.labellist[this.decimal].label === 'yes') {
@@ -314,9 +294,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * renders the counts of all the labels
-     */
     renderLabelCounts() {
 
         this.labelCountYes.textContent = this.getLabelCount('yes');
@@ -480,9 +457,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * moves the picture to the decimal value in the navigation field
-     */
     movePicture() {
 
         const sValue = this.navigationField.value;
@@ -495,10 +469,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * moves the picture up or down by one decimal
-     * @param {*} iIncrement the value to move by: either 1 or -1
-     */
     incrementPicture(iIncrement) {
 
         if (Math.abs(iIncrement) === 1) {
@@ -511,10 +481,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * sets the label for the current picture
-     * @param {*} iLabel the label to set, as an enumerated value
-     */
     setLabel(iLabel) {
 
         const sLabel = LabelMaker.getValidLabelString(iLabel);
@@ -537,10 +503,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * gets the count of labels for the given label
-     * @param {*} sLabel 
-     */
     getLabelCount(sLabel) {
 
         let iLabelCount = 0;
@@ -555,9 +517,6 @@ class LabelMaker {
 
     }
 
-    /**
-     * loads the list of labels from a file
-     */
     loadLabels() {
 
         loadJsonFromFile('labellists/labellist.json')
@@ -578,19 +537,12 @@ class LabelMaker {
 
     }
 
-    /**
-     * saves the list of labels to a file
-     */
     saveLabels() {
 
         saveJsonToFile(this.labellist, 'labellist.json');
 
     }
 
-    /**
-     * draws a binary value as a square
-     * @param {*} sBinary a string with a binary value
-     */
     drawAsSquare(sBinary) {
 
         const iBoxLength = BOX_SIZE ** 2;
@@ -614,12 +566,6 @@ class LabelMaker {
 
     };
 
-    /**
-     * draws one pixel at a given position with the given color
-     * @param {*} x an x position as an integer
-     * @param {*} y a y position as an integer
-     * @param {*} iState flag indicating that pixel is on if 1; otherwise off
-     */
     drawPixel(x, y, iState) {
         if (iState === 0) {
             this.drawPixelOff(x, y);
@@ -735,12 +681,6 @@ var convertBinaryToDecimal = function (sBinary) {
 
 }
 
-/**
- * converts a decimal to a binary
- * @param {int} iDecimal 
- * @param {int} iPadSize 
- * @returns the binary as a string
- */
 var convertDecimalToBinary = function (iDecimal, iPadSize) {
 
     var sBinary = '';
@@ -766,22 +706,12 @@ var convertDecimalToBinary = function (iDecimal, iPadSize) {
 
 }
 
-/**
- * loads json data from a file
- * @param {*} sFilename _
- * @returns {Promise} a promise to an array of data
- */
 var loadJsonFromFile = function (sFilename) {
 
     return fetch(sFilename);
 
 }
 
-/**
- * saves json data to a file
- * @param {*} aData array of data
- * @param {*} sFilename _
- */
 var saveJsonToFile = function (aData, sFilename) {
 
     var sType = 'application/json';
@@ -818,7 +748,6 @@ var saveJsonToFile = function (aData, sFilename) {
 
 }
 
-// starts the label maker
 var oLabelMaker = new LabelMaker();
 
 oLabelMaker.renderMainView();
