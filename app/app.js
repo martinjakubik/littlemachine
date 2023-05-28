@@ -28,7 +28,7 @@ class LabelMaker {
 
     static getValidLabelString(iLabel) {
 
-        const sLabel = 'unlabelled';
+        let sLabel = 'unlabelled';
         const oValidLabels = LabelMaker.labels();
         const aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
         for (let i = 0; i < aValidLabelKeys.length; i++) {
@@ -122,7 +122,7 @@ class LabelMaker {
         const iSpace1 = DRAW_BLOCK_SIZE / 8;
         const iSpace2 = DRAW_BLOCK_SIZE / 8;
         const aPath = [];
-        const oPoint = {};
+        let oPoint = {};
         for (let i = 1; i < 4; i++) {
             oPoint = {
                 x1: x * DRAW_BLOCK_SIZE + iSpace2,
@@ -142,7 +142,7 @@ class LabelMaker {
         const iSpace1 = DRAW_BLOCK_SIZE / 8;
         const iSpace2 = DRAW_BLOCK_SIZE / 8;
         const aPath = [];
-        const oPoint = {};
+        let oPoint = {};
         for (let i = 1; i < 4; i++) {
             oPoint = {
                 x1: x * DRAW_BLOCK_SIZE + iSpace2,
@@ -350,17 +350,19 @@ class LabelMaker {
         
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
 
+        let sButtonClass;
+        let sButtonId;
         if (sLabelName) {
             
-            const sButtonClass = 'labelnamenavigationbutton';
-            const sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
+            sButtonClass = 'labelnamenavigationbutton';
+            sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
             oButton.onclick = this.moveToClosestByLabelName.bind(this, iSide, sLabelName);
             
         } else {
 
             const iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
-            const sButtonClass = 'navigationbutton';
-            const sButtonId = `navigationbutton${sSide}`;
+            sButtonClass = 'navigationbutton';
+            sButtonId = `navigationbutton${sSide}`;
             oButton.onclick = this.incrementPicture.bind(this, iIncrement);
             
         }
