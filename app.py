@@ -63,7 +63,7 @@ def printFace(boxSize, binary, printDot):
         f.write(makeGrayPNG(data, boxSize, boxSize))
 
 commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
-commandLineParser.add_argument('boxSize', type = int, help = 'the size of each box')
+commandLineParser.add_argument('boxSize', type = int, default = 2, help = 'the size of each box, 1 .. 4 pixels')
 commandLineParser.add_argument('--printDot', action = 'store_true', default = False, help = 'if true, prints a dot in empty spaces')
 commandLineParser.add_argument('--log', help = 'sets logging to DEBUG or off')
 
