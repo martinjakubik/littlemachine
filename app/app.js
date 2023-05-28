@@ -28,12 +28,12 @@ class LabelMaker {
 
     static getValidLabelString(iLabel) {
 
-        var sLabel = 'unlabelled';
-        var oValidLabels = LabelMaker.labels();
-        var aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
-        for (var i = 0; i < aValidLabelKeys.length; i++) {
-            var sValidLabelKey = aValidLabelKeys[i];
-            var iValidLabel = oValidLabels[sValidLabelKey];
+        const sLabel = 'unlabelled';
+        const oValidLabels = LabelMaker.labels();
+        const aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
+        for (let i = 0; i < aValidLabelKeys.length; i++) {
+            const sValidLabelKey = aValidLabelKeys[i];
+            const iValidLabel = oValidLabels[sValidLabelKey];
             if (iLabel === iValidLabel) {
                 sLabel = sValidLabelKey;
                 break;
@@ -71,9 +71,9 @@ class LabelMaker {
 
     static makeLabelList() {
 
-        var aLabelList = [];
-        for (var i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
-            var oLabel = {
+        const aLabelList = [];
+        for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
+            const oLabel = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
                 label: 'unlabelled'
             }
@@ -119,11 +119,11 @@ class LabelMaker {
     };
 
     static oInterlace1(x ,y) {
-        var iSpace1 = DRAW_BLOCK_SIZE / 8;
-        var iSpace2 = DRAW_BLOCK_SIZE / 8;
-        var aPath = [];
-        var oPoint = {};
-        for (var i = 1; i < 4; i++) {
+        const iSpace1 = DRAW_BLOCK_SIZE / 8;
+        const iSpace2 = DRAW_BLOCK_SIZE / 8;
+        const aPath = [];
+        const oPoint = {};
+        for (let i = 1; i < 4; i++) {
             oPoint = {
                 x1: x * DRAW_BLOCK_SIZE + iSpace2,
                 y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
@@ -139,11 +139,11 @@ class LabelMaker {
     };
 
     static oInterlace2(x ,y) {
-        var iSpace1 = DRAW_BLOCK_SIZE / 8;
-        var iSpace2 = DRAW_BLOCK_SIZE / 8;
-        var aPath = [];
-        var oPoint = {};
-        for (var i = 1; i < 4; i++) {
+        const iSpace1 = DRAW_BLOCK_SIZE / 8;
+        const iSpace2 = DRAW_BLOCK_SIZE / 8;
+        const aPath = [];
+        const oPoint = {};
+        for (let i = 1; i < 4; i++) {
             oPoint = {
                 x1: x * DRAW_BLOCK_SIZE + iSpace2,
                 y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
@@ -159,7 +159,7 @@ class LabelMaker {
     };
 
     static addClass (oView, sClass) {
-        var sClasses = oView.getAttribute('class');
+        const sClasses = oView.getAttribute('class');
 
         if (sClasses.indexOf(sClass) < 0) {
             oView.setAttribute('class', oView.getAttribute('class') + ' ' + sClass);
@@ -171,10 +171,10 @@ class LabelMaker {
     };
 
     static removeClass (oView, sClass) {
-        var sCurrentClasses = oView.getAttribute('class');
-        var nStartIndex = sCurrentClasses.indexOf(sClass);
-        var nEndIndex = nStartIndex + sClass.length;
-        var sUpdatedClasses;
+        const sCurrentClasses = oView.getAttribute('class');
+        const nStartIndex = sCurrentClasses.indexOf(sClass);
+        const nEndIndex = nStartIndex + sClass.length;
+        let sUpdatedClasses;
 
         if (nStartIndex > 0 && nEndIndex <= sCurrentClasses.length) {
             sUpdatedClasses = (sCurrentClasses.substr(0, nStartIndex) + ' ' +
@@ -209,13 +209,13 @@ class LabelMaker {
      */
     renderPictureNavigator() {
         
-        var oPictureNavigator = document.createElement('div');
+        const oPictureNavigator = document.createElement('div');
         oPictureNavigator.setAttribute('id', 'picturenavigator');
         LabelMaker.setClass(oPictureNavigator, 'picturenavigator');
 
-        var oButtonLeft = this.makeNavigationButton(LabelMaker.sides().left);
-        var oCanvas = this.makeCanvas();
-        var oButtonRight = this.makeNavigationButton(LabelMaker.sides().right);
+        const oButtonLeft = this.makeNavigationButton(LabelMaker.sides().left);
+        const oCanvas = this.makeCanvas();
+        const oButtonRight = this.makeNavigationButton(LabelMaker.sides().right);
 
         oPictureNavigator.insertBefore(oButtonLeft, null);
         oPictureNavigator.insertBefore(oCanvas, null);
@@ -236,8 +236,8 @@ class LabelMaker {
      */
     renderPicture() {
 
-        var i = this.decimal;
-        var sBinary = convertDecimalToBinary(i, BOX_SIZE);
+        const i = this.decimal;
+        const sBinary = convertDecimalToBinary(i, BOX_SIZE);
         this.drawAsSquare(sBinary);
 
     };
@@ -247,11 +247,11 @@ class LabelMaker {
      */
     renderLabelControl() {
 
-        var oLabelControl = document.createElement('div');
+        const oLabelControl = document.createElement('div');
         oLabelControl.setAttribute('id', 'labelcontrol');
         LabelMaker.setClass(oLabelControl, 'labelcontrol');
 
-        var oLabelDots = document.createElement('div');
+        const oLabelDots = document.createElement('div');
         oLabelDots.setAttribute('id', 'labeldots');
         LabelMaker.setClass(oLabelDots, 'labeldots');
 
@@ -260,15 +260,15 @@ class LabelMaker {
 
         this.renderDotColors();
 
-        var oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
-        var oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
+        const oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
+        const oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
 
         oLabelDots.insertBefore(this.dotYes, null);
         oLabelDots.insertBefore(this.dotNo, null);
 
-        var oLabelCountGroupYes = this.makeLabelCountGroup('yes');
-        var oLabelCountGroupNo = this.makeLabelCountGroup('no');
-        var oLabelCountGroupUnlabelled = this.makeLabelCountGroup('unlabelled');
+        const oLabelCountGroupYes = this.makeLabelCountGroup('yes');
+        const oLabelCountGroupNo = this.makeLabelCountGroup('no');
+        const oLabelCountGroupUnlabelled = this.makeLabelCountGroup('unlabelled');
 
         oLabelControl.insertBefore(oLabelDots, null);
         oLabelControl.insertBefore(oButtonYes, null);
@@ -278,7 +278,7 @@ class LabelMaker {
         oLabelControl.insertBefore(oLabelCountGroupNo, null);
         oLabelControl.insertBefore(oLabelCountGroupUnlabelled, null);
 
-        var oTrainingAccuracyText = document.createElement('p');
+        const oTrainingAccuracyText = document.createElement('p');
         oTrainingAccuracyText.innerText = 'Training Set Accuracy: _';
 
         oLabelControl.insertBefore(oTrainingAccuracyText, null);
@@ -289,8 +289,8 @@ class LabelMaker {
 
     renderFileControl() {
 
-        var oButtonLoad = this.makeLoadButton();
-        var oButtonSave = this.makeSaveButton();
+        const oButtonLoad = this.makeLoadButton();
+        const oButtonSave = this.makeSaveButton();
 
         document.body.insertBefore(oButtonSave, null);
 
@@ -327,7 +327,7 @@ class LabelMaker {
 
     makeCanvas() {
 
-        var oCanvas = document.createElement('canvas');
+        const oCanvas = document.createElement('canvas');
 
         oCanvas.setAttribute('id', PICTURE_CANVAS_ID);
         oCanvas.setAttribute('width', PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE);
@@ -346,28 +346,28 @@ class LabelMaker {
 
     makeNavigationButton(iSide, sLabelName) {
         
-        var oButton = document.createElement('button');
+        const oButton = document.createElement('button');
         
-        var sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
+        const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
 
         if (sLabelName) {
             
-            var sButtonClass = 'labelnamenavigationbutton';
-            var sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
+            const sButtonClass = 'labelnamenavigationbutton';
+            const sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
             oButton.onclick = this.moveToClosestByLabelName.bind(this, iSide, sLabelName);
             
         } else {
 
-            var iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
-            var sButtonClass = 'navigationbutton';
-            var sButtonId = `navigationbutton${sSide}`;
+            const iIncrement = iSide === LabelMaker.sides().left ? -1 : 1;
+            const sButtonClass = 'navigationbutton';
+            const sButtonId = `navigationbutton${sSide}`;
             oButton.onclick = this.incrementPicture.bind(this, iIncrement);
             
         }
         LabelMaker.setClass(oButton, sButtonClass);
 
-        var sButtonSideClass = `navigationbutton${sSide}`;
-        var sButtonLabelNameSideClass = `labelnamenavigationbutton${sSide}`;
+        const sButtonSideClass = `navigationbutton${sSide}`;
+        const sButtonLabelNameSideClass = `labelnamenavigationbutton${sSide}`;
         LabelMaker.addClass(oButton, sButtonSideClass);
         LabelMaker.addClass(oButton, sButtonLabelNameSideClass);
 
@@ -378,10 +378,10 @@ class LabelMaker {
 
     makeNavigationField() {
 
-        var oField = document.createElement('input');
+        const oField = document.createElement('input');
 
-        var sFieldClass = 'navigationfield';
-        var sFieldId = 'navigationfield';
+        const sFieldClass = 'navigationfield';
+        const sFieldId = 'navigationfield';
         LabelMaker.setClass(oField, sFieldClass);
         oField.setAttribute('id', sFieldId);
         oField.onchange = this.movePicture.bind(this);
@@ -392,12 +392,12 @@ class LabelMaker {
 
     makeLabelDot(iLabel) {
 
-        var oDot = document.createElement('div');
+        const oDot = document.createElement('div');
 
-        var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+        const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
 
-        var sDotClass = 'labeldot';
-        var sDotId = `labeldot${sLabel}`;
+        const sDotClass = 'labeldot';
+        const sDotId = `labeldot${sLabel}`;
         LabelMaker.setClass(oDot, sDotClass);
         oDot.setAttribute('id', sDotId);
 
@@ -407,12 +407,12 @@ class LabelMaker {
 
     makeLabelButton(iLabel) {
 
-        var oButton = document.createElement('button');
+        const oButton = document.createElement('button');
 
-        var sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+        const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
 
-        var sButtonClass = 'labelbutton';
-        var sButtonId = `labelbutton${sLabel}`;
+        const sButtonClass = 'labelbutton';
+        const sButtonId = `labelbutton${sLabel}`;
         LabelMaker.setClass(oButton, sButtonClass);
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.setLabel.bind(this, iLabel);
@@ -423,23 +423,23 @@ class LabelMaker {
 
     makeLabelCountGroup(sLabelName) {
 
-        var labelCountGroup = document.createElement('div');
+        const labelCountGroup = document.createElement('div');
         labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
         LabelMaker.setClass(labelCountGroup, 'labelcountgroup');
 
-        var labelCountLabel = document.createElement('span');
+        const labelCountLabel = document.createElement('span');
         labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
         LabelMaker.setClass(labelCountLabel, 'labelcountname');
         labelCountLabel.textContent = sLabelName;
 
-        var sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
+        const sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
         this[sCamelCaseLabelName] = document.createElement('span');
         this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
         LabelMaker.setClass(this[sCamelCaseLabelName], 'labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
-        var oButtonNextByLabel = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
-        var oButtonPreviousByLabel = this.makeNavigationButton(LabelMaker.sides().left, sLabelName);
+        const oButtonNextByLabel = this.makeNavigationButton(LabelMaker.sides().right, sLabelName);
+        const oButtonPreviousByLabel = this.makeNavigationButton(LabelMaker.sides().left, sLabelName);
 
         labelCountGroup.insertBefore(oButtonPreviousByLabel, null);
         labelCountGroup.insertBefore(labelCountLabel, null);
@@ -452,10 +452,10 @@ class LabelMaker {
 
     makeLoadButton() {
 
-        var oButton = document.createElement('button');
+        const oButton = document.createElement('button');
 
-        var sButtonClass = 'loadbutton';
-        var sButtonId = 'loadbutton';
+        const sButtonClass = 'loadbutton';
+        const sButtonId = 'loadbutton';
         LabelMaker.setClass(oButton, sButtonClass);
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.loadLabels.bind(this);
@@ -466,10 +466,10 @@ class LabelMaker {
 
     makeSaveButton() {
 
-        var oButton = document.createElement('button');
+        const oButton = document.createElement('button');
 
-        var sButtonClass = 'savebutton';
-        var sButtonId = 'savebutton';
+        const sButtonClass = 'savebutton';
+        const sButtonId = 'savebutton';
         LabelMaker.setClass(oButton, sButtonClass);
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.saveLabels.bind(this);
@@ -483,8 +483,8 @@ class LabelMaker {
      */
     movePicture() {
 
-        var sValue = this.navigationField.value;
-        var iValue = parseInt(sValue);
+        const sValue = this.navigationField.value;
+        const iValue = parseInt(sValue);
 
         this.decimal = LabelMaker.getValidDecimalValue(iValue)
 
@@ -515,8 +515,8 @@ class LabelMaker {
      */
     setLabel(iLabel) {
 
-        var sLabel = LabelMaker.getValidLabelString(iLabel);
-        var sCurrentLabel = this.labellist[this.decimal].label;
+        const sLabel = LabelMaker.getValidLabelString(iLabel);
+        const sCurrentLabel = this.labellist[this.decimal].label;
 
         if (sLabel === sCurrentLabel) {
             this.labellist[this.decimal].label = 'unlabelled';
@@ -541,10 +541,10 @@ class LabelMaker {
      */
     getLabelCount(sLabel) {
 
-        var iLabelCount = 0;
-        var sValidLabel = LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
-        for (var i = 0; i < this.labellist.length; i++) {
-            var oLabelData = this.labellist[i];
+        let iLabelCount = 0;
+        const sValidLabel = LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
+        for (let i = 0; i < this.labellist.length; i++) {
+            const oLabelData = this.labellist[i];
             if (oLabelData.label === sValidLabel) {
                 iLabelCount++;
             }
@@ -591,18 +591,18 @@ class LabelMaker {
      */
     drawAsSquare(sBinary) {
 
-        var iBoxLength = BOX_SIZE ** 2;
+        const iBoxLength = BOX_SIZE ** 2;
 
         if (sBinary.length < iBoxLength) {
             return;
         }
 
-        var sColor = '';
-        var iState = 0;
+        let sColor = '';
+        let iState = 0;
 
-        var x = 0;
-        var y = 0;
-        for (var i = 0; i < iBoxLength; i++) {
+        let x = 0;
+        let y = 0;
+        for (let i = 0; i < iBoxLength; i++) {
             x = i % BOX_SIZE;
             y = Math.floor(i / BOX_SIZE);
             sColor = sBinary.substring(i, i + 1);
@@ -668,17 +668,17 @@ class LabelMaker {
 
     moveToClosestByLabelName(iSide, sLabelName) {
 
-        var iCurrentLabel = this.decimal;
+        const iCurrentLabel = this.decimal;
 
         if (iSide === LabelMaker.sides().right) {
-            for (var i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
+            for (let i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
                 if(this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
                 }
             }
         } else if (iSide === LabelMaker.sides().left) {
-            for (var i = iCurrentLabel - 1; i >= 0; i--) {
+            for (let i = iCurrentLabel - 1; i >= 0; i--) {
                 if(this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
@@ -691,25 +691,25 @@ class LabelMaker {
 
     drawAt(oEvent) {
 
-        var x = oEvent.pageX - this.canvasPosition.left;
-        var y = oEvent.pageY - this.canvasPosition.top;
+        const x = oEvent.pageX - this.canvasPosition.left;
+        const y = oEvent.pageY - this.canvasPosition.top;
 
-        var nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
-        var nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
+        const nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
+        const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
 
         // converts x, y coordinate to 0 .. 16
-        var nPositionInBinaryString = (nBlockX) + (nBlockY * BOX_SIZE);
-        var iNewState = 0;
-        var sOldBinaryNumber = this.labellist[this.decimal].binary;
-        var sPixelColor = sOldBinaryNumber.charAt(nPositionInBinaryString);
+        const nPositionInBinaryString = (nBlockX) + (nBlockY * BOX_SIZE);
+        let iNewState = 0;
+        const sOldBinaryNumber = this.labellist[this.decimal].binary;
+        const sPixelColor = sOldBinaryNumber.charAt(nPositionInBinaryString);
         if (sPixelColor === '0') {
             iNewState = 1;
         } else {
             iNewState = 0;
         }
-        var sNewBinaryNumber = sOldBinaryNumber.substring(0, nPositionInBinaryString) + iNewState + sOldBinaryNumber.substring(nPositionInBinaryString + 1);
+        const sNewBinaryNumber = sOldBinaryNumber.substring(0, nPositionInBinaryString) + iNewState + sOldBinaryNumber.substring(nPositionInBinaryString + 1);
 
-        var nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
+        const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
         this.navigationField.value = nDecimal;
         this.movePicture();
         
