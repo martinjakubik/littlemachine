@@ -1,5 +1,6 @@
 import sys
 import argparse
+import logging
 from  makepng import *
 from pathlib import Path
 
@@ -35,24 +36,23 @@ def printFace(boxSize, binary, printDot):
         if pixel == '1':
             block = str(u'\u2588\u2588'.encode('utf-8'))
             row.append(255)
-            sys.stdout.write(block)
+            logging.debug(block)
         elif printDot:
-            sys.stdout.write(' .')
+            logging.debug(' .')
             row.append(0)
         else:
-            sys.stdout.write('  ')
+            logging.debug('  ')
             row.append(0)
 
         if column < (boxSize - 1):
             column = column + 1
         else:
-            sys.stdout.write('\n')
             data.append(row)
             row = []
             column = 0
 
     size = boxSize ** 2
-    sys.stdout.write(binary + '\n\n')
+    logging.debug(binary + '\n\n')
 
     boxPathDirectory = Path('labellists/png' + str(size))
     boxPath = boxPathDirectory / (binary + '.png')
@@ -66,8 +66,12 @@ def printFace(boxSize, binary, printDot):
 commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
 commandLineParser.add_argument('boxSize', type = int, help = 'the size of each box')
 commandLineParser.add_argument('--printDot', action = 'store_true', default = False, help = 'if true, prints a dot in empty spaces')
+commandLineParser.add_argument('--log', help = 'sets logging to DEBUG or off')
 
 arguments = commandLineParser.parse_args()
+
+if arguments.log == 'DEBUG':
+    logging.basicConfig(level=logging.DEBUG)
 
 boxSize = arguments.boxSize
 printDot = arguments.printDot
