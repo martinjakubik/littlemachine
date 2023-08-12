@@ -6,6 +6,7 @@
     "learnhypertext": "^2.0.3"
   },
   "scripts": {
-    "start": "node dev/server.js"
+    "start": "node dev/server.js",
+    "postinstall": "node postinstall.js"
   }
 }
