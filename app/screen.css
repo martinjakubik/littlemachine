@@ -154,8 +154,16 @@ button {
     font-size: 12pt;
 }
 
+h1 {
+    color: green;
+    font-size: 8em;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
 p {
     color: green;
+    font-size: 2em;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
 }
