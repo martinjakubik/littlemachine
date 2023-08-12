@@ -1,3 +1,6 @@
+import { createButton } from './learnhypertext.mjs';
+import { classify } from './classify.mjs';
+
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_BOXES = 65536;
 const BOX_SIZE = 4;
@@ -277,6 +280,7 @@ class LabelMaker {
 
         const oButtonLoad = this.makeLoadButton();
         const oButtonSave = this.makeSaveButton();
+        const oButtonClassify = this.makeClassifyButton();
 
         document.body.insertBefore(oButtonLoad, null);
         document.body.insertBefore(oButtonSave, null);
@@ -461,6 +465,15 @@ class LabelMaker {
 
     }
 
+    makeClassifyButton() {
+
+        const oButton = createButton('classifyButton', 'Start Classifying');
+        oButton.onclick = this.classifyButtonTap.bind(this);
+
+        return oButton;
+
+    }
+
     movePicture() {
 
         const sValue = this.navigationField.value;
@@ -544,6 +557,12 @@ class LabelMaker {
     saveLabels() {
 
         saveJsonToFile(this.labellist, 'labellist.json');
+
+    }
+
+    classifyButtonTap() {
+
+        classify();
 
     }
 

@@ -101,6 +101,10 @@ button {
     content: 'no';
 }
 
+#classifyButton {
+    width: auto;
+}
+
 .savebutton {
     margin: 1em .1em;
     width: 3em;
