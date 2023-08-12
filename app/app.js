@@ -278,6 +278,7 @@ class LabelMaker {
         const oButtonLoad = this.makeLoadButton();
         const oButtonSave = this.makeSaveButton();
 
+        document.body.insertBefore(oButtonLoad, null);
         document.body.insertBefore(oButtonSave, null);
 
     }
