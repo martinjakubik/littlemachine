@@ -1,6 +1,6 @@
 import { createButton } from './learnhypertext.mjs';
 import { classify } from './classify.mjs';
-import { convertToString, convertToArray } from './actualConvert.js';
+import { convertToMatrix } from './actualConvert.js';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_BOXES = 65536;
@@ -281,11 +281,11 @@ class LabelMaker {
 
         const oButtonLoad = this.makeLoadButton();
         const oButtonSave = this.makeSaveButton();
-        const oButtonClassify = this.makeClassifyButton();
 
         document.body.insertBefore(oButtonLoad, null);
         document.body.insertBefore(oButtonSave, null);
 
+        const oButtonClassify = this.makeClassifyButton();
     }
 
     renderDotColors() {
@@ -563,8 +563,8 @@ class LabelMaker {
 
     classifyButtonTap() {
 
-        const sLabelList = convertToString(this.labellist);
-        classify(sLabelList);
+        const matrixLabelList = convertToMatrix(this.labellist);
+        classify(matrixLabelList);
 
     }
 

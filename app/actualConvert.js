@@ -26,9 +26,30 @@ const convertToString = function (oJsonData, bKeepUnlabelled = false) {
     return sCsvData;
 }
 
-const convertToArray = function (oJsonData, bKeepUnlabelled = false) {
-    let aCsvData = [];
-    return aCsvData;
+const convertToMatrix = function (oJsonData, bKeepUnlabelled = false) {
+    let matrixData = [];
+    if (oJsonData) {
+        oJsonData.forEach((oDatum, index) => {
+            let sBinary = oDatum.binary;
+            let aBinaryRowWithLabelSlot = [];
+            for (let i = 0; i < sBinary.length; i++) {
+                aBinaryRowWithLabelSlot.push(sBinary[i] === '1' ? 1 : 0);
+            }
+            let nLabel = -1;
+            if (oDatum.label === 'yes') {
+                nLabel = 1;
+            } else if (oDatum.label === 'no') {
+                nLabel = 0;
+            }
+            aBinaryRowWithLabelSlot.push(nLabel);
+            if (bKeepUnlabelled) {
+                matrixData.push(aBinaryRowWithLabelSlot);
+            } else if (nLabel != -1) {
+                matrixData.push(aBinaryRowWithLabelSlot);
+            }
+        });
+        return matrixData;
+    }
 }
 
-export { convertToString, convertToArray };
+export { convertToString, convertToMatrix };
