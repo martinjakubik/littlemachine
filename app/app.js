@@ -1,5 +1,6 @@
 import { createButton } from './learnhypertext.mjs';
 import { classify } from './classify.mjs';
+import { convertToString, convertToArray } from './actualConvert.js';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_BOXES = 65536;
@@ -562,7 +563,8 @@ class LabelMaker {
 
     classifyButtonTap() {
 
-        classify();
+        const sLabelList = convertToString(this.labellist);
+        classify(sLabelList);
 
     }
 
