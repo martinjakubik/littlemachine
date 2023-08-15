@@ -8,5 +8,8 @@
   "scripts": {
     "start": "node dev/server.js",
     "postinstall": "node postinstall.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.47.0"
   }
 }
