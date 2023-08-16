@@ -46,11 +46,13 @@
 const fminsearch = function (fun, Parm0, x, y, Opt) {
     if (!Opt) { Opt = {}; }
     if (!Opt.maxIter) { Opt.maxIter = 1000; }
+
     if (!Opt.step) {
         // initial step is 1/100 of initial value (remember not to use zero in Parm0)
         Opt.step = Parm0.map(p => {
             return p / 100;
         });
+
         Opt.step = Opt.step.map(si => {
             // converts null steps into 1's
             if (si == 0) {
@@ -60,15 +62,19 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
             }
         });
     }
+
     if (typeof (Opt.display) == 'undefined') {
         Opt.display = true;
     }
+
     if (!Opt.objFun) {
-        //SSD
+        // calculates sum of squared differences
         Opt.objFun = (y, yp) => {
+            // iterates over the array y, each element is yi
             return y.map((yi, i) => {
                 return Math.pow((yi - yp[i]), 2);
             }).reduce((a, b) => {
+                // sums the squares
                 return a + b;
             });
         };
