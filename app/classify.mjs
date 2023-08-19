@@ -1,7 +1,7 @@
 import { oneVsAll } from "./oneVsAll.mjs";
 
 const classify = function (matrixData) {
-    const m = math.size(matrixData)[0];
+    const m = matrixData.size()[0];
     const matrixX = math.subset(matrixData, math.index(math.range(0, m), math.range(0, 16)));
     const aY = math.squeeze(math.subset(matrixData, math.index(math.range(0, m), 16)));
 
