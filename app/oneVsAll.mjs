@@ -1,6 +1,5 @@
 const oneVsAll = function (matrixX, aY, nLabelCount, nLambda) {
-
-    const aMatrixSize = math.size(matrixX);
+    const aMatrixSize = matrixX.size();
     const m = aMatrixSize[0];
     const n = aMatrixSize[1];
 
