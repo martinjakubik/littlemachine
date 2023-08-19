@@ -87,7 +87,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
     };
 
     let P0 = cloneVector(Parm0), P1 = cloneVector(Parm0);
-    let n = P0._data.length;
+    let m = P0.size()[0];
     let step = Opt.step;
 
     // function (of Parameters) to minimize
@@ -98,7 +98,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
     // silly multi-univariate screening
     for (let i = 0; i < Opt.maxIter; i++) {
         // takes a step for each parameter
-        for (let j = 0; j < n; j++) {
+        for (let j = 0; j < m; j++) {
             P1 = cloneVector(P0);
             P1[j] += step[j];
             // checks if parm value going in the right direction
