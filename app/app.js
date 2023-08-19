@@ -230,8 +230,8 @@ class LabelMaker {
     renderPicture() {
 
         const i = this.decimal;
-        const sBinary = convertDecimalToBinary(i, BOX_SIZE);
-        this.drawAsSquare(sBinary);
+        const sSample = convertDecimalToBinary(i, BOX_SIZE);
+        this.drawAsSquare(sSample);
 
     };
 
@@ -568,11 +568,11 @@ class LabelMaker {
 
     }
 
-    drawAsSquare(sBinary) {
+    drawAsSquare(sSample) {
 
         const iBoxLength = BOX_SIZE ** 2;
 
-        if (sBinary.length < iBoxLength) {
+        if (sSample.length < iBoxLength) {
             return;
         }
 
@@ -584,7 +584,7 @@ class LabelMaker {
         for (let i = 0; i < iBoxLength; i++) {
             x = i % BOX_SIZE;
             y = Math.floor(i / BOX_SIZE);
-            sColor = sBinary.substring(i, i + 1);
+            sColor = sSample.substring(i, i + 1);
             iState = parseInt(sColor);
             this.drawPixel(x, y, iState);
         }
@@ -692,13 +692,13 @@ class LabelMaker {
 
 }
 
-var convertBinaryToDecimal = function (sBinary) {
+var convertBinaryToDecimal = function (sSample) {
 
     var nDecimal = 0;
 
-    for (var i = sBinary.length - 1; i >= 0; i--) {
+    for (var i = sSample.length - 1; i >= 0; i--) {
         var nExponent = 15 - i;
-        var nDigit = sBinary.charAt(i);
+        var nDigit = sSample.charAt(i);
         nDecimal = nDecimal + (2 ** nExponent) * nDigit;
     }
 
@@ -708,7 +708,7 @@ var convertBinaryToDecimal = function (sBinary) {
 
 var convertDecimalToBinary = function (iDecimal, iPadSize) {
 
-    var sBinary = '';
+    var sSample = '';
     var iValidPadSize = iPadSize ? iPadSize : 1;
 
     if (iValidPadSize ** 2 > MAX_EXPONENT) {
@@ -720,14 +720,14 @@ var convertDecimalToBinary = function (iDecimal, iPadSize) {
     for (var iExponent = iMaxPosition; iExponent >= 0; iExponent--) {
         var iPower = 2 ** iExponent;
         if (iPower <= iRemainder) {
-            sBinary += '1';
+            sSample += '1';
             iRemainder = iRemainder - iPower;
         } else {
-            sBinary += '0';
+            sSample += '0';
         }
     }
 
-    return sBinary;
+    return sSample;
 
 }
 
