@@ -24,32 +24,32 @@ const convertToString = function (oJsonData, bKeepUnlabelled = false) {
     }
 
     return sCsvData;
-}
+};
 
 const convertToMatrix = function (oJsonData, bKeepUnlabelled = false) {
     let matrixData = [];
     if (oJsonData) {
-        oJsonData.forEach((oDatum, index) => {
-            let sBinary = oDatum.binary;
-            let aBinaryRowWithLabelSlot = [];
-            for (let i = 0; i < sBinary.length; i++) {
-                aBinaryRowWithLabelSlot.push(sBinary[i] === '1' ? 1 : 0);
+        oJsonData.forEach(oRow => {
+            let sSample = oRow.binary;
+            let aSampleRowWithLabelSlot = [];
+            for (let colIndex = 0; colIndex < sSample.length; colIndex++) {
+                aSampleRowWithLabelSlot.push(sSample[colIndex] === '1' ? 1 : 0);
             }
             let nLabel = -1;
-            if (oDatum.label === 'yes') {
+            if (oRow.label === 'yes') {
                 nLabel = 1;
-            } else if (oDatum.label === 'no') {
+            } else if (oRow.label === 'no') {
                 nLabel = 0;
             }
-            aBinaryRowWithLabelSlot.push(nLabel);
+            aSampleRowWithLabelSlot.push(nLabel);
             if (bKeepUnlabelled) {
-                matrixData.push(aBinaryRowWithLabelSlot);
+                matrixData.push(aSampleRowWithLabelSlot);
             } else if (nLabel != -1) {
-                matrixData.push(aBinaryRowWithLabelSlot);
+                matrixData.push(aSampleRowWithLabelSlot);
             }
         });
-        return matrixData;
+        return math.matrix(matrixData);
     }
-}
+};
 
 export { convertToString, convertToMatrix };
