@@ -87,7 +87,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
     };
 
     let P0 = cloneVector(Parm0), P1 = cloneVector(Parm0);
-    let n = P0.length;
+    let n = P0._data.length;
     let step = Opt.step;
 
     // function (of Parameters) to minimize
