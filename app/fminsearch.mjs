@@ -72,6 +72,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
         Opt.objFun = (y, yp) => {
             // iterates over the array y, each element is yi
             return y.map((yi, i) => {
+                // TODO: correct y and yp so they are both array datatypes here
                 return Math.pow((yi - yp[i]), 2);
             }).reduce((a, b) => {
                 // sums the squares
