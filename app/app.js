@@ -197,9 +197,9 @@ class LabelMaker {
         this.navigationField = this.makeNavigationField();
         this.navigationField.setAttribute('value', this.decimal);
 
+        this.renderFileControl();
         this.renderPictureNavigator();
         this.renderLabelControl();
-        this.renderFileControl();
 
     }
 
