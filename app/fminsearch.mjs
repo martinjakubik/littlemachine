@@ -104,11 +104,11 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
             // checks if parm value going in the right direction
             if (funParm(P1) < funParm(P0)) {
                 // goes a little faster
-                step[j] = 1.2 * step[j];
+                step._data[j] = 1.2 * step._data[j];
                 P0 = cloneVector(P1);
             } else {
-                // otherwiese reverses and goes slower
-                step[j] = -(0.5 * step[j]);
+                // otherwise reverses and goes slower
+                step._data[j] = -(0.5 * step._data[j]);
             }
         }
         if (Opt.display) {
