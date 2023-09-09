@@ -641,8 +641,8 @@ class LabelMaker {
     }
 
     moveToClosestByLabelName(iSide, sLabelName) {
-
         const iCurrentLabel = this.decimal;
+        let bLabelFound = false;
 
         if (iSide === LabelMaker.sides().right) {
             for (let i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
@@ -650,6 +650,7 @@ class LabelMaker {
                     return;
                 }
                 if (this.labellist[i].label === sLabelName) {
+                    bLabelFound = true;
                     this.navigationField.value = i;
                     break;
                 }
@@ -657,13 +658,15 @@ class LabelMaker {
         } else if (iSide === LabelMaker.sides().left) {
             for (let i = iCurrentLabel - 1; i >= 0; i--) {
                 if (this.labellist[i].label === sLabelName) {
+                    bLabelFound = true;
                     this.navigationField.value = i;
                     break;
                 }
             }
         }
-        this.movePicture();
-
+        if (bLabelFound) {
+            this.movePicture();
+        }
     }
 
     drawAt(oEvent) {
