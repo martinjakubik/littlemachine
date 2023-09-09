@@ -546,6 +546,7 @@ class LabelMaker {
             })
             .then(sResponseJson => {
                 this.labellist = sResponseJson;
+                this.moveToClosestByLabelName(LabelMaker.sides().right, 'yes')
                 this.renderDotColors();
                 this.renderLabelCounts();
             })
@@ -645,6 +646,9 @@ class LabelMaker {
 
         if (iSide === LabelMaker.sides().right) {
             for (let i = iCurrentLabel + 1; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
+                if (!this.labellist[i]) {
+                    return;
+                }
                 if (this.labellist[i].label === sLabelName) {
                     this.navigationField.value = i;
                     break;
