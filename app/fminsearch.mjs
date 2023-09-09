@@ -92,7 +92,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
 
     // function (of Parameters) to minimize
     const funParm = P => {
-        return Opt.objFun(y, fun(x, P));
+        return Opt.objFun(y, fun(P, x));
     };
 
     // silly multi-univariate screening
