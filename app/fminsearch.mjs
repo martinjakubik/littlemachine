@@ -100,7 +100,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
         // takes a step for each parameter
         for (let j = 0; j < m; j++) {
             P1 = cloneVector(P0);
-            P1[j] += step[j];
+            P1._data[j] += step._data[j];
             // checks if parm value going in the right direction
             if (funParm(P1) < funParm(P0)) {
                 // goes a little faster
