@@ -1,7 +1,7 @@
 import { fminsearch } from "./fminsearch.mjs";
 import { lrCostFunction } from "./lrCostFunction.mjs";
 
-const oneVsAll = function (matrixX0, aY, nLabelCount, nLambda) {
+const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     const aMatrixSize = matrixX0.size();
     const m = aMatrixSize[0];
     const n = aMatrixSize[1];
@@ -17,7 +17,7 @@ const oneVsAll = function (matrixX0, aY, nLabelCount, nLambda) {
     //     fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
     //         initial_theta, options);
     // end;
-    fminsearch(t => lrCostFunction(t, matrixX1, aY, nLambda), arrayInitialTheta, matrixX0, aY);
+    fminsearch(t => lrCostFunction(t, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
 
     return arrayAllTheta;
 };
