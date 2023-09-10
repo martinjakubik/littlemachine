@@ -106,12 +106,12 @@ button {
 }
 
 #saveButton {
-    margin: 1em .1em;
+    margin: 1em .1em 0 4em;
     width: 3em;
 }
 
 #loadButton {
-    margin: 1em 0 0 4.1em;
+    margin: 1em .1em 0 4em;
     width: 3em;
 }
 

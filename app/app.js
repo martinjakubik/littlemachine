@@ -187,9 +187,11 @@ class LabelMaker {
         this.navigationField = this.makeNavigationField();
         this.navigationField.setAttribute('value', this.decimal);
 
-        this.renderFileControl();
+        this.renderLoadButton();
+        this.renderClassifyButton();
         this.renderPictureNavigator();
         this.renderLabelControl();
+        this.renderSaveButton();
     }
 
     renderPictureNavigator() {
@@ -258,12 +260,6 @@ class LabelMaker {
         oLabelControl.insertBefore(oTrainingAccuracyText, null);
 
         document.body.insertBefore(oLabelControl, null);
-    }
-
-    renderFileControl() {
-        this.makeLoadButton();
-        this.makeSaveButton();
-        this.makeClassifyButton();
     }
 
     renderDotColors() {
@@ -400,21 +396,21 @@ class LabelMaker {
         return labelCountGroup;
     }
 
-    makeLoadButton() {
+    renderLoadButton() {
         const oButton = createButton('loadButton', 'Load');
         oButton.onclick = this.loadLabels.bind(this);
 
         return oButton;
     }
 
-    makeSaveButton() {
+    renderSaveButton() {
         const oButton = createButton('saveButton', 'Save');
         oButton.onclick = this.saveLabels.bind(this);
 
         return oButton;
     }
 
-    makeClassifyButton() {
+    renderClassifyButton() {
         const oButton = createButton('classifyButton', 'Start Classifying');
         oButton.onclick = this.classifyButtonTap.bind(this);
 
