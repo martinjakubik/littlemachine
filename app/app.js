@@ -261,12 +261,8 @@ class LabelMaker {
     }
 
     renderFileControl() {
-        const oButtonLoad = this.makeLoadButton();
-        const oButtonSave = this.makeSaveButton();
-
-        document.body.insertBefore(oButtonLoad, null);
-        document.body.insertBefore(oButtonSave, null);
-
+        this.makeLoadButton();
+        this.makeSaveButton();
         this.makeClassifyButton();
     }
 
@@ -405,24 +401,14 @@ class LabelMaker {
     }
 
     makeLoadButton() {
-        const oButton = document.createElement('button');
-
-        const sButtonClass = 'loadbutton';
-        const sButtonId = 'loadbutton';
-        LabelMaker.setClass(oButton, sButtonClass);
-        oButton.setAttribute('id', sButtonId);
+        const oButton = createButton('loadButton', 'Load');
         oButton.onclick = this.loadLabels.bind(this);
 
         return oButton;
     }
 
     makeSaveButton() {
-        const oButton = document.createElement('button');
-
-        const sButtonClass = 'savebutton';
-        const sButtonId = 'savebutton';
-        LabelMaker.setClass(oButton, sButtonClass);
-        oButton.setAttribute('id', sButtonId);
+        const oButton = createButton('saveButton', 'Save');
         oButton.onclick = this.saveLabels.bind(this);
 
         return oButton;

@@ -105,22 +105,14 @@ button {
     width: auto;
 }
 
-.savebutton {
+#saveButton {
     margin: 1em .1em;
     width: 3em;
 }
 
-.savebutton::before {
-    content: 'save';
-}
-
-.loadbutton {
+#loadButton {
     margin: 1em 0 0 4.1em;
     width: 3em;
-}
-
-.loadbutton::before {
-    content: 'load';
 }
 
 .labelcountname {
