@@ -67,12 +67,12 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
         Opt.display = true;
     }
 
+    // TODO: objFun is the cost function: moce this algorithm to cost function and call that instead of objFun
     if (!Opt.objFun) {
         // calculates sum of squared differences
         Opt.objFun = (y, yp) => {
             // iterates over the array y, each element is yi
             return y.map((yi, i) => {
-                // TODO: correct y and yp so they are both array datatypes here
                 return Math.pow((yi - yp[i]), 2);
             }).reduce((a, b) => {
                 // sums the squares
