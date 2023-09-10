@@ -267,7 +267,7 @@ class LabelMaker {
         document.body.insertBefore(oButtonLoad, null);
         document.body.insertBefore(oButtonSave, null);
 
-        const oButtonClassify = this.makeClassifyButton();
+        this.makeClassifyButton();
     }
 
     renderDotColors() {
