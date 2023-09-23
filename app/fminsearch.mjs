@@ -1,3 +1,5 @@
+import { lrCostFunction } from "./lrCostFunction.mjs";
+
 /*
     fminsearch
 
@@ -70,15 +72,7 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
     // TODO: objFun is the cost function: moce this algorithm to cost function and call that instead of objFun
     if (!Opt.objFun) {
         // calculates sum of squared differences
-        Opt.objFun = (y, yp) => {
-            // iterates over the array y, each element is yi
-            return y.map((yi, i) => {
-                return Math.pow((yi - yp[i]), 2);
-            }).reduce((a, b) => {
-                // sums the squares
-                return a + b;
-            });
-        };
+        Opt.objFun = lrCostFunction;
     }
 
     const cloneVector = V => {
