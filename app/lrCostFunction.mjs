@@ -27,7 +27,7 @@ const lrCostFunction = function (matrixTheta, matrixX, arrayY, nLambda) {
         return 1 - x;
     };
 
-    // ports the follwing line from octave code
+    // ports the following line from octave code
     //      sumall = (-y' * log(sigmoids) - (1 - y)' * log(1 - sigmoids));
     const arrayYTranspose = math.transpose(arrayY);
     const arrayLogSigmoids = math.map(arraySigmoids, Math.log);
@@ -37,7 +37,7 @@ const lrCostFunction = function (matrixTheta, matrixX, arrayY, nLambda) {
     const nProductOneMinusYTransposeByLogOneMinusSigmoids = math.multiply(arrayOneMinusYTranspose, arrayLogOneMinusSigmoids);
     const nSumall = nProductYTransposeByLogSigmoids - nProductOneMinusYTransposeByLogOneMinusSigmoids;
 
-    // ports the follwing line from octave code
+    // ports the following line from octave code
     //      sumsquares = sum(theta(2:end) .^ 2);
     const matrixThetaDotSquared = math.dotPow(matrixTheta, 2);
     const nSumSquares = math.sum(matrixThetaDotSquared);
