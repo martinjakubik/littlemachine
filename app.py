@@ -1,10 +1,11 @@
 import argparse
 import logging
-from  makepng import *
+from makepng import *
 from pathlib import Path
 
 MAX_EXPONENT = 64
 MAX_NUMBER_OF_BOXES = 65536
+
 
 def convertDecimalToBinary(decimal, pad_size):
 
@@ -24,6 +25,7 @@ def convertDecimalToBinary(decimal, pad_size):
             binaryString += '0'
 
     return binaryString
+
 
 def printFace(boxSize, binary, printDot):
 
@@ -53,19 +55,23 @@ def printFace(boxSize, binary, printDot):
     size = boxSize ** 2
     logging.debug(binary + '\n\n')
 
-    boxPathDirectory = Path('labellists/png' + str(size))
+    boxPathDirectory = Path('resources/png' + str(size))
     boxPath = boxPathDirectory / (binary + '.png')
 
     if not boxPathDirectory.exists() or not boxPathDirectory.is_dir():
-        boxPathDirectory.mkdir(parents = True)
+        boxPathDirectory.mkdir(parents=True)
 
-    with boxPath.open(mode = 'wb') as f:
+    with boxPath.open(mode='wb') as f:
         f.write(makeGrayPNG(data, boxSize, boxSize))
 
-commandLineParser = argparse.ArgumentParser(description = 'generates pixel boxes')
-commandLineParser.add_argument('boxSize', type = int, default = 2, help = 'the size of each box, 1 .. 4 pixels')
-commandLineParser.add_argument('--printDot', action = 'store_true', default = False, help = 'if true, prints a dot in empty spaces')
-commandLineParser.add_argument('--log', help = 'sets logging to DEBUG or off')
+
+commandLineParser = argparse.ArgumentParser(
+    description='generates pixel boxes')
+commandLineParser.add_argument(
+    'boxSize', type=int, default=2, help='the size of each box, 1 .. 4 pixels')
+commandLineParser.add_argument('--printDot', action='store_true',
+                               default=False, help='if true, prints a dot in empty spaces')
+commandLineParser.add_argument('--log', help='sets logging to DEBUG or off')
 
 arguments = commandLineParser.parse_args()
 
@@ -78,7 +84,7 @@ printDot = arguments.printDot
 numberOfBoxes = 2 ** (boxSize ** 2)
 
 if numberOfBoxes > MAX_NUMBER_OF_BOXES:
-    print ('too many boxes. try less than', MAX_NUMBER_OF_BOXES)
+    print('too many boxes. try less than', MAX_NUMBER_OF_BOXES)
     raise SystemExit(1)
 
 for index in range(numberOfBoxes):

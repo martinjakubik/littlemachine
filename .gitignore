@@ -8,21 +8,21 @@ public
 build
 
 app/learnhypertext.mjs
-app/labellists
+app/resources
 
 js/lib
 
-labellists/boxes.txt
-labellists/boxes*.txt
-labellists/*.csv
-labellists/*.json
+resources/boxes.txt
+resources/boxes*.txt
+resources/*.csv
+resources/*.json
 
-labellists/png4
-labellists/png9/*
-labellists/png16/*
+resources/png4
+resources/png9/*
+resources/png16/*
 
 octave/labellist-*.csv
 
 dev
 
-html/labellists/*.json
+html/resources/*.json

@@ -470,7 +470,7 @@ class LabelMaker {
     }
 
     loadLabels() {
-        loadJsonFromFile('labellists/labellist.json').then(oResponse => {
+        loadJsonFromFile('resources/labellist.json').then(oResponse => {
             if (!oResponse.ok) {
                 throw new Error(`http error ${oResponse.status}`);
             }
