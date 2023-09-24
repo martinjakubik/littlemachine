@@ -87,14 +87,14 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
 
     // function (of Parameters) to minimize
     const funParm = (oDebugParams, arrayTheta) => {
-        // TODO: I am calling cost function on its own result here wtf
-        return Opt.objFun(oDebugParams, y, fun(oDebugParams, arrayTheta, x));
+        return fun(oDebugParams, arrayTheta, x);
     };
 
     let oDebugParams = {
         iteration_i: 0,
         iteration_j: 0
     };
+
     // silly multi-univariate screening
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;

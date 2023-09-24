@@ -20,6 +20,7 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
         J: 0,
         grad: 0
     };
+
     const m = arrayY.size()[0];
     const arraySigmoids = sigmoid(math.multiply(matrixX, arrayTheta));
 
