@@ -1,6 +1,6 @@
 import { sigmoid } from "./sigmoid.mjs";
 
-const lrCostFunction = function (matrixTheta, matrixX, arrayY, nLambda) {
+const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLambda) {
 
     /*
     here is how cost function was imlemented in fminsearch.mjs
@@ -21,7 +21,7 @@ const lrCostFunction = function (matrixTheta, matrixX, arrayY, nLambda) {
         grad: 0
     };
     const m = arrayY.size()[0];
-    const arraySigmoids = sigmoid(math.multiply(matrixX, matrixTheta));
+    const arraySigmoids = sigmoid(math.multiply(matrixX, arrayTheta));
 
     const fnOneMinus = function (x) {
         return 1 - x;
@@ -39,8 +39,8 @@ const lrCostFunction = function (matrixTheta, matrixX, arrayY, nLambda) {
 
     // ports the following line from octave code
     //      sumsquares = sum(theta(2:end) .^ 2);
-    const matrixThetaDotSquared = math.dotPow(matrixTheta, 2);
-    const nSumSquares = math.sum(matrixThetaDotSquared);
+    const arrayThetaDotSquared = math.dotPow(arrayTheta, 2);
+    const nSumSquares = math.sum(arrayThetaDotSquared);
 
     return oCost;
 };

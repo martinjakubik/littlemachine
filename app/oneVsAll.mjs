@@ -17,7 +17,7 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     //     fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
     //         initial_theta, options);
     // end;
-    fminsearch(t => lrCostFunction(t, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
+    fminsearch((oDebugParams, arrayTheta) => lrCostFunction(oDebugParams, arrayTheta, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
 
     return arrayAllTheta;
 };

@@ -81,26 +81,34 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
         });
     };
 
-    let P0 = cloneVector(Parm0), P1 = cloneVector(Parm0);
-    let m = P0.size()[0];
+    let arrayTheta0 = cloneVector(Parm0), arrayTheta1 = cloneVector(Parm0);
+    let m = arrayTheta0.size()[0];
     let step = Opt.step;
 
     // function (of Parameters) to minimize
-    const funParm = P => {
-        return Opt.objFun(y, fun(P, x));
+    const funParm = (oDebugParams, arrayTheta) => {
+        // TODO: I am calling cost function on its own result here wtf
+        return Opt.objFun(oDebugParams, y, fun(oDebugParams, arrayTheta, x));
     };
 
+    let oDebugParams = {
+        iteration_i: 0,
+        iteration_j: 0
+    };
     // silly multi-univariate screening
     for (let i = 0; i < Opt.maxIter; i++) {
+        oDebugParams.iteration_i = i;
         // takes a step for each parameter
         for (let j = 0; j < m; j++) {
-            P1 = cloneVector(P0);
-            P1._data[j] += step._data[j];
+            oDebugParams.iteration_j = j;
+            arrayTheta1 = cloneVector(arrayTheta0);
+            arrayTheta1._data[j] += step._data[j];
             // checks if parm value going in the right direction
-            if (funParm(P1) < funParm(P0)) {
+            // fun(arrayTheta1, x, i, j);
+            if (funParm(oDebugParams, arrayTheta1) < funParm(oDebugParams, arrayTheta0)) {
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
-                P0 = cloneVector(P1);
+                arrayTheta0 = cloneVector(arrayTheta1);
             } else {
                 // otherwise reverses and goes slower
                 step._data[j] = -(0.5 * step._data[j]);
@@ -108,11 +116,11 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
         }
         if (Opt.display) {
             if (i > (Opt.maxIter - 10)) {
-                console.log(i + 1, funParm(P0), P0);
+                console.log(i + 1, funParm(arrayTheta0), arrayTheta0);
             }
         }
     }
-    return P0;
+    return arrayTheta0;
 };
 
 export { fminsearch };
