@@ -1,3 +1,4 @@
+import { outputToFile } from "./outputToFile.mjs";
 import { sigmoid } from "./sigmoid.mjs";
 
 const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLambda) {
@@ -44,7 +45,12 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
     const nSumSquares = math.sum(arrayThetaDotSquared);
 
     if (oDebugParams.iteration_i === 0 && oDebugParams.iteration_j === 0) {
-        console.log('arrayYTranspose', arrayYTranspose);
+        outputToFile(arrayYTranspose, 'arrayYTranspose');
+        outputToFile(arrayLogSigmoids, 'arrayLogSigmoids');
+        outputToFile(arrayOneMinusYTranspose, 'arrayOneMinusYTranspose');
+        outputToFile(arrayLogOneMinusSigmoids, 'arrayLogOneMinusSigmoids');
+        outputToFile(nProductYTransposeByLogSigmoids, 'nProductYTransposeByLogSigmoids');
+        outputToFile(nProductOneMinusYTransposeByLogOneMinusSigmoids, 'nProductOneMinusYTransposeByLogOneMinusSigmoids');
     }
 
     return oCost;
