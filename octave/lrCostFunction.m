@@ -3,7 +3,7 @@
 %   J = lrCostFunction(theta, X, y, lambda) computes the cost of using
 %   theta as the parameter for regularized logistic regression and the
 %   gradient of the cost w.r.t. to the parameters. 
-function [J, grad] = lrCostFunction(theta, X, y, lambda)
+function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
 
     % initializes number of training examples
     m = length(y);
@@ -20,6 +20,23 @@ function [J, grad] = lrCostFunction(theta, X, y, lambda)
     sigmoids = sigmoid(X * theta);
 
     sumall = (-y' * log(sigmoids) - (1 - y)' * log(1 - sigmoids));
+
+    if debugParams == 0
+        arrayYtranspose = -y';
+        arrayLogSigmoids = log(sigmoids);
+        arrayOneMinusYTranspose = (1 - y)';
+        arrayLogOneMinusSigmoids = log(1 - sigmoids);
+        nProductYTransposeByLogSigmoids = -y' * log(sigmoids);
+        nProductOneMinusYTransposeByLogOneMinusSigmoids = (1 - y)' * log(1 - sigmoids);
+        nSumall = sumall;
+        save("../resources/a1-arrayYtranspose.debug.mat", "arrayYtranspose");
+        save("../resources/a1-arrayLogSigmoids.debug.mat", "arrayLogSigmoids");
+        save("../resources/a1-arrayOneMinusYTranspose.debug.mat", "arrayOneMinusYTranspose");
+        save("../resources/a1-arrayLogOneMinusSigmoids.debug.mat", "arrayLogOneMinusSigmoids");
+        save("../resources/a1-nProductYTransposeByLogSigmoids.debug.mat", "nProductYTransposeByLogSigmoids");
+        save("../resources/a1-nProductOneMinusYTransposeByLogOneMinusSigmoids.debug.mat", "nProductOneMinusYTransposeByLogOneMinusSigmoids");
+        save("../resources/a1-nSumall.debug.mat", "nSumall");
+    end
 
     sumsquares = sum(theta(2:end) .^ 2);
 

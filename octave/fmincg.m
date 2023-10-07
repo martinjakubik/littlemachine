@@ -62,16 +62,17 @@ EXT = 3.0;                    % extrapolate maximum 3 times the current bracket
 MAX = 20;                         % max 20 function evaluations per line search
 RATIO = 100;                                      % maximum allowed slope ratio
 
-argstr = ['feval(f, X'];                      % compose string used to call function
+argstr = ['feval(f, debugParams, X'];    % compose string used to call function
 for i = 1:(nargin - 3)
   argstr = [argstr, ',P', int2str(i)];
 end
 argstr = [argstr, ')'];
 
 if max(size(length)) == 2, red=length(2); length=length(1); else red=1; end
-S=['Iteration '];
 
 i = 0;                                            % zero the run length counter
+debugParams = i;
+
 ls_failed = 0;                             % no previous line search has failed
 fX = [];
 [f1 df1] = eval(argstr);                      % get function value and gradient
@@ -82,6 +83,8 @@ z1 = red/(1-d1);                                  % initial step is red/(|s|+1)
 
 while i < abs(length)                                      % while not finished
   i = i + (length>0);                                      % count iterations?!
+
+  debugParams = i;
 
   X0 = X; f0 = f1; df0 = df1;                   % make a copy of current values
   X = X + z1*s;                                             % begin line search
@@ -146,7 +149,7 @@ while i < abs(length)                                      % while not finished
 
   if success                                         % if line search succeeded
     f1 = f2; fX = [fX' f1]';
-    fprintf('%s %4i | Cost: %4.6e\r', S, i, f1);
+    fprintf('Iteration %4i | Cost: %4.6e\r', i, f1);
     s = (df2'*df2-df1'*df2)/(df1'*df1)*s - df2;      % Polack-Ribiere direction
     tmp = df1; df1 = df2; df2 = tmp;                         % swap derivatives
     d2 = df1'*s;
