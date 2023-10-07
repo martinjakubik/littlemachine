@@ -51,6 +51,7 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
         outputToFile(arrayLogOneMinusSigmoids, 'arrayLogOneMinusSigmoids');
         outputToFile(nProductYTransposeByLogSigmoids, 'nProductYTransposeByLogSigmoids');
         outputToFile(nProductOneMinusYTransposeByLogOneMinusSigmoids, 'nProductOneMinusYTransposeByLogOneMinusSigmoids');
+        outputToFile(nSumall, 'nSumall');
     }
 
     return oCost;
