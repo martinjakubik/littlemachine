@@ -112,7 +112,7 @@ button {
 
 #loadButton {
     margin: 1em .1em 0 4em;
-    width: 3em;
+    width: auto;
 }
 
 .labelcountname {

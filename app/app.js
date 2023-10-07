@@ -397,7 +397,7 @@ class LabelMaker {
     }
 
     renderLoadButton() {
-        const oButton = createButton('loadButton', 'Load');
+        const oButton = createButton('loadButton', 'Load Data');
         oButton.onclick = this.loadLabels.bind(this);
 
         return oButton;
@@ -411,7 +411,7 @@ class LabelMaker {
     }
 
     renderClassifyButton() {
-        const oButton = createButton('classifyButton', 'Start Classifying');
+        const oButton = createButton('classifyButton', 'Start Learning');
         oButton.onclick = this.classifyButtonTap.bind(this);
 
         return oButton;
