@@ -45,7 +45,7 @@ import { lrCostFunction } from "./lrCostFunction.mjs";
     number of iterations, initial step vector and the display switch, for example
     Parms = fminsearch(fun, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
 */
-const fminsearch = function (fun, Parm0, x, y, Opt) {
+const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
     if (!Opt) { Opt = {}; }
     if (!Opt.maxIter) { Opt.maxIter = 1000; }
 
@@ -88,11 +88,6 @@ const fminsearch = function (fun, Parm0, x, y, Opt) {
     // function (of Parameters) to minimize
     const funParm = (oDebugParams, arrayTheta) => {
         return fun(oDebugParams, arrayTheta, x);
-    };
-
-    let oDebugParams = {
-        iteration_i: 0,
-        iteration_j: 0
     };
 
     // silly multi-univariate screening

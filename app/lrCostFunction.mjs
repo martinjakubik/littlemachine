@@ -44,7 +44,7 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
     const arrayThetaDotSquared = math.dotPow(arrayTheta, 2);
     const nSumSquares = math.sum(arrayThetaDotSquared);
 
-    if (oDebugParams.iteration_i === 0 && oDebugParams.iteration_j === 0) {
+    if (oDebugParams.debugActive && oDebugParams.iteration_i === 0 && oDebugParams.iteration_j === 0) {
         outputToFile(arrayYTranspose, 'arrayYTranspose');
         outputToFile(arrayLogSigmoids, 'arrayLogSigmoids');
         outputToFile(arrayOneMinusYTranspose, 'arrayOneMinusYTranspose');

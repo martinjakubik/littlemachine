@@ -12,12 +12,18 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
 
     const arrayInitialTheta = math.squeeze(math.zeros(n + 1, 1));
 
+    const oDebugParams = {
+        debugActive: true,
+        iteration_i: 0,
+        iteration_j: 0
+    };
+
     // for c = 1:num_labels
     // all_theta(c, :) = ...
     //     fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
     //         initial_theta, options);
     // end;
-    fminsearch((oDebugParams, arrayTheta) => lrCostFunction(oDebugParams, arrayTheta, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
+    fminsearch(oDebugParams, (oCostFunctionDebugParams, arrayTheta) => lrCostFunction(oCostFunctionDebugParams, arrayTheta, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
 
     return arrayAllTheta;
 };
