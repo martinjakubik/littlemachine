@@ -23,7 +23,7 @@ resources/png4
 resources/png9/*
 resources/png16/*
 
-octave/labellist-*.csv
+octave/labellist*.csv
 
 dev
 
