@@ -411,7 +411,7 @@ class LabelMaker {
     }
 
     renderClassifyButton() {
-        const oButton = createButton('classifyButton', 'Start Learning');
+        const oButton = createButton('classifyButton', 'Start Training');
         oButton.onclick = this.classifyButtonTap.bind(this);
 
         return oButton;
