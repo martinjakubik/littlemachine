@@ -30,7 +30,7 @@ lambda = 0.1;
 [all_theta] = oneVsAll(X, y, num_labels, lambda);
 
 save("../resources/all_theta.debug.mat", "all_theta");
-disp(all_theta);
+% disp(all_theta);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -38,6 +38,6 @@ pause;
 pred = predictOneVsAll(all_theta, X);
 
 save("../resources/prediction.debug.mat", "pred")
-disp(pred')
+% disp(pred')
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
