@@ -29,6 +29,7 @@ function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
         nProductYTransposeByLogSigmoids = -y' * log(sigmoids);
         nProductOneMinusYTransposeByLogOneMinusSigmoids = (1 - y)' * log(1 - sigmoids);
         nSumall = sumall;
+        save("../resources/a1-sigmoids.debug.0.littlemachine", "sigmoids");
         save("../resources/a1-arrayYtranspose.debug.0.littlemachine", "arrayYtranspose");
         save("../resources/a1-arrayLogSigmoids.debug.0.littlemachine", "arrayLogSigmoids");
         save("../resources/a1-arrayOneMinusYTranspose.debug.0.littlemachine", "arrayOneMinusYTranspose");
@@ -46,6 +47,7 @@ function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
         nProductYTransposeByLogSigmoids = -y' * log(sigmoids);
         nProductOneMinusYTransposeByLogOneMinusSigmoids = (1 - y)' * log(1 - sigmoids);
         nSumall = sumall;
+        save("../resources/a1-sigmoids.debug.1.littlemachine", "sigmoids");
         save("../resources/a1-arrayYtranspose.debug.1.littlemachine", "arrayYtranspose");
         save("../resources/a1-arrayLogSigmoids.debug.1.littlemachine", "arrayLogSigmoids");
         save("../resources/a1-arrayOneMinusYTranspose.debug.1.littlemachine", "arrayOneMinusYTranspose");
