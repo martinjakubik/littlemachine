@@ -25,6 +25,6 @@ resources/png16/*
 
 octave/labellist*.csv
 
-dev
+dev/server.js
 
 html/resources/*.json
