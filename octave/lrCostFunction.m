@@ -3,7 +3,7 @@
 %   J = lrCostFunction(theta, X, y, lambda) computes the cost of using
 %   theta as the parameter for regularized logistic regression and the
 %   gradient of the cost w.r.t. to the parameters. 
-function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
+function [J, grad] = lrCostFunction(debugIteration, theta, X, y, lambda)
 
     % initializes number of training examples
     m = length(y);
@@ -21,7 +21,7 @@ function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
 
     sumall = (-y' * log(sigmoids) - (1 - y)' * log(1 - sigmoids));
 
-    if debugParams == 0
+    if debugIteration == 0
         arrayYtranspose = -y';
         arrayLogSigmoids = log(sigmoids);
         arrayOneMinusYTranspose = (1 - y)';
