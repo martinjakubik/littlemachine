@@ -31,7 +31,7 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
 
     // ports the following line from octave code
     //      sumall = (-y' * log(sigmoids) - (1 - y)' * log(1 - sigmoids));
-    const arrayYTranspose = math.transpose(arrayY);
+    const arrayYTranspose = math.multiply(math.transpose(arrayY), -1);
     const arrayLogSigmoids = math.map(arraySigmoids, Math.log);
     const arrayOneMinusYTranspose = math.transpose(math.map(arrayY, fnOneMinus));
     const arrayLogOneMinusSigmoids = math.map(math.map(arraySigmoids, fnOneMinus), Math.log);
