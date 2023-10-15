@@ -1,4 +1,4 @@
-function [X, fX, i] = fmincg(f, X, options, P1, P2, P3, P4, P5)
+function [X, fX, i] = fmincg(debugParams, f, X, options, P1, P2, P3, P4, P5)
 % Minimize a continuous differentialble multivariate function. Starting point
 % is given by "X" (D by 1), and the function named in the string "f", must
 % return a function value and a vector of partial derivatives. The Polack-
@@ -62,8 +62,8 @@ EXT = 3.0;                    % extrapolate maximum 3 times the current bracket
 MAX = 20;                         % max 20 function evaluations per line search
 RATIO = 100;                                      % maximum allowed slope ratio
 
-argstr = ['feval(f, debugIteration, X'];    % compose string used to call function
-for i = 1:(nargin - 3)
+argstr = ['feval(f, debugParams, X'];    % compose string used to call function
+for i = 2:(nargin - 3)
   argstr = [argstr, ',P', int2str(i)];
 end
 argstr = [argstr, ')'];
@@ -71,7 +71,7 @@ argstr = [argstr, ')'];
 if max(size(length)) == 2, red=length(2); length=length(1); else red=1; end
 
 i = 0;                                            % zero the run length counter
-debugIteration = i;
+debugParams.iteration = i;
 
 ls_failed = 0;                             % no previous line search has failed
 fX = [];
@@ -84,7 +84,7 @@ z1 = red/(1-d1);                                  % initial step is red/(|s|+1)
 while i < abs(length)                                      % while not finished
   i = i + (length>0);                                      % count iterations?!
 
-  debugIteration = i;
+  debugParams.iteration = i;
 
   X0 = X; f0 = f1; df0 = df1;                   % make a copy of current values
   X = X + z1*s;                                             % begin line search

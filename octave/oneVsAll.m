@@ -19,9 +19,11 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 
     options = optimset('GradObj', 'on', 'MaxIter', 50);
 
-    for c = 0:(num_labels - 1)
+    for c = 1:num_labels
+        label = c - 1;
+        debugParams.label = label;
         all_theta(c, :) = ...
-            fmincg (@(debugIteration, t)(lrCostFunction(debugIteration, t, X, (y == c), lambda)), ...
+            fmincg (debugParams, @(debugParams, t)(lrCostFunction(debugParams, t, X, (y == label), lambda)), ...
                 initial_theta, options);
     end;
 
