@@ -29,13 +29,13 @@ function [J, grad] = lrCostFunction(debugParams, theta, X, y, lambda)
         nProductYTransposeByLogSigmoids = -y' * log(sigmoids);
         nProductOneMinusYTransposeByLogOneMinusSigmoids = (1 - y)' * log(1 - sigmoids);
         nSumall = sumall;
-        save("../resources/a1-arrayYtranspose.debug.mat", "arrayYtranspose");
-        save("../resources/a1-arrayLogSigmoids.debug.mat", "arrayLogSigmoids");
-        save("../resources/a1-arrayOneMinusYTranspose.debug.mat", "arrayOneMinusYTranspose");
-        save("../resources/a1-arrayLogOneMinusSigmoids.debug.mat", "arrayLogOneMinusSigmoids");
-        save("../resources/a1-nProductYTransposeByLogSigmoids.debug.mat", "nProductYTransposeByLogSigmoids");
-        save("../resources/a1-nProductOneMinusYTransposeByLogOneMinusSigmoids.debug.mat", "nProductOneMinusYTransposeByLogOneMinusSigmoids");
-        save("../resources/a1-nSumall.debug.mat", "nSumall");
+        save("../resources/a1-arrayYtranspose.debug.littlemachine", "arrayYtranspose");
+        save("../resources/a1-arrayLogSigmoids.debug.littlemachine", "arrayLogSigmoids");
+        save("../resources/a1-arrayOneMinusYTranspose.debug.littlemachine", "arrayOneMinusYTranspose");
+        save("../resources/a1-arrayLogOneMinusSigmoids.debug.littlemachine", "arrayLogOneMinusSigmoids");
+        save("../resources/a1-nProductYTransposeByLogSigmoids.debug.littlemachine", "nProductYTransposeByLogSigmoids");
+        save("../resources/a1-nProductOneMinusYTransposeByLogOneMinusSigmoids.debug.littlemachine", "nProductOneMinusYTransposeByLogOneMinusSigmoids");
+        save("../resources/a1-nSumall.debug.littlemachine", "nSumall");
     end
 
     sumsquares = sum(theta(2:end) .^ 2);
