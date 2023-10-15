@@ -17,7 +17,7 @@ resources/boxes*.txt
 resources/*.csv
 resources/*.json
 resources/*.debug.mat
-resources/*.debug.littlemachine
+resources/*.debug.*littlemachine
 
 resources/png4
 resources/png9/*
