@@ -1,10 +1,10 @@
-const formatMathObject = function (oMathJSContent) {
+const formatMathObject = function (oMathJSContent, sLabel) {
     const sCurrentDate = new Date().toLocaleString();
     const sUsername = 'martin';
     const sDataType = oMathJSContent.type;
     const numRows = oMathJSContent._size ? oMathJSContent._size[0] : 0;
     const numColumns = oMathJSContent._size.length === 2 ? oMathJSContent._size[1] : 1;
-    let sContentToOutput = `# Created by Little Machine, ${sCurrentDate} <${sUsername}>\n# name: sigmoids\n# type: ${sDataType}\n# rows: ${numRows}\n# columns: ${numColumns}\n`;
+    let sContentToOutput = `# Created by Little Machine, ${sCurrentDate} <${sUsername}>\n# name: ${sLabel}\n# type: ${sDataType}\n# rows: ${numRows}\n# columns: ${numColumns}\n`;
     oMathJSContent._data.forEach((element, index, array) => {
         sContentToOutput = sContentToOutput + ' ' + element;
         if (index < array.length - 1) {
@@ -18,7 +18,7 @@ const formatMathObject = function (oMathJSContent) {
 const outputToFile = function (oContent, sLabel) {
     let sContentToOutput = '';
     if (oContent.type && oContent.type === 'DenseMatrix') {
-        sContentToOutput = formatMathObject(oContent);
+        sContentToOutput = formatMathObject(oContent, sLabel);
     } else {
         sContentToOutput = JSON.stringify(oContent);
     }
