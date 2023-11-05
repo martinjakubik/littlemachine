@@ -23,7 +23,12 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     //     fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
     //         initial_theta, options);
     // end;
-    fminsearch(oDebugParams, (oCostFunctionDebugParams, arrayTheta) => lrCostFunction(oCostFunctionDebugParams, arrayTheta, matrixX1, arrayY, nLambda), arrayInitialTheta, matrixX0, arrayY);
+    const c = 1;
+    const label = c - 1;
+    const arrayYPerLabel = math.map(arrayY, nValue => {
+        return nValue === label ? 1 : 0;
+    });
+    fminsearch(oDebugParams, (oCostFunctionDebugParams, arrayTheta) => lrCostFunction(oCostFunctionDebugParams, arrayTheta, matrixX1, arrayYPerLabel, nLambda), arrayInitialTheta, matrixX0, arrayY);
 
     return arrayAllTheta;
 };
