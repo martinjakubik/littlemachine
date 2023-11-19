@@ -103,9 +103,10 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
                 step._data[j] = -(0.5 * step._data[j]);
             }
         }
+        // logs the last 10 iterations
         if (Opt.display) {
             if (i > (Opt.maxIter - 10)) {
-                console.log(i + 1, funParm(arrayTheta0), arrayTheta0);
+                console.log(i + 1, funParm(oDebugParams, arrayTheta0), arrayTheta0);
             }
         }
     }
