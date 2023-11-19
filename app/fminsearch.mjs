@@ -75,13 +75,7 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         Opt.objFun = lrCostFunction;
     }
 
-    const cloneVector = V => {
-        return V.map(v => {
-            return v;
-        });
-    };
-
-    let arrayTheta0 = cloneVector(Parm0), arrayTheta1 = cloneVector(Parm0);
+    let arrayTheta0 = math.clone(Parm0), arrayTheta1 = math.clone(Parm0);
     let m = arrayTheta0.size()[0];
     let step = Opt.step;
 
@@ -96,14 +90,14 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         // takes a step for each parameter
         for (let j = 0; j < m; j++) {
             oDebugParams.iteration_j = j;
-            arrayTheta1 = cloneVector(arrayTheta0);
+            arrayTheta1 = math.clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
             if (funParm(oDebugParams, arrayTheta1) < funParm(oDebugParams, arrayTheta0)) {
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
-                arrayTheta0 = cloneVector(arrayTheta1);
+                arrayTheta0 = math.clone(arrayTheta1);
             } else {
                 // otherwise reverses and goes slower
                 step._data[j] = -(0.5 * step._data[j]);
