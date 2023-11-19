@@ -13,7 +13,7 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     const arrayInitialTheta = math.squeeze(math.zeros(n + 1, 1));
 
     const oDebugParams = {
-        debugActive: true,
+        debugActive: false,
         iteration_i: 0,
         iteration_j: 0
     };
