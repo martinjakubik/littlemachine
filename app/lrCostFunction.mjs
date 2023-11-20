@@ -56,6 +56,15 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
         outputToFile(nSumall, 'nSumall');
     }
 
+    // remaining to port:
+    //      regularized = lambda * sumsquares / (2 * m);
+    //      J = sumall / m + regularized;
+    //      grad = (X' * (sigmoids .- y)) / m;
+    //      temp = theta;
+    //      temp(1) = 0;
+    //      grad = grad .+ lambda * temp / m;
+    //      grad = grad(:);
+
     return oCost;
 };
 
