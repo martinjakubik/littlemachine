@@ -1,5 +1,3 @@
-import { lrCostFunction } from "./lrCostFunction.mjs";
-
 /*
     fminsearch
 
@@ -69,12 +67,6 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         Opt.display = true;
     }
 
-    // TODO: objFun is the cost function: moce this algorithm to cost function and call that instead of objFun
-    if (!Opt.objFun) {
-        // calculates sum of squared differences
-        Opt.objFun = lrCostFunction;
-    }
-
     let arrayTheta0 = math.clone(Parm0), arrayTheta1 = math.clone(Parm0);
     let m = arrayTheta0.size()[0];
     let step = Opt.step;
@@ -84,7 +76,7 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         return fun(oDebugParams, arrayTheta, x);
     };
 
-    // silly multi-univariate screening
+    // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
         // takes a step for each parameter
