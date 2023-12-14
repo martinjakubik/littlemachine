@@ -56,11 +56,24 @@ const lrCostFunction = function (oDebugParams, arrayTheta, matrixX, arrayY, nLam
         outputToFile(nSumall, 'nSumall');
     }
 
-    // remaining to port:
+    // ports the following line from octave code
     //      regularized = lambda * sumsquares / (2 * m);
+    const nRegularized = nLambda * nSumSquares / (2 * m);
+
     //      J = sumall / m + regularized;
+    oCost.J = nSumall / m + nRegularized;
+
     //      grad = (X' * (sigmoids .- y)) / m;
+    const matrixXTranspose = math.transpose(matrixX);
+    const arraySigmoidsMinusY = math.subtract(arraySigmoids, arrayY);
+    const arrayXMultipliedBySigmoidsMinusY = math.multiply(matrixXTranspose, arraySigmoidsMinusY);
+    oCost.grad = math.divide(arrayXMultipliedBySigmoidsMinusY, 2);
+
+    // ports the following line from octave code
     //      temp = theta;
+    let arrayTemporaryTheta = math.clone(arrayTheta);
+
+    // remaining to port:
     //      temp(1) = 0;
     //      grad = grad .+ lambda * temp / m;
     //      grad = grad(:);
