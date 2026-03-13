@@ -15,9 +15,12 @@ const classify = function (matrixData) {
 
     const nStartTime = Date.now();
     console.log('starting classification');
+
     const arrayAllTheta = oneVsAll(matrixX, arrayY, nLabelCount, nLambda);
+
     const nEndTime = Date.now();
     console.log(`finished classification; took ${nEndTime - nStartTime}`);
+
     return arrayAllTheta;
 };
 

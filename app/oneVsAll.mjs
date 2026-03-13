@@ -29,8 +29,9 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
         return nValue === label ? 1 : 0;
     });
     const oFMinSearchOptions = {
-        maxIter: 50,
+        maxIter: 1000,
         display: true,
+        displayLevel: 1,
     };
     fminsearch(
         oDebugParams,
