@@ -44,16 +44,20 @@
     Parms = fminsearch(fun, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
 */
 const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
-    if (!Opt) { Opt = {}; }
-    if (!Opt.maxIter) { Opt.maxIter = 1000; }
+    if (!Opt) {
+        Opt = {};
+    }
+    if (!Opt.maxIter) {
+        Opt.maxIter = 1000;
+    }
 
     if (!Opt.step) {
         // initial step is 1/100 of initial value (remember not to use zero in Parm0)
-        Opt.step = Parm0.map(p => {
+        Opt.step = Parm0.map((p) => {
             return p / 100;
         });
 
-        Opt.step = Opt.step.map(si => {
+        Opt.step = Opt.step.map((si) => {
             // converts null steps into 1's
             if (si == 0) {
                 return 1;
@@ -63,11 +67,12 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         });
     }
 
-    if (typeof (Opt.display) == 'undefined') {
+    if (typeof Opt.display == 'undefined') {
         Opt.display = true;
     }
 
-    let arrayTheta0 = math.clone(Parm0), arrayTheta1 = math.clone(Parm0);
+    let arrayTheta0 = math.clone(Parm0),
+        arrayTheta1 = math.clone(Parm0);
     let m = arrayTheta0.size()[0];
     let step = Opt.step;
 
@@ -86,7 +91,10 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             arrayTheta1._data[j] += step._data[j];
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
-            if (funParm(oDebugParams, arrayTheta1) < funParm(oDebugParams, arrayTheta0)) {
+            if (
+                funParm(oDebugParams, arrayTheta1) <
+                funParm(oDebugParams, arrayTheta0)
+            ) {
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
                 arrayTheta0 = math.clone(arrayTheta1);
@@ -97,8 +105,19 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         }
         // logs the last 10 iterations
         if (Opt.display) {
-            if (i > (Opt.maxIter - 10)) {
-                console.log(i + 1, funParm(oDebugParams, arrayTheta0), arrayTheta0);
+            if (i % 10 === 0) {
+                console.log(
+                    i + 1,
+                    funParm(oDebugParams, arrayTheta0),
+                    arrayTheta0,
+                );
+            }
+            if (i > Opt.maxIter - 10) {
+                console.log(
+                    i + 1,
+                    funParm(oDebugParams, arrayTheta0),
+                    arrayTheta0,
+                );
             }
         }
     }
