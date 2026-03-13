@@ -84,6 +84,8 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
+        if (Opt.display && i % 10 === 0)
+            console.log(`array theta 0 before iteration: ${arrayTheta0._data}`);
         // takes a step for each parameter
         for (let j = 0; j < m; j++) {
             oDebugParams.iteration_j = j;
@@ -92,23 +94,17 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
             if (
-                funParm(oDebugParams, arrayTheta1) <
-                funParm(oDebugParams, arrayTheta0)
+                funParm(oDebugParams, arrayTheta1).J <
+                funParm(oDebugParams, arrayTheta0).J
             ) {
-                if (Opt.display) {
-                    if (i % 10 === 0) {
-                        console.log('f(th1) is less than f(th0)');
-                    }
-                }
+                if (Opt.display && i % 10 === 0)
+                    console.log('f(th1) is less than f(th0)');
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
                 arrayTheta0 = math.clone(arrayTheta1);
             } else {
-                if (Opt.display) {
-                    if (i % 10 === 0) {
-                        console.log('f(th1) is more than f(th0)');
-                    }
-                }
+                if (Opt.display && i % 10 === 0)
+                    console.log('f(th1) is more than f(th0)');
                 // otherwise reverses and goes slower
                 step._data[j] = -(0.5 * step._data[j]);
             }
