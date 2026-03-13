@@ -104,11 +104,16 @@ const lrCostFunction = function (
     //      temp = theta;
     let arrayTemporaryTheta = math.clone(arrayTheta);
 
-    // remaining to port:
+    // ports the following lines from octave code
     //      temp(1) = 0;
     //      grad = grad .+ lambda * temp / m;
     //      grad = grad(:);
     //      return [J, grad]
+    arrayTemporaryTheta[0] = 0;
+    const lambdaTimesTemp = math.multiply(nLambda, arrayTemporaryTheta);
+    const lambdaTimesTempDividedbyM = math.divide(lambdaTimesTemp, m);
+    oCost.grad = math.add(oCost.grad, lambdaTimesTempDividedbyM);
+    oCost.grad = math.flatten(oCost.grad);
 
     return oCost;
 };
