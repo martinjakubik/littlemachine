@@ -95,10 +95,20 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
                 funParm(oDebugParams, arrayTheta1) <
                 funParm(oDebugParams, arrayTheta0)
             ) {
+                if (Opt.display) {
+                    if (i % 10 === 0) {
+                        console.log('f(th1) is less than f(th0)');
+                    }
+                }
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
                 arrayTheta0 = math.clone(arrayTheta1);
             } else {
+                if (Opt.display) {
+                    if (i % 10 === 0) {
+                        console.log('f(th1) is more than f(th0)');
+                    }
+                }
                 // otherwise reverses and goes slower
                 step._data[j] = -(0.5 * step._data[j]);
             }
@@ -108,7 +118,7 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             if (i % 10 === 0) {
                 console.log(
                     i + 1,
-                    funParm(oDebugParams, arrayTheta0),
+                    funParm(oDebugParams, arrayTheta0).grad._data,
                     arrayTheta0,
                 );
             }

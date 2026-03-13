@@ -1,5 +1,5 @@
-import { fminsearch } from "./fminsearch.mjs";
-import { lrCostFunction } from "./lrCostFunction.mjs";
+import { fminsearch } from './fminsearch.mjs';
+import { lrCostFunction } from './lrCostFunction.mjs';
 
 const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     const aMatrixSize = matrixX0.size();
@@ -15,7 +15,7 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     const oDebugParams = {
         debugActive: false,
         iteration_i: 0,
-        iteration_j: 0
+        iteration_j: 0,
     };
 
     // for c = 1:num_labels
@@ -25,10 +25,28 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     // end;
     const c = 1;
     const label = c - 1;
-    const arrayYPerLabel = math.map(arrayY, nValue => {
+    const arrayYPerLabel = math.map(arrayY, (nValue) => {
         return nValue === label ? 1 : 0;
     });
-    fminsearch(oDebugParams, (oCostFunctionDebugParams, arrayTheta) => lrCostFunction(oCostFunctionDebugParams, arrayTheta, matrixX1, arrayYPerLabel, nLambda), arrayInitialTheta, matrixX0, arrayY);
+    const oFMinSearchOptions = {
+        maxIter: 50,
+        display: true,
+    };
+    fminsearch(
+        oDebugParams,
+        (oCostFunctionDebugParams, arrayTheta) =>
+            lrCostFunction(
+                oCostFunctionDebugParams,
+                arrayTheta,
+                matrixX1,
+                arrayYPerLabel,
+                nLambda,
+            ),
+        arrayInitialTheta,
+        matrixX0,
+        arrayY,
+        oFMinSearchOptions,
+    );
 
     return arrayAllTheta;
 };
