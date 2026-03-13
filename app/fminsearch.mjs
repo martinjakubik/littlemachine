@@ -81,6 +81,8 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
         return fun(oDebugParams, arrayTheta, x);
     };
 
+    let nJ0, nJ1, nPreviousJ0;
+
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
@@ -89,12 +91,15 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             oDebugParams.iteration_j = j;
             arrayTheta1 = math.clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
+
+            // saves J
+            nPreviousJ0 = nJ0;
+            nJ0 = funParm(oDebugParams, arrayTheta0).J;
+            nJ1 = funParm(oDebugParams, arrayTheta1).J;
+
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
-            if (
-                funParm(oDebugParams, arrayTheta1).J <
-                funParm(oDebugParams, arrayTheta0).J
-            ) {
+            if (nJ1 < nJ0) {
                 if (Opt.display && Opt.displayLevel >= 2 && i % 10 === 0)
                     console.log('f(th1) is less than f(th0)');
                 // goes a little faster
@@ -107,13 +112,23 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
                 step._data[j] = -(0.5 * step._data[j]);
             }
         }
+
+        if (Opt.display && Opt.displayLevel >= 2 && i % 10 === 0)
+            console.log(
+                `j0: ${nJ0}; prev j0: ${nPreviousJ0}; diff: ${Math.abs(nPreviousJ0 - nJ0)}`,
+            );
+        // breaks if the gradient is very small
+        if (Math.abs(nPreviousJ0 - nJ0) < 0.000000000001) {
+            // break;
+        }
+
         // logs every 10th iteration
         if (Opt.display && Opt.displayLevel >= 1 && i % 10 === 0) {
-            console.log(i + 1, funParm(oDebugParams, arrayTheta0), arrayTheta0);
+            console.log(i + 1, nJ0, arrayTheta0);
         }
         // logs the last 10 iterations
         if (Opt.display && Opt.displayLevel >= 1 && i > Opt.maxIter - 10) {
-            console.log(i + 1, funParm(oDebugParams, arrayTheta0), arrayTheta0);
+            console.log(i + 1, nJ0, arrayTheta0);
         }
     }
     return arrayTheta0;
