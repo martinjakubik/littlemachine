@@ -2,11 +2,14 @@ const convertToString = function (oJsonData, bKeepUnlabelled = false) {
     let sCsvData = '';
 
     if (oJsonData) {
-        oJsonData.forEach(oDatum => {
+        oJsonData.forEach((oDatum) => {
             let sBinary = oDatum.binary;
             let sBinaryCsv = '';
             for (let i = 0; i < sBinary.length; i++) {
-                sBinaryCsv = sBinaryCsv + sBinary[i] + (i < sBinary.length - 1 ? ',' : '');
+                sBinaryCsv =
+                    sBinaryCsv +
+                    sBinary[i] +
+                    (i < sBinary.length - 1 ? ',' : '');
             }
             let sLabel = -1;
             if (oDatum.label === 'yes') {
@@ -29,7 +32,7 @@ const convertToString = function (oJsonData, bKeepUnlabelled = false) {
 const convertToMatrix = function (oJsonData, bKeepUnlabelled = false) {
     let matrixData = [];
     if (oJsonData) {
-        oJsonData.forEach(oRow => {
+        oJsonData.forEach((oRow) => {
             let sSample = oRow.binary;
             let aSampleRowWithLabelSlot = [];
             for (let colIndex = 0; colIndex < sSample.length; colIndex++) {

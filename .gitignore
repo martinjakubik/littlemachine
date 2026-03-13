@@ -8,6 +8,8 @@ public
 build
 
 app/learnhypertext.mjs
+app/math.js
+app/math.js.map
 app/resources
 
 js/lib

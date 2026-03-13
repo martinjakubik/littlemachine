@@ -21,6 +21,28 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             .catch((oError) => {
                 console.log(oError);
             });
+
+        oFs.copyFile(
+            './node_modules/mathjs/lib/browser/math.js',
+            `${sLibPath}/math.js`,
+        )
+            .then((oResult) => {
+                console.log(oResult);
+            })
+            .catch((oError) => {
+                console.log(oError);
+            });
+
+        oFs.copyFile(
+            './node_modules/mathjs/lib/browser/math.js.map',
+            `${sLibPath}/math.js.map`,
+        )
+            .then((oResult) => {
+                console.log(oResult);
+            })
+            .catch((oError) => {
+                console.log(oError);
+            });
     })
     .catch((oError) => {
         console.log(oError);
