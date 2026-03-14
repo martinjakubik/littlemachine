@@ -3,7 +3,8 @@ const formatMathObject = function (oMathJSContent, sLabel) {
     const sUsername = 'martin';
     const sDataType = oMathJSContent.type;
     const numRows = oMathJSContent._size ? oMathJSContent._size[0] : 0;
-    const numColumns = oMathJSContent._size.length === 2 ? oMathJSContent._size[1] : 1;
+    const numColumns =
+        oMathJSContent._size.length === 2 ? oMathJSContent._size[1] : 1;
     let sContentToOutput = `# Created by Little Machine, ${sCurrentDate} <${sUsername}>\n# name: ${sLabel}\n# type: ${sDataType}\n# rows: ${numRows}\n# columns: ${numColumns}\n`;
     oMathJSContent._data.forEach((element, index, array) => {
         sContentToOutput = sContentToOutput + ' ' + element;
@@ -13,7 +14,6 @@ const formatMathObject = function (oMathJSContent, sLabel) {
     });
     return sContentToOutput;
 };
-
 
 const outputToFile = function (oContent, sLabel) {
     let sContentToOutput = '';

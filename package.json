@@ -1,16 +1,16 @@
 {
-  "name": "labelmaker",
-  "version": "0.0.1",
-  "type": "module",
-  "dependencies": {
-    "learnhypertext": "^2.0.3",
-    "mathjs": "^15.1.1"
-  },
-  "scripts": {
-    "start": "node dev/server.js",
-    "postinstall": "node postinstall.js"
-  },
-  "devDependencies": {
-    "eslint": "^8.47.0"
-  }
+    "name": "labelmaker",
+    "version": "0.0.1",
+    "type": "module",
+    "dependencies": {
+        "learnhypertext": "^2.0.3",
+        "mathjs": "^15.1.1"
+    },
+    "scripts": {
+        "start": "node dev/server.js",
+        "postinstall": "node postinstall.js"
+    },
+    "devDependencies": {
+        "eslint": "^8.47.0"
+    }
 }

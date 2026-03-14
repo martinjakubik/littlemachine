@@ -58,7 +58,7 @@ button {
 
 .labeldot {
     width: 1em;
-    border-radius: .4em;
+    border-radius: 0.4em;
     height: 1em;
     margin: 0 6em 0 6em;
     display: inline-block;
@@ -81,7 +81,7 @@ button {
 }
 
 .labelbutton {
-    margin: 1em .1em;
+    margin: 1em 0.1em;
     width: 3em;
 }
 
@@ -106,12 +106,12 @@ button {
 }
 
 #saveButton {
-    margin: 1em .1em 0 4em;
+    margin: 1em 0.1em 0 4em;
     width: 3em;
 }
 
 #loadButton {
-    margin: 1em .1em 0 4em;
+    margin: 1em 0.1em 0 4em;
     width: auto;
 }
 
@@ -137,15 +137,15 @@ button {
     width: 4em;
 }
 
-.labelnamenavigationbuttonright{
+.labelnamenavigationbuttonright {
     right: 0em;
 }
 
-.labelnamenavigationbuttonleft{
+.labelnamenavigationbuttonleft {
     left: 0em;
 }
 
-.labelcountgroup:hover>.labelnamenavigationbutton {
+.labelcountgroup:hover > .labelnamenavigationbutton {
     display: inline-block;
     font-size: 12pt;
 }
