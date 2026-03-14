@@ -96,7 +96,7 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             arrayTheta1 = math.clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
 
-            // saves last 10 J
+            // saves last 11 J
             oPreviousJ0.list[oPreviousJ0.index] = nJ0;
             oPreviousJ0.index = (oPreviousJ0.index + 1) % 11;
             nJ0 = funParm(oDebugParams, arrayTheta0).J;
