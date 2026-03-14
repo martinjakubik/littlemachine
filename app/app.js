@@ -196,10 +196,10 @@ class LabelMaker {
         this.navigationField = this.makeNavigationField();
         this.navigationField.setAttribute('value', this.decimal);
 
-        this.renderLoadButton();
-        this.renderClassifyButton();
         this.renderPictureNavigator();
         this.renderLabelControl();
+        this.renderLoadButton();
+        this.renderClassifyButton();
         this.renderSaveButton();
     }
 
