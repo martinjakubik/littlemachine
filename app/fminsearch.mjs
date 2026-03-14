@@ -82,6 +82,10 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
     };
 
     let nJ0, nJ1, nPreviousJ0;
+    let oPreviousJ0 = {
+        list: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        index: 0,
+    };
 
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
@@ -92,34 +96,41 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             arrayTheta1 = math.clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
 
-            // saves J
-            nPreviousJ0 = nJ0;
+            // saves last 10 J
+            oPreviousJ0.list[oPreviousJ0.index] = nJ0;
+            oPreviousJ0.index = (oPreviousJ0.index + 1) % 11;
             nJ0 = funParm(oDebugParams, arrayTheta0).J;
             nJ1 = funParm(oDebugParams, arrayTheta1).J;
 
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
             if (nJ1 < nJ0) {
-                if (Opt.display && Opt.displayLevel >= 2 && i % 10 === 0)
+                if (Opt.display && Opt.displayLevel >= 3 && i % 10 === 0)
                     console.log('f(th1) is less than f(th0)');
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
                 arrayTheta0 = math.clone(arrayTheta1);
             } else {
-                if (Opt.display && Opt.displayLevel >= 2 && i % 10 === 0)
+                if (Opt.display && Opt.displayLevel >= 3 && i % 10 === 0)
                     console.log('f(th1) is more than f(th0)');
                 // otherwise reverses and goes slower
                 step._data[j] = -(0.5 * step._data[j]);
             }
         }
 
+        nPreviousJ0 =
+            oPreviousJ0.list.reduce(
+                (accumulator, currentValue) => accumulator + currentValue,
+                0,
+            ) / oPreviousJ0.list.length;
         if (Opt.display && Opt.displayLevel >= 2 && i % 10 === 0)
             console.log(
                 `j0: ${nJ0}; prev j0: ${nPreviousJ0}; diff: ${Math.abs(nPreviousJ0 - nJ0)}`,
             );
         // breaks if the gradient is very small
-        if (Math.abs(nPreviousJ0 - nJ0) < 0.000000000001) {
-            // break;
+        const nGradientThreshold = 1.0e-19;
+        if (Math.abs(nPreviousJ0 - nJ0) < nGradientThreshold) {
+            break;
         }
 
         // logs every 10th iteration
