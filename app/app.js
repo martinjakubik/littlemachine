@@ -646,32 +646,39 @@ class LabelMaker {
     }
 
     drawAt (oEvent) {
-        const x = oEvent.pageX - this.canvasPosition.left;
-        const y = oEvent.pageY - this.canvasPosition.top;
+        const oTarget = oEvent ? oEvent.target : null;
+        if (oTarget) {
+            const x = oEvent.pageX - oTarget.offsetLeft;
+            const y = oEvent.pageY - oTarget.offsetTop;
 
-        const nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
-        const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
+            const nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
+            const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
 
-        // converts x, y coordinate to 0 .. 16
-        const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
-        let iNewState = 0;
-        const sOldBinaryNumber = this.labellist[this.decimal].binary;
-        const sPixelColor = sOldBinaryNumber.charAt(nPositionInBinaryString);
-        if (sPixelColor === '0') {
-            iNewState = 1;
+            // converts x, y coordinate to 0 .. 16
+            const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
+            let iNewState = 0;
+            const sOldBinaryNumber = this.labellist[this.decimal].binary;
+            const sPixelColor = sOldBinaryNumber.charAt(
+                nPositionInBinaryString,
+            );
+            if (sPixelColor === '0') {
+                iNewState = 1;
+            } else {
+                iNewState = 0;
+            }
+            const sNewBinaryNumber =
+                sOldBinaryNumber.substring(0, nPositionInBinaryString) +
+                iNewState +
+                sOldBinaryNumber.substring(nPositionInBinaryString + 1);
+
+            const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
+            this.navigationField.value = nDecimal;
+            this.movePicture();
+
+            this.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
-            iNewState = 0;
+            console.error('no click target found');
         }
-        const sNewBinaryNumber =
-            sOldBinaryNumber.substring(0, nPositionInBinaryString) +
-            iNewState +
-            sOldBinaryNumber.substring(nPositionInBinaryString + 1);
-
-        const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
-        this.navigationField.value = nDecimal;
-        this.movePicture();
-
-        this.drawPixel(nBlockX, nBlockY, iNewState);
     }
 }
 
