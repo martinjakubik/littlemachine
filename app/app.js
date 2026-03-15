@@ -196,27 +196,11 @@ class LabelMaker {
         this.navigationField = this.makeNavigationField();
         this.navigationField.setAttribute('value', this.decimal);
 
-        this.renderAllPictures();
         this.renderPictureNavigator();
         this.renderLabelControl();
         this.renderLoadButton();
         this.renderClassifyButton();
         this.renderSaveButton();
-    }
-
-    renderAllPictures () {
-        const oSampleImgBox = document.createElement('div');
-        oSampleImgBox.classList.add('sampleImgBox');
-        document.body.insertBefore(oSampleImgBox, null);
-        // 65536; 1st row rightmost: 11010000 == 208
-        // 8 rows == 1664
-        for (let i = 0; i < 3328; i++) {
-            const sSample = convertDecimalToBinary(i, 4);
-            const oSampleImg = document.createElement('img');
-            oSampleImg.src = `./resources/png16/${sSample}.png`;
-            oSampleImg.classList.add('sampleImg');
-            oSampleImgBox.insertBefore(oSampleImg, null);
-        }
     }
 
     renderPictureNavigator () {

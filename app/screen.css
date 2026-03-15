@@ -13,15 +13,6 @@ button {
     font-size: 4em;
 }
 
-.sampleImgBox {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.sampleImg {
-    width: 16px;
-}
-
 .picturenavigator {
     margin: 3em 0 0 16em;
     width: 26em;
