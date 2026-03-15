@@ -196,14 +196,39 @@ class LabelMaker {
         this.navigationField = this.makeNavigationField();
         this.navigationField.setAttribute('value', this.decimal);
 
-        this.renderPictureNavigator();
+        const oContainer = document.createElement('div');
+        oContainer.classList.add('container');
+        document.body.appendChild(oContainer);
+
+        this.renderPictureThumbnails(oContainer);
+        this.renderPictureNavigator(oContainer);
         this.renderLabelControl();
         this.renderLoadButton();
         this.renderClassifyButton();
         this.renderSaveButton();
     }
 
-    renderPictureNavigator () {
+    renderPictureThumbnails (oParentDiv) {
+        const oPictureThumbnails = document.createElement('div');
+        oPictureThumbnails.classList.add('pictureThumbnails');
+        const nNumberOfThumbnails = 200;
+        const nStep = MAX_NUMBER_OF_BOXES / nNumberOfThumbnails;
+        let oPicture, sPictureFilename;
+        for (
+            let nPicture = 0;
+            nPicture < MAX_NUMBER_OF_BOXES;
+            nPicture = nPicture + nStep
+        ) {
+            oPicture = document.createElement('img');
+            oPicture.classList.add('samplePicture');
+            sPictureFilename = convertDecimalToBinary(nPicture, 4);
+            oPicture.src = `./resources/png16/${sPictureFilename}.png`;
+            oPictureThumbnails.appendChild(oPicture);
+        }
+        oParentDiv.insertBefore(oPictureThumbnails, null);
+    }
+
+    renderPictureNavigator (oParentDiv) {
         const oPictureNavigator = document.createElement('div');
         oPictureNavigator.setAttribute('id', 'picturenavigator');
         LabelMaker.setClass(oPictureNavigator, 'picturenavigator');
@@ -219,7 +244,7 @@ class LabelMaker {
         oPictureNavigator.insertBefore(oButtonRight, null);
         oPictureNavigator.insertBefore(this.navigationField, null);
 
-        document.body.insertBefore(oPictureNavigator, null);
+        oParentDiv.insertBefore(oPictureNavigator, null);
 
         this.canvasPosition = {
             top: oCanvas.offsetTop,

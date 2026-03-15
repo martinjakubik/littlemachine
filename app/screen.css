@@ -13,6 +13,21 @@ button {
     font-size: 4em;
 }
 
+.container {
+    display: grid;
+    justify-content: center;
+}
+
+.pictureThumbnails {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.samplePicture {
+    width: 1em;
+    margin: 0.8em;
+}
+
 .picturenavigator {
     margin: 3em 0 0 16em;
     width: 26em;
