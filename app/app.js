@@ -260,11 +260,6 @@ class LabelMaker {
         oLabelControl.insertBefore(oLabelCountGroupNo, null);
         oLabelControl.insertBefore(oLabelCountGroupUnlabelled, null);
 
-        const oTrainingAccuracyText = document.createElement('p');
-        oTrainingAccuracyText.innerText = 'Training Set Accuracy: _';
-
-        oLabelControl.insertBefore(oTrainingAccuracyText, null);
-
         oParentDiv.insertBefore(oLabelControl, null);
     }
 
