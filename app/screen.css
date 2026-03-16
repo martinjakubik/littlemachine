@@ -90,8 +90,9 @@ button {
 }
 
 .labelbutton {
-    margin: 1em 0.3em;
+    margin: 1em 0.6em;
     width: 3em;
+    font-size: 3em;
 }
 
 #labelbuttonyes {
@@ -116,9 +117,13 @@ button {
     width: fit-content;
 }
 
+.labelcontrol {
+    width: 26em;
+}
+
 .labelcountgroup {
     display: grid;
-    justify-content: space-evenly;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .labelcountname {
