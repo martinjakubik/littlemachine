@@ -129,18 +129,17 @@ button {
 }
 
 .labelcountname {
-    display: inline-block;
-    width: 8em;
+    margin: 0.3em 0 0 0;
     text-align: right;
-    font-size: 1.5em;
+    font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
     color: #101010;
     grid-column: 2;
 }
 
 .labelcount {
-    margin: 0 0 0 1em;
-    font-size: 1.5em;
+    margin: 0.3em 0 0 1em;
+    font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
     color: #101010;
     grid-column: 3;
@@ -153,7 +152,7 @@ button {
 .labelnamenavigationbutton {
     display: none;
     width: 4em;
-    font-size: 12pt;
+    font-size: 1em;
 }
 
 .labelnamenavigationbuttonleft {
