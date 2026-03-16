@@ -171,7 +171,7 @@ class LabelMaker {
 
         this.renderPictureThumbnails(oContainer);
         this.renderPictureNavigator(oContainer);
-        this.renderLabelControl();
+        this.renderLabelControl(oContainer);
         this.renderLoadButton();
         this.renderClassifyButton();
         this.renderSaveButton();
@@ -227,7 +227,7 @@ class LabelMaker {
         this.drawAsSquare(sSample);
     }
 
-    renderLabelControl () {
+    renderLabelControl (oParentDiv) {
         const oLabelControl = document.createElement('div');
         oLabelControl.setAttribute('id', 'labelcontrol');
         oLabelControl.classList.add('labelcontrol');
@@ -265,7 +265,7 @@ class LabelMaker {
 
         oLabelControl.insertBefore(oTrainingAccuracyText, null);
 
-        document.body.insertBefore(oLabelControl, null);
+        oParentDiv.insertBefore(oLabelControl, null);
     }
 
     renderDotColors () {
