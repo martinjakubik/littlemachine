@@ -156,10 +156,6 @@ class LabelMaker {
         };
     }
 
-    static setClass (oView, sClass) {
-        oView.setAttribute('class', sClass);
-    }
-
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
@@ -204,7 +200,7 @@ class LabelMaker {
     renderPictureNavigator (oParentDiv) {
         const oPictureNavigator = document.createElement('div');
         oPictureNavigator.setAttribute('id', 'picturenavigator');
-        LabelMaker.setClass(oPictureNavigator, 'picturenavigator');
+        oPictureNavigator.classList.add('picturenavigator');
 
         const oButtonLeft = this.makeNavigationButton(LabelMaker.sides().left);
         const oCanvas = this.makeCanvas();
@@ -234,11 +230,11 @@ class LabelMaker {
     renderLabelControl () {
         const oLabelControl = document.createElement('div');
         oLabelControl.setAttribute('id', 'labelcontrol');
-        LabelMaker.setClass(oLabelControl, 'labelcontrol');
+        oLabelControl.classList.add('labelcontrol');
 
         const oLabelDots = document.createElement('div');
         oLabelDots.setAttribute('id', 'labeldots');
-        LabelMaker.setClass(oLabelDots, 'labeldots');
+        oLabelDots.classList.add('labeldots');
 
         this.dotYes = this.makeLabelDot(LabelMaker.labels().yes);
         this.dotNo = this.makeLabelDot(LabelMaker.labels().no);
@@ -351,7 +347,7 @@ class LabelMaker {
 
         const sFieldClass = 'navigationfield';
         const sFieldId = 'navigationfield';
-        LabelMaker.setClass(oField, sFieldClass);
+        oField.classList.add(sFieldClass);
         oField.setAttribute('id', sFieldId);
         oField.onchange = this.movePicture.bind(this);
 
@@ -365,7 +361,7 @@ class LabelMaker {
 
         const sDotClass = 'labeldot';
         const sDotId = `labeldot${sLabel}`;
-        LabelMaker.setClass(oDot, sDotClass);
+        oDot.classList.add(sDotClass);
         oDot.setAttribute('id', sDotId);
 
         return oDot;
@@ -378,7 +374,7 @@ class LabelMaker {
 
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
-        LabelMaker.setClass(oButton, sButtonClass);
+        oButton.classList.add(sButtonClass);
         oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.setLabel.bind(this, iLabel);
 
@@ -388,17 +384,17 @@ class LabelMaker {
     makeLabelCountGroup (sLabelName) {
         const labelCountGroup = document.createElement('div');
         labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
-        LabelMaker.setClass(labelCountGroup, 'labelcountgroup');
+        labelCountGroup.classList.add('labelcountgroup');
 
         const labelCountLabel = document.createElement('span');
         labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
-        LabelMaker.setClass(labelCountLabel, 'labelcountname');
+        labelCountLabel.classList.add('labelcountname');
         labelCountLabel.textContent = sLabelName;
 
         const sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
         this[sCamelCaseLabelName] = document.createElement('span');
         this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
-        LabelMaker.setClass(this[sCamelCaseLabelName], 'labelcount');
+        this[sCamelCaseLabelName].classList.add('labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
         const oButtonNextByLabel = this.makeNavigationButton(
