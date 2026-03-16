@@ -21,6 +21,7 @@ button {
 .pictureThumbnails {
     display: flex;
     flex-wrap: wrap;
+    width: 60em;
 }
 
 .samplePicture {
