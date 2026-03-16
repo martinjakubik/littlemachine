@@ -156,35 +156,8 @@ class LabelMaker {
         };
     }
 
-    static addClass (oView, sClass) {
-        const sClasses = oView.getAttribute('class');
-
-        if (sClasses.indexOf(sClass) < 0) {
-            oView.setAttribute(
-                'class',
-                oView.getAttribute('class') + ' ' + sClass,
-            );
-        }
-    }
-
     static setClass (oView, sClass) {
         oView.setAttribute('class', sClass);
-    }
-
-    static removeClass (oView, sClass) {
-        const sCurrentClasses = oView.getAttribute('class');
-        const nStartIndex = sCurrentClasses.indexOf(sClass);
-        const nEndIndex = nStartIndex + sClass.length;
-        let sUpdatedClasses;
-
-        if (nStartIndex > 0 && nEndIndex <= sCurrentClasses.length) {
-            sUpdatedClasses = (
-                sCurrentClasses.substr(0, nStartIndex) +
-                ' ' +
-                sCurrentClasses.substr(nEndIndex)
-            ).trim();
-            oView.setAttribute('class', sUpdatedClasses);
-        }
     }
 
     constructor () {
@@ -301,14 +274,14 @@ class LabelMaker {
 
     renderDotColors () {
         if (this.labellist[this.decimal].label === 'yes') {
-            LabelMaker.removeClass(this.dotNo, 'on');
-            LabelMaker.addClass(this.dotYes, 'on');
+            this.dotNo.classList.remove('on');
+            this.dotYes.classList.add('on');
         } else if (this.labellist[this.decimal].label === 'no') {
-            LabelMaker.removeClass(this.dotYes, 'on');
-            LabelMaker.addClass(this.dotNo, 'on');
+            this.dotYes.classList.remove('on');
+            this.dotNo.classList.add('on');
         } else {
-            LabelMaker.removeClass(this.dotYes, 'on');
-            LabelMaker.removeClass(this.dotNo, 'on');
+            this.dotYes.classList.remove('on');
+            this.dotNo.classList.remove('on');
         }
     }
 
@@ -362,12 +335,12 @@ class LabelMaker {
             sButtonId = `navigationbutton${sSide}`;
             oButton.onclick = this.incrementPicture.bind(this, iIncrement);
         }
-        LabelMaker.setClass(oButton, sButtonClass);
+        oButton.classList.add(sButtonClass);
 
         const sButtonSideClass = `navigationbutton${sSide}`;
         const sButtonLabelNameSideClass = `labelnamenavigationbutton${sSide}`;
-        LabelMaker.addClass(oButton, sButtonSideClass);
-        LabelMaker.addClass(oButton, sButtonLabelNameSideClass);
+        oButton.classList.add(sButtonSideClass);
+        oButton.classList.add(sButtonLabelNameSideClass);
 
         oButton.setAttribute('id', sButtonId);
         return oButton;
