@@ -3,12 +3,12 @@ body {
 }
 
 button {
-    background-color: #000000;
+    background-color: #efefef;
     height: 1.4em;
     width: 1.4em;
-    border: 2px solid #00ff00;
+    border: 2px solid #101010;
     border-radius: 0.1em;
-    color: #00ff00;
+    color: #101010;
     font-family: 'Courier New', Courier, monospace;
     font-size: 4em;
 }
@@ -37,7 +37,7 @@ button {
     position: relative;
     top: 0.4em;
     margin: 0 1em 0 1em;
-    border: 2px solid #00ff00;
+    border: 2px solid #101010;
     border-radius: 0.4em;
 }
 
@@ -47,11 +47,11 @@ button {
 }
 
 .navigationfield {
-    background-color: #000000;
-    color: #00ff00;
+    background-color: #efefef;
+    color: #101010;
     width: 5em;
     margin: 1em 1em 1em 6em;
-    border: 2px solid #00ff00;
+    border: 2px solid #101010;
     border-radius: 0.1em;
     text-align: center;
     font-size: 1.5em;
@@ -132,7 +132,7 @@ button {
     text-align: right;
     font-size: 1.5em;
     font-family: 'Courier New', Courier, monospace;
-    color: #00ff00;
+    color: #101010;
     grid-column: 2;
 }
 
@@ -140,7 +140,7 @@ button {
     margin: 0 0 0 1em;
     font-size: 1.5em;
     font-family: 'Courier New', Courier, monospace;
-    color: #00ff00;
+    color: #101010;
     grid-column: 3;
 }
 
