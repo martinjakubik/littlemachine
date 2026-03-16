@@ -172,9 +172,9 @@ class LabelMaker {
         this.renderPictureThumbnails(oContainer);
         this.renderPictureNavigator(oContainer);
         this.renderLabelControl(oContainer);
-        this.renderLoadButton();
-        this.renderClassifyButton();
-        this.renderSaveButton();
+        this.renderLoadButton(oContainer);
+        this.renderClassifyButton(oContainer);
+        this.renderSaveButton(oContainer);
     }
 
     renderPictureThumbnails (oParentDiv) {
@@ -386,13 +386,13 @@ class LabelMaker {
         labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
         labelCountGroup.classList.add('labelcountgroup');
 
-        const labelCountLabel = document.createElement('span');
+        const labelCountLabel = document.createElement('div');
         labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
         labelCountLabel.classList.add('labelcountname');
         labelCountLabel.textContent = sLabelName;
 
         const sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
-        this[sCamelCaseLabelName] = document.createElement('span');
+        this[sCamelCaseLabelName] = document.createElement('div');
         this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
         this[sCamelCaseLabelName].classList.add('labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
@@ -414,25 +414,23 @@ class LabelMaker {
         return labelCountGroup;
     }
 
-    renderLoadButton () {
-        const oButton = createButton('loadButton', 'Load Data');
+    renderLoadButton (oParentDiv) {
+        const oButton = createButton('loadButton', 'Load Data', oParentDiv);
         oButton.onclick = this.loadLabels.bind(this);
-
-        return oButton;
     }
 
-    renderSaveButton () {
-        const oButton = createButton('saveButton', 'Save');
+    renderSaveButton (oParentDiv) {
+        const oButton = createButton('saveButton', 'Save', oParentDiv);
         oButton.onclick = this.saveLabels.bind(this);
-
-        return oButton;
     }
 
-    renderClassifyButton () {
-        const oButton = createButton('classifyButton', 'Start Training');
+    renderClassifyButton (oParentDiv) {
+        const oButton = createButton(
+            'classifyButton',
+            'Start Training',
+            oParentDiv,
+        );
         oButton.onclick = this.classifyButtonTap.bind(this);
-
-        return oButton;
     }
 
     movePicture () {

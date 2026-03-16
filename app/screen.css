@@ -15,7 +15,7 @@ button {
 
 .container {
     display: grid;
-    justify-content: center;
+    justify-items: center;
 }
 
 .pictureThumbnails {
@@ -30,7 +30,6 @@ button {
 }
 
 .picturenavigator {
-    margin: 3em 0 0 16em;
     width: 26em;
 }
 
@@ -66,12 +65,6 @@ button {
     content: '>';
 }
 
-.labelcontrol {
-    position: relative;
-    margin: 1em 1em 1em 16em;
-    width: 26em;
-}
-
 .labeldot {
     width: 1em;
     border-radius: 0.4em;
@@ -97,7 +90,7 @@ button {
 }
 
 .labelbutton {
-    margin: 1em 0.1em;
+    margin: 1em 0.3em;
     width: 3em;
 }
 
@@ -117,18 +110,15 @@ button {
     content: 'no';
 }
 
-#classifyButton {
-    width: auto;
-}
-
-#saveButton {
-    margin: 1em 0.1em 0 4em;
-    width: 3em;
-}
-
+#classifyButton,
+#saveButton,
 #loadButton {
-    margin: 1em 0.1em 0 4em;
-    width: auto;
+    width: fit-content;
+}
+
+.labelcountgroup {
+    display: grid;
+    justify-content: space-evenly;
 }
 
 .labelcountname {
@@ -138,6 +128,7 @@ button {
     font-size: 1.5em;
     font-family: 'Courier New', Courier, monospace;
     color: #00ff00;
+    grid-column: 2;
 }
 
 .labelcount {
@@ -145,25 +136,29 @@ button {
     font-size: 1.5em;
     font-family: 'Courier New', Courier, monospace;
     color: #00ff00;
+    grid-column: 3;
+}
+
+.navigationbuttonright {
+    right: 0em;
 }
 
 .labelnamenavigationbutton {
     display: none;
-    position: absolute;
     width: 4em;
-}
-
-.labelnamenavigationbuttonright {
-    right: 0em;
+    font-size: 12pt;
 }
 
 .labelnamenavigationbuttonleft {
-    left: 0em;
+    grid-column: 1;
+}
+
+.labelnamenavigationbuttonright {
+    grid-column: 4;
 }
 
 .labelcountgroup:hover > .labelnamenavigationbutton {
-    display: inline-block;
-    font-size: 12pt;
+    display: initial;
 }
 
 h1 {
