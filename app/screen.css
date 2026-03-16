@@ -58,6 +58,10 @@ button {
     font-size: 1.5em;
 }
 
+.navigationbuttonright {
+    justify-self: right;
+}
+
 .navigationbuttonleft::before {
     content: '<';
 }
@@ -140,10 +144,6 @@ button {
 .labelcount {
     margin: 0.3em 0 0 1em;
     grid-column: 3;
-}
-
-.navigationbuttonright {
-    right: 0em;
 }
 
 .labelnamenavigationbutton {
