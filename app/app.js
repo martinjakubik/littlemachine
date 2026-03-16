@@ -541,7 +541,7 @@ class LabelMaker {
     }
 
     drawPixelOn (x, y) {
-        this.context.strokeStyle = 'green';
+        this.context.strokeStyle = '#efefef';
         this.context.lineWidth = '2';
 
         this.drawShape(LabelMaker.oOutline(x, y));
@@ -549,7 +549,7 @@ class LabelMaker {
         this.context.lineWidth = '6';
         this.drawShape(LabelMaker.oInterlace1(x, y));
 
-        this.context.strokeStyle = '#004000';
+        this.context.strokeStyle = '#404040';
         this.drawShape(LabelMaker.oInterlace2(x, y));
     }
 
