@@ -10,7 +10,7 @@ button {
     border-radius: 0.1em;
     color: #101010;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 4em;
+    font-size: 3em;
 }
 
 .container {
@@ -44,6 +44,7 @@ button {
 .navigationbutton {
     vertical-align: text-bottom;
     height: 3em;
+    font-size: 4em;
 }
 
 .navigationfield {
@@ -115,6 +116,7 @@ button {
 #saveButton,
 #loadButton {
     width: fit-content;
+    margin: 0.2em;
 }
 
 .labelcontrol {
