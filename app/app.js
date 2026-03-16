@@ -194,7 +194,7 @@ class LabelMaker {
             oPicture.src = `./resources/png16/${sPictureFilename}.png`;
             oPictureThumbnails.appendChild(oPicture);
         }
-        oParentDiv.insertBefore(oPictureThumbnails, null);
+        oParentDiv.appendChild(oPictureThumbnails);
     }
 
     renderPictureNavigator (oParentDiv) {
@@ -208,12 +208,12 @@ class LabelMaker {
             LabelMaker.sides().right,
         );
 
-        oPictureNavigator.insertBefore(oButtonLeft, null);
-        oPictureNavigator.insertBefore(oCanvas, null);
-        oPictureNavigator.insertBefore(oButtonRight, null);
-        oPictureNavigator.insertBefore(this.navigationField, null);
+        oPictureNavigator.appendChild(oButtonLeft);
+        oPictureNavigator.appendChild(oCanvas);
+        oPictureNavigator.appendChild(oButtonRight);
+        oPictureNavigator.appendChild(this.navigationField);
 
-        oParentDiv.insertBefore(oPictureNavigator, null);
+        oParentDiv.appendChild(oPictureNavigator);
 
         this.canvasPosition = {
             top: oCanvas.offsetTop,
@@ -244,23 +244,23 @@ class LabelMaker {
         const oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
         const oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
 
-        oLabelDots.insertBefore(this.dotYes, null);
-        oLabelDots.insertBefore(this.dotNo, null);
+        oLabelDots.appendChild(this.dotYes);
+        oLabelDots.appendChild(this.dotNo);
 
         const oLabelCountGroupYes = this.makeLabelCountGroup('yes');
         const oLabelCountGroupNo = this.makeLabelCountGroup('no');
         const oLabelCountGroupUnlabelled =
             this.makeLabelCountGroup('unlabelled');
 
-        oLabelControl.insertBefore(oLabelDots, null);
-        oLabelControl.insertBefore(oButtonYes, null);
-        oLabelControl.insertBefore(oButtonNo, null);
+        oLabelControl.appendChild(oLabelDots);
+        oLabelControl.appendChild(oButtonYes);
+        oLabelControl.appendChild(oButtonNo);
 
-        oLabelControl.insertBefore(oLabelCountGroupYes, null);
-        oLabelControl.insertBefore(oLabelCountGroupNo, null);
-        oLabelControl.insertBefore(oLabelCountGroupUnlabelled, null);
+        oLabelControl.appendChild(oLabelCountGroupYes);
+        oLabelControl.appendChild(oLabelCountGroupNo);
+        oLabelControl.appendChild(oLabelCountGroupUnlabelled);
 
-        oParentDiv.insertBefore(oLabelControl, null);
+        oParentDiv.appendChild(oLabelControl);
     }
 
     renderDotColors () {
@@ -401,10 +401,10 @@ class LabelMaker {
             sLabelName,
         );
 
-        labelCountGroup.insertBefore(oButtonPreviousByLabel, null);
-        labelCountGroup.insertBefore(labelCountLabel, null);
-        labelCountGroup.insertBefore(this[sCamelCaseLabelName], null);
-        labelCountGroup.insertBefore(oButtonNextByLabel, null);
+        labelCountGroup.appendChild(oButtonPreviousByLabel);
+        labelCountGroup.appendChild(labelCountLabel);
+        labelCountGroup.appendChild(this[sCamelCaseLabelName]);
+        labelCountGroup.appendChild(oButtonNextByLabel);
 
         return labelCountGroup;
     }
