@@ -90,13 +90,13 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
-        // takes a step for each parameter
+        // takes a step for each parameter - or.... each example?
         for (let j = 0; j < m; j++) {
             oDebugParams.iteration_j = j;
             arrayTheta1 = math.clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
 
-            // saves last 11 J
+            // saves last 11 costs (J)
             oPreviousJ0.list[oPreviousJ0.index] = nJ0;
             oPreviousJ0.index = (oPreviousJ0.index + 1) % 11;
             nJ0 = funParm(oDebugParams, arrayTheta0).J;

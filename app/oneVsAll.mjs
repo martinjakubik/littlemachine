@@ -5,10 +5,10 @@ const oneVsAll = function (matrixX0, arrayY, nLabelCount, nLambda) {
     // X0 is expected to be a matrix of parameters; 2000 rows with 16 columns is a reasonable size
     const aMatrixSize = matrixX0.size();
 
-    // m is the row count
+    // m is the row count (ex. 2000)
     const m = aMatrixSize[0];
 
-    // n is the column count
+    // n is the column count (ex. 16)
     const n = aMatrixSize[1];
 
     // allTheta has 2 rows (1 per yes/no label), and 17 columns (16 parameters plus a placeholder zero for the label)
