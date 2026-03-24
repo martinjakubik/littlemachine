@@ -11,7 +11,7 @@ app/learnhypertext.mjs
 app/math.js
 app/math.js.map
 app/resources
-app/lib/js/js
+app/lib/*
 
 js/lib
 
