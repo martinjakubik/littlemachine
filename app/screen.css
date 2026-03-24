@@ -1,11 +1,11 @@
 body {
     background-color: #ffffff;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 2em;
 }
 
 button {
     background-color: #efefef;
+    font-family: 'Courier New', Courier, monospace;
     height: 1.4em;
     width: 1.4em;
     border: 2px solid #101010;
@@ -15,7 +15,7 @@ button {
 }
 
 .step {
-    width: 20em;
+    width: 46em;
 }
 
 .container {
@@ -169,11 +169,18 @@ button {
 }
 
 h1 {
+    font-size: 3em;
     color: green;
     text-align: center;
 }
 
 p {
+    font-size: 2em;
     color: green;
     text-align: center;
+}
+
+ul {
+    font-size: 2em;
+    color: green;
 }
