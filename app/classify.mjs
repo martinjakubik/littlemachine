@@ -1,6 +1,9 @@
 import { oneVsAll } from './oneVsAll.mjs';
+import { createMathLib } from './lib/js/mathematix/index.js';
 
 const classify = function (matrixData) {
+    const mathlib = createMathLib('naive');
+
     // m is the number of rows, so 2000 could be a reasonable size
     const m = matrixData.size()[0];
 
@@ -21,7 +24,13 @@ const classify = function (matrixData) {
     const nStartTime = Date.now();
     console.log('starting classification');
 
-    const arrayAllTheta = oneVsAll(matrixX, arrayY, nLabelCount, nLambda);
+    const arrayAllTheta = oneVsAll(
+        mathlib,
+        matrixX,
+        arrayY,
+        nLabelCount,
+        nLambda,
+    );
 
     const nEndTime = Date.now();
     console.log(`finished classification; took ${nEndTime - nStartTime}`);

@@ -3,6 +3,7 @@ import { sigmoid } from './sigmoid.mjs';
 
 const lrCostFunction = function (
     oDebugParams,
+    mathlib,
     arrayTheta,
     matrixX,
     arrayY,

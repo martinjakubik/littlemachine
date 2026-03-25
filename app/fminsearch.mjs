@@ -43,7 +43,7 @@
     number of iterations, initial step vector and the display switch, for example
     Parms = fminsearch(fun, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
 */
-const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
+const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
     if (!Opt) {
         Opt = {};
     }
@@ -77,8 +77,8 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
     let step = Opt.step;
 
     // function (of Parameters) to minimize
-    const funParm = (oDebugParams, arrayTheta) => {
-        return fun(oDebugParams, arrayTheta, x);
+    const funParm = (oDebugParams, mathlib, arrayTheta) => {
+        return fun(oDebugParams, mathlib, arrayTheta, x);
     };
 
     let nJ0, nJ1, nPreviousJ0;
@@ -99,8 +99,8 @@ const fminsearch = function (oDebugParams, fun, Parm0, x, y, Opt) {
             // saves last 11 costs (J)
             oPreviousJ0.list[oPreviousJ0.index] = nJ0;
             oPreviousJ0.index = (oPreviousJ0.index + 1) % 11;
-            nJ0 = funParm(oDebugParams, arrayTheta0).J;
-            nJ1 = funParm(oDebugParams, arrayTheta1).J;
+            nJ0 = funParm(oDebugParams, mathlib, arrayTheta0).J;
+            nJ1 = funParm(oDebugParams, mathlib, arrayTheta1).J;
 
             // checks if parm value going in the right direction
             // fun(arrayTheta1, x, i, j);
