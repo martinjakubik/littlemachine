@@ -87,6 +87,12 @@ const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
         index: 0,
     };
 
+    let oDisplayObject = {
+        i: 0,
+        J: 0,
+        theta: [],
+    };
+
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
@@ -133,6 +139,10 @@ const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
             break;
         }
 
+        oDisplayObject.i = i;
+        oDisplayObject.J = nJ0;
+        oDisplayObject.theta = arrayTheta0;
+
         // logs every 10th iteration
         if (Opt.display && Opt.displayLevel >= 1 && i % 10 === 0) {
             console.log(i + 1, nJ0, arrayTheta0);
@@ -140,6 +150,14 @@ const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
         // logs the last 10 iterations
         if (Opt.display && Opt.displayLevel >= 1 && i > Opt.maxIter - 10) {
             console.log(i + 1, nJ0, arrayTheta0);
+        }
+        // displays every 10th iteration on UI
+        if (Opt.displayFunction && i % 10 === 0) {
+            Opt.displayFunction(oDisplayObject);
+        }
+        // displays the last 10 iterations on UI
+        if (Opt.displayFunction && i > Opt.maxIter - 10) {
+            Opt.displayFunction(oDisplayObject);
         }
     }
     return arrayTheta0;
