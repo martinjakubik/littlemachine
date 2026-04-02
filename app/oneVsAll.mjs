@@ -45,8 +45,13 @@ const oneVsAll = function (
     const arrayYPerLabel = math.map(arrayY, (nValue) => {
         return nValue === label ? 1 : 0;
     });
+
+    // for gradientThreshold:
+    // use 1.0e-19 as a reasonable value to stop the fminsearch
+    // use 1.0e-6 to stop relatively quickly for debugging
     const oFMinSearchOptions = {
         maxIter: 1000,
+        gradientThreshold: 1.0e-6,
         display: true,
         displayLevel: 1,
         displayFunction: oDisplayOptions.displayFunction,

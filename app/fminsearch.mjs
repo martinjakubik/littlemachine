@@ -101,6 +101,10 @@ const fminsearch = function (
         theta: [],
     };
 
+    const nDefaultGradientThreshold = 1.0e-19;
+    const nGradientThreshold =
+        Opt.gradientThreshold || nDefaultGradientThreshold;
+
     // repeats up to a max count of iterations
     for (let i = 0; i < Opt.maxIter; i++) {
         oDebugParams.iteration_i = i;
@@ -149,8 +153,8 @@ const fminsearch = function (
             console.log(
                 `j0: ${nJ0}; prev j0: ${nPreviousJ0}; diff: ${Math.abs(nPreviousJ0 - nJ0)}`,
             );
+
         // breaks if the gradient is very small
-        const nGradientThreshold = 1.0e-19;
         if (Math.abs(nPreviousJ0 - nJ0) < nGradientThreshold) {
             break;
         }
