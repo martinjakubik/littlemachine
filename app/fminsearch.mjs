@@ -27,13 +27,13 @@
 
     --
 
-    fun = function(x, Parm)
+    fnCalculateCost = function(x, Parm)
 
     example:
     x = [32, 37, 42, 47, 52, 57, 62, 67, 72, 77, 82, 87, 92];
     y = [749, 1525, 1947, 2201, 2380, 2537, 2671, 2758, 2803, 2943, 3007, 2979, 2992]
-    fun = function (x, P) { return x.map( function(xi) { return (P[0]+1/(1/(P[1]*(xi-P[2]))+1/P[3])) }) }
-    Parms = fminsearch(fun, [100, 30, 10, 5000], x, y)
+    fnCalculateCost = function (x, P) { return x.map( function(xi) { return (P[0]+1/(1/(P[1]*(xi-P[2]))+1/P[3])) }) }
+    Parms = fminsearch(fnCalculateCost, [100, 30, 10, 5000], x, y)
 
     Another test:
     x = [32, 37, 42, 47, 52, 57, 62, 67, 72, 77, 82, 87, 92];
@@ -41,9 +41,17 @@
 
     Opt is an object will all other parameters, from the objective function (cost function), to the
     number of iterations, initial step vector and the display switch, for example
-    Parms = fminsearch(fun, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
+    Parms = fminsearch(fnCalculateCost, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
 */
-const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
+const fminsearch = function (
+    oDebugParams,
+    mathlib,
+    fnCalculateCost,
+    Parm0,
+    x,
+    y,
+    Opt,
+) {
     if (!Opt) {
         Opt = {};
     }
@@ -77,8 +85,8 @@ const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
     let step = Opt.step;
 
     // function (of Parameters) to minimize
-    const funParm = (oDebugParams, mathlib, arrayTheta) => {
-        return fun(oDebugParams, mathlib, arrayTheta, x);
+    const fnCalculateCostParametrized = (oDebugParams, mathlib, arrayTheta) => {
+        return fnCalculateCost(oDebugParams, mathlib, arrayTheta, x);
     };
 
     let nJ0, nJ1, nPreviousJ0;
@@ -105,11 +113,19 @@ const fminsearch = function (oDebugParams, mathlib, fun, Parm0, x, y, Opt) {
             // saves last 11 costs (J)
             oPreviousJ0.list[oPreviousJ0.index] = nJ0;
             oPreviousJ0.index = (oPreviousJ0.index + 1) % 11;
-            nJ0 = funParm(oDebugParams, mathlib, arrayTheta0).J;
-            nJ1 = funParm(oDebugParams, mathlib, arrayTheta1).J;
+            nJ0 = fnCalculateCostParametrized(
+                oDebugParams,
+                mathlib,
+                arrayTheta0,
+            ).J;
+            nJ1 = fnCalculateCostParametrized(
+                oDebugParams,
+                mathlib,
+                arrayTheta1,
+            ).J;
 
             // checks if parm value going in the right direction
-            // fun(arrayTheta1, x, i, j);
+            // fnCalculateCost(arrayTheta1, x, i, j);
             if (nJ1 < nJ0) {
                 if (Opt.display && Opt.displayLevel >= 3 && i % 10 === 0)
                     console.log('f(th1) is less than f(th0)');
