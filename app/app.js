@@ -513,9 +513,9 @@ class LabelMaker {
         saveJsonToFile(this.labellist, 'labellist.json');
     }
 
-    async classifyButtonTap () {
+    classifyButtonTap () {
         const matrixLabelList = convertToMatrix(this.labellist);
-        await classify(matrixLabelList, {
+        classify(matrixLabelList, {
             displayFunction: this.updateTrainingDisplay.bind(this),
         });
     }
