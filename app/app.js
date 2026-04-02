@@ -175,6 +175,7 @@ class LabelMaker {
         this.renderLoadButton(oContainer);
         this.renderClassifyButton(oContainer);
         this.renderSaveButton(oContainer);
+        this.makeTrainingDisplay(oContainer);
     }
 
     renderPictureThumbnails (oParentDiv) {
@@ -409,6 +410,12 @@ class LabelMaker {
         return labelCountGroup;
     }
 
+    makeTrainingDisplay (oParentDiv) {
+        this.trainingDisplayDiv = document.createElement('div');
+        this.trainingDisplayDiv.classList.add('trainingDisplay');
+        oParentDiv.appendChild(this.trainingDisplayDiv);
+    }
+
     renderLoadButton (oParentDiv) {
         const oButton = createButton('loadButton', 'Load Data', oParentDiv);
         oButton.onclick = this.loadLabels.bind(this);
@@ -508,7 +515,9 @@ class LabelMaker {
 
     classifyButtonTap () {
         const matrixLabelList = convertToMatrix(this.labellist);
-        classify(matrixLabelList);
+        classify(matrixLabelList, {
+            displayFunction: this.updateTrainingDisplay.bind(this),
+        });
     }
 
     drawAsSquare (sSample) {
@@ -641,6 +650,10 @@ class LabelMaker {
         } else {
             console.error('no click target found');
         }
+    }
+
+    updateTrainingDisplay (oDisplayObject) {
+        this.trainingDisplayDiv.innerHTML = oDisplayObject.i;
     }
 }
 

@@ -1,7 +1,14 @@
 import { fminsearch } from './fminsearch.mjs';
 import { lrCostFunction } from './lrCostFunction.mjs';
 
-const oneVsAll = function (mathlib, matrixX0, arrayY, nLabelCount, nLambda) {
+const oneVsAll = function (
+    mathlib,
+    matrixX0,
+    arrayY,
+    nLabelCount,
+    nLambda,
+    oDisplayOptions,
+) {
     // X0 is expected to be a matrix of parameters; 2000 rows with 16 columns is a reasonable size
     const aMatrixSize = matrixX0.size();
 
@@ -42,6 +49,7 @@ const oneVsAll = function (mathlib, matrixX0, arrayY, nLabelCount, nLambda) {
         maxIter: 1000,
         display: true,
         displayLevel: 1,
+        displayFunction: oDisplayOptions.displayFunction,
     };
     fminsearch(
         oDebugParams,

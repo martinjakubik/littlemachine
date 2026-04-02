@@ -1,7 +1,7 @@
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
 
-const classify = function (matrixData) {
+const classify = function (matrixData, oDisplayOptions) {
     const mathlib = createMathLib('naive');
 
     // m is the number of rows, so 2000 could be a reasonable size
@@ -30,6 +30,7 @@ const classify = function (matrixData) {
         arrayY,
         nLabelCount,
         nLambda,
+        oDisplayOptions,
     );
 
     const nEndTime = Date.now();
