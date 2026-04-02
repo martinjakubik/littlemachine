@@ -167,6 +167,14 @@ const fminsearch = function (
         if (Opt.display && Opt.displayLevel >= 1 && i > Opt.maxIter - 10) {
             console.log(i + 1, nJ0, arrayTheta0);
         }
+        // displays every 10th iteration
+        if (Opt.displayFunction && i % 10 === 0) {
+            Opt.displayFunction(oDisplayObject);
+        }
+        // displays the last 10 iterations
+        if (Opt.displayFunction && i > Opt.maxIter - 10) {
+            Opt.displayFunction(oDisplayObject);
+        }
     }
     return arrayTheta0;
 };
