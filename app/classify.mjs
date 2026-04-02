@@ -1,6 +1,18 @@
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
 
+addEventListener('message', (message) => {
+    const oMessagePayload = message.data.payload || {};
+    const sCommand = message.data.command || 'none';
+    switch (sCommand) {
+    case 'start':
+        classify(oMessagePayload.labelList, oMessagePayload.options);
+        break;
+    default:
+        break;
+    }
+});
+
 const classify = function (matrixData, oDisplayOptions) {
     const mathlib = createMathLib('naive');
 

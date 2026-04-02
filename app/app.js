@@ -159,6 +159,7 @@ class LabelMaker {
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
+        this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
     }
 
     renderMainView () {
@@ -518,6 +519,10 @@ class LabelMaker {
         classify(matrixLabelList, {
             displayFunction: this.updateTrainingDisplay.bind(this),
         });
+        // this.classifyWorker.postMessage({
+        //     command: 'start',
+        //     payload: { labelList: matrixLabelList, options: {} },
+        // });
     }
 
     drawAsSquare (sSample) {
