@@ -21,7 +21,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                 );
             })
             .catch((oError) => {
-                console.log(oError);
+                console.log(`[error] details: ${oError}`);
             });
 
         // copies MathJS lib as browser (one file)
@@ -35,7 +35,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                 );
             })
             .catch((oError) => {
-                console.log(oError);
+                console.log(`[error] details: ${oError}`);
             });
 
         oFs.copyFile(
@@ -48,7 +48,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                 );
             })
             .catch((oError) => {
-                console.log(oError);
+                console.log(`[error] details: ${oError}`);
             });
 
         // copies MathJS lib as ESM
@@ -73,15 +73,15 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                         );
                     })
                     .catch((oError) => {
-                        console.log(oError);
+                        console.log(`[error] details: ${oError}`);
                     });
             })
             .catch((oError) => {
-                console.log(oError);
+                console.log(`[error] details: ${oError}`);
             });
     })
     .catch((oError) => {
-        console.log(oError);
+        console.log(`[error] details: ${oError}`);
     });
 
 oFs.mkdir(sResourcePath, oMkDirOptions)
@@ -96,9 +96,9 @@ oFs.mkdir(sResourcePath, oMkDirOptions)
                 console.log(oResult);
             })
             .catch((oError) => {
-                console.log(oError);
+                console.log(`[error] details: ${oError}`);
             });
     })
     .catch((oError) => {
-        console.log(oError);
+        console.log(`[error] details: ${oError}`);
     });
