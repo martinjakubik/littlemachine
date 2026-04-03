@@ -22,6 +22,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                 console.log(oError);
             });
 
+        // copies MathJS lib as browser (one file)
         oFs.copyFile(
             './node_modules/mathjs/lib/browser/math.js',
             `${sLibPath}/math.js`,
@@ -39,6 +40,25 @@ oFs.mkdir(sLibPath, oMkDirOptions)
         )
             .then((oResult) => {
                 console.log(oResult);
+            })
+            .catch((oError) => {
+                console.log(oError);
+            });
+
+        // copies MathJS lib as ESM
+        const sLibPath_MathJs = `${sLibPath}/mathjs`;
+        const oLibMathJsCopyOptions = {
+            recursive: true,
+        };
+        oFs.mkdir(sLibPath_MathJs, oMkDirOptions)
+            .then((oResult) => {
+                console.log(oResult);
+
+                oFs.cp(
+                    './node_modules/mathjs/lib/esm/',
+                    sLibPath_MathJs,
+                    oLibMathJsCopyOptions,
+                );
             })
             .catch((oError) => {
                 console.log(oError);

@@ -12,8 +12,11 @@ app/math.js
 app/math.js.map
 app/resources
 app/lib/*
+app/mathjs
 
 js/lib
+
+lib
 
 resources/boxes.txt
 resources/boxes*.txt
