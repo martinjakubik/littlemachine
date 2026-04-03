@@ -9,14 +9,16 @@ const oMkDirOptions = {
 
 oFs.mkdir(sLibPath, oMkDirOptions)
     .then((oResult) => {
-        console.log(oResult);
+        console.log(`[success] mkdir ${sLibPath}; details: '${oResult}'`);
 
         oFs.copyFile(
             './node_modules/learnhypertext/js/index.mjs',
             `${sLibPath}/learnhypertext.mjs`,
         )
             .then((oResult) => {
-                console.log(oResult);
+                console.log(
+                    `[success] copy file ${sLibPath}/learnhypertext.mjs; details: '${oResult}'`,
+                );
             })
             .catch((oError) => {
                 console.log(oError);
@@ -28,7 +30,9 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js`,
         )
             .then((oResult) => {
-                console.log(oResult);
+                console.log(
+                    `[success] copy file ${sLibPath}/math.js; details: '${oResult}'`,
+                );
             })
             .catch((oError) => {
                 console.log(oError);
@@ -39,7 +43,9 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js.map`,
         )
             .then((oResult) => {
-                console.log(oResult);
+                console.log(
+                    `[success] copy file ${sLibPath}/math.js.map; details: '${oResult}'`,
+                );
             })
             .catch((oError) => {
                 console.log(oError);
@@ -52,13 +58,23 @@ oFs.mkdir(sLibPath, oMkDirOptions)
         };
         oFs.mkdir(sLibPath_MathJs, oMkDirOptions)
             .then((oResult) => {
-                console.log(oResult);
+                console.log(
+                    `[success] mkdir ${sLibPath_MathJs}; details: '${oResult}'`,
+                );
 
                 oFs.cp(
                     './node_modules/mathjs/lib/esm/',
                     sLibPath_MathJs,
                     oLibMathJsCopyOptions,
-                );
+                )
+                    .then((oResult) => {
+                        console.log(
+                            `[success] copy dir ${sLibPath_MathJs}; details: '${oResult}'`,
+                        );
+                    })
+                    .catch((oError) => {
+                        console.log(oError);
+                    });
             })
             .catch((oError) => {
                 console.log(oError);
