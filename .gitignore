@@ -5,6 +5,7 @@
 node_modules
 public
 
+app
 
 src/learnhypertext.mjs
 src/math.js
