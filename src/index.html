@@ -1,0 +1,436 @@
+<html>
+    <head>
+        <title>Little Machine — How to Build an AI</title>
+        <link rel="stylesheet" href="screen.css" />
+    </head>
+    <body>
+        <div id="impress">
+            <!-- ═══════════════════════════════════════════
+                 PART 0 — HOOK
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="hook" data-x="0">
+                <h1>Build your own AI.</h1>
+                <p>Right now. In your browser.</p>
+                <p>No account. No cloud. No Python.</p>
+                <p>When you're done, you can save it and keep it.</p>
+            </div>
+
+            <div class="step" id="hook-what" data-x="1000">
+                <h1>What kind of AI?</h1>
+                <p>An image classifier.</p>
+                <p>You will teach it to answer one question:</p>
+                <p><em>"Is there a face in this image?"</em></p>
+                <p>
+                    You supply the examples. You do the training. The model is
+                    yours.
+                </p>
+            </div>
+
+            <div class="step" id="hook-how" data-x="2000">
+                <h1>How does it work?</h1>
+                <p>Four steps — and you'll do all of them:</p>
+                <ul>
+                    <li>Build a training set</li>
+                    <li>Choose a learning architecture</li>
+                    <li>Train the model</li>
+                    <li>Test it on new images</li>
+                </ul>
+                <p>Let's go.</p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 1 — THE TRAINING SET
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="dataset-intro" data-x="4000">
+                <h1>Part 1 — The Training Set</h1>
+                <p>An AI learns from examples, not from rules.</p>
+                <p>You never tell it what a face <em>is</em>.</p>
+                <p>
+                    You show it thousands of images and say: <em>yes</em> or
+                    <em>no</em>.
+                </p>
+                <p>
+                    That collection of labelled examples is the
+                    <strong>training set</strong>.
+                </p>
+            </div>
+
+            <div class="step" id="dataset-anatomy" data-x="5000">
+                <h1>Anatomy of an example</h1>
+                <p>Each example is two things:</p>
+                <ul>
+                    <li>
+                        An <strong>input</strong> — a tiny 16-bit greyscale
+                        image
+                    </li>
+                    <li>
+                        A <strong>label</strong> — <em>face</em> or
+                        <em>not a face</em>
+                    </li>
+                </ul>
+                <p>Our dataset has 2,000 – 3,000 of these pairs.</p>
+                <p>
+                    Quality matters more than quantity: garbage in, garbage out.
+                </p>
+            </div>
+
+            <div class="step" id="dataset-editor" data-x="6000">
+                <h1>The Dataset Editor</h1>
+                <p>The editor lets you:</p>
+                <ul>
+                    <li><strong>Load</strong> an existing dataset from disk</li>
+                    <li>
+                        <strong>Browse</strong> examples and see their labels
+                    </li>
+                    <li>
+                        <strong>Modify</strong> labels or remove bad examples
+                    </li>
+                    <li><strong>Add</strong> your own images and label them</li>
+                    <li>
+                        <strong>Save</strong> the dataset back to your machine
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step" id="dataset-balance" data-x="7000">
+                <h1>A balanced dataset</h1>
+                <p>
+                    If 90% of your examples are "not a face", the AI learns to
+                    always say "not a face" — and it will be right 90% of the
+                    time.
+                </p>
+                <p>That's cheating. And useless.</p>
+                <p>
+                    Aim for roughly equal numbers of <em>yes</em> and
+                    <em>no</em> examples.
+                </p>
+                <p>
+                    <a href="labelmaker.html">Try it</a>. Load a dataset,
+                    unbalance it on purpose, and see what happens.
+                </p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 2 — LEARNING ARCHITECTURES
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="arch-intro" data-x="9000">
+                <h1>Part 2 — Learning Architectures</h1>
+                <p>Not all AIs think the same way.</p>
+                <p>
+                    The <strong>architecture</strong> is the shape of the
+                    machine — how inputs connect to outputs.
+                </p>
+                <p>Different shapes work better for different problems.</p>
+            </div>
+
+            <div class="step" id="arch-logistic" data-x="10000">
+                <h1>Logistic Regression</h1>
+                <p>The simplest possible classifier.</p>
+                <p>
+                    Each pixel gets a <strong>weight</strong> — how important is
+                    this pixel for the answer?
+                </p>
+                <p>
+                    Add up all (pixel × weight). If the total is big enough:
+                    <em>yes</em>.
+                </p>
+                <p>
+                    <strong>Works well when:</strong> the position of a feature
+                    matters more than its relationship to neighbours.
+                </p>
+                <p>
+                    <strong>Fails when:</strong> what matters is how pixels
+                    relate to each other.
+                </p>
+            </div>
+
+            <div class="step" id="arch-nn" data-x="11000">
+                <h1>Neural Network</h1>
+                <p>
+                    Multiple layers of weighted sums, with a twist between each
+                    layer.
+                </p>
+                <p>
+                    Hidden layers let the network learn
+                    <strong>combinations</strong> of pixels — edges, curves,
+                    shapes.
+                </p>
+                <p>
+                    <strong>Works well when:</strong> the answer depends on
+                    relationships between pixels, not just positions.
+                </p>
+                <p>
+                    <strong>The cost:</strong> more parameters, longer training,
+                    harder to interpret.
+                </p>
+            </div>
+
+            <div class="step" id="arch-compare" data-x="12000">
+                <h1>Which one should you use?</h1>
+                <p>
+                    Try both. The app lets you switch architectures and retrain.
+                </p>
+                <ul>
+                    <li>
+                        For simple, position-based patterns →
+                        <strong>Logistic Regression</strong>
+                    </li>
+                    <li>
+                        For anything involving shape or texture →
+                        <strong>Neural Network</strong>
+                    </li>
+                </ul>
+                <p>Compare the accuracy numbers. Let the data decide.</p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 3 — TRAINING
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="training-intro" data-x="14000">
+                <h1>Part 3 — Training</h1>
+                <p>Training is a loop.</p>
+                <p>
+                    The model makes a guess → you tell it how wrong it was → it
+                    adjusts its weights slightly → repeat.
+                </p>
+                <p>
+                    One pass through the entire dataset is called an
+                    <strong>epoch</strong>.
+                </p>
+            </div>
+
+            <div class="step" id="training-loss" data-x="15000">
+                <h1>The loss function</h1>
+                <p>How do you measure "how wrong"?</p>
+                <p>
+                    With a <strong>loss function</strong> — a single number that
+                    goes down as the model improves.
+                </p>
+                <p>
+                    During training, watch the loss curve. If it's still
+                    falling, keep going. If it plateaus, you're done (or stuck).
+                </p>
+            </div>
+
+            <div class="step" id="training-time" data-x="16000">
+                <h1>How long does it take?</h1>
+                <p>
+                    On this dataset, training takes about
+                    <strong>20 minutes</strong> in the browser.
+                </p>
+                <p>While it runs, you can:</p>
+                <ul>
+                    <li>Watch the loss curve update in real time</li>
+                    <li>Peek at the model's weights — see them change</li>
+                    <li>Read about what's happening under the hood</li>
+                </ul>
+                <p>The model is working hard. So can you.</p>
+            </div>
+
+            <div class="step" id="training-weights" data-x="17000">
+                <h1>What the brain looks like</h1>
+                <p>After a few epochs, visualise the weights.</p>
+                <p>
+                    For a logistic regression model, the weights are the same
+                    shape as the input image — you can literally see what the
+                    model "thinks" a face looks like.
+                </p>
+                <p>
+                    For a neural network, the first layer's weights show the
+                    <strong>features</strong> it's learned to detect.
+                </p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 4 — ACCURACY
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="accuracy-intro" data-x="19000">
+                <h1>Part 4 — Accuracy</h1>
+                <p>How do you know if the model is good?</p>
+                <p>
+                    You test it on examples it has
+                    <strong>never seen before</strong>.
+                </p>
+                <p>
+                    This is the <strong>test set</strong> — held back from
+                    training on purpose.
+                </p>
+            </div>
+
+            <div class="step" id="accuracy-metrics" data-x="20000">
+                <h1>What to measure</h1>
+                <ul>
+                    <li>
+                        <strong>Accuracy</strong> — what fraction did it get
+                        right overall?
+                    </li>
+                    <li>
+                        <strong>Precision</strong> — when it said "face", how
+                        often was it right?
+                    </li>
+                    <li>
+                        <strong>Recall</strong> — how many real faces did it
+                        find?
+                    </li>
+                    <li>
+                        <strong>Confusion matrix</strong> — the 2×2 table of all
+                        four possible outcomes
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step" id="accuracy-tradeoffs" data-x="21000">
+                <h1>Tradeoffs</h1>
+                <p>
+                    High precision, low recall: the model is <em>cautious</em> —
+                    says "face" rarely, but usually correctly.
+                </p>
+                <p>
+                    Low precision, high recall: the model is <em>generous</em> —
+                    finds most faces, but cries wolf a lot.
+                </p>
+                <p>Which is better? Depends on what you're using it for.</p>
+                <p>
+                    <strong>Try it:</strong> adjust the decision threshold and
+                    watch both numbers move.
+                </p>
+            </div>
+
+            <div class="step" id="accuracy-overfitting" data-x="22000">
+                <h1>Overfitting</h1>
+                <p>
+                    If the model scores 99% on training data but 60% on test
+                    data, it has <strong>memorised</strong> the training set
+                    instead of learning from it.
+                </p>
+                <p>This is called overfitting.</p>
+                <p>
+                    Signs: training loss keeps falling, test accuracy stops
+                    improving or gets worse.
+                </p>
+                <p>
+                    Fix: more varied training data, fewer parameters, or stop
+                    earlier.
+                </p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 5 — RUNNING THE MODEL
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="run-intro" data-x="24000">
+                <h1>Part 5 — Run it!</h1>
+                <p>Training is done. The model is saved on your machine.</p>
+                <p>Now: show it something new.</p>
+                <p>
+                    Load any image. The model will output a number between 0 and
+                    1.
+                </p>
+                <p>
+                    Above 0.5 → it thinks "face". Below 0.5 → it thinks "not a
+                    face".
+                </p>
+            </div>
+
+            <div class="step" id="run-ground-truth" data-x="25000">
+                <h1>You are the ground truth</h1>
+                <p>
+                    At this point, only you know if the model is getting it
+                    right.
+                </p>
+                <p>Try images that are:</p>
+                <ul>
+                    <li>Clear, straight-on faces — it should be confident</li>
+                    <li>
+                        Faces at an angle or in shadow — does it still recognise
+                        them?
+                    </li>
+                    <li>
+                        Things that look vaguely face-shaped — does it get
+                        fooled?
+                    </li>
+                </ul>
+                <p>
+                    This is called <strong>qualitative evaluation</strong>.
+                    Numbers only tell half the story.
+                </p>
+            </div>
+
+            <div class="step" id="run-save" data-x="26000">
+                <h1>Save and share</h1>
+                <p>
+                    Your trained model is a file — a list of numbers (the
+                    weights).
+                </p>
+                <p>You can:</p>
+                <ul>
+                    <li>
+                        <strong>Save it</strong> and reload it later without
+                        retraining
+                    </li>
+                    <li>
+                        <strong>Share it</strong> with someone else — they can
+                        run it instantly
+                    </li>
+                    <li>
+                        <strong>Compare</strong> two models trained on different
+                        datasets
+                    </li>
+                </ul>
+                <p>The model is yours. You made it.</p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 WRAP-UP
+            ═══════════════════════════════════════════ -->
+
+            <div class="step" id="wrapup" data-x="28000">
+                <h1>What you just did</h1>
+                <ul>
+                    <li>Built a labelled dataset</li>
+                    <li>Chose a learning architecture</li>
+                    <li>Watched a model train, live</li>
+                    <li>Measured its accuracy honestly</li>
+                    <li>Ran it on images it had never seen</li>
+                </ul>
+                <p>
+                    That is exactly what researchers do — just with bigger
+                    machines and more coffee.
+                </p>
+            </div>
+
+            <div class="step" id="wrapup-next" data-x="29000">
+                <h1>What's next?</h1>
+                <p>Everything you did here scales up.</p>
+                <ul>
+                    <li>More pixels → convolutional networks</li>
+                    <li>More classes → softmax output</li>
+                    <li>More data → transfer learning</li>
+                    <li>More compute → GPUs, clusters, the cloud</li>
+                </ul>
+                <p>The ideas are the same. The arithmetic is the same.</p>
+                <p>Only the scale changes.</p>
+            </div>
+
+            <div class="step" id="wrapup-start" data-x="30000">
+                <h1>Ready to build yours?</h1>
+                <p>
+                    Click <a href="labelmaker.html">here</a> to open the dataset
+                    editor and start teaching Little Machine.
+                </p>
+            </div>
+        </div>
+        <script src="lib/js/impress.min.js"></script>
+        <script>
+            window.impress;
+        </script>
+        <script>
+            impress().init();
+        </script>
+    </body>
+</html>

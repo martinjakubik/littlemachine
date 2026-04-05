@@ -7,10 +7,12 @@
         "mathjs": "^15.1.1"
     },
     "scripts": {
-        "start": "node dev/server.js",
-        "postinstall": "node postinstall.js"
+        "postinstall": "node postinstall.js",
+        "build": "node build.js",
+        "start": "node dev/server.js"
     },
     "devDependencies": {
-        "eslint": "^8.47.0"
+        "eslint": "^8.47.0",
+        "impress.js": "^1.1.0"
     }
 }

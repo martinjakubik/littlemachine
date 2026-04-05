@@ -5,14 +5,13 @@
 node_modules
 public
 
-build
 
-app/learnhypertext.mjs
-app/math.js
-app/math.js.map
-app/resources
-app/lib/*
-app/mathjs
+src/learnhypertext.mjs
+src/math.js
+src/math.js.map
+src/resources
+src/lib/*
+src/mathjs
 
 js/lib
 

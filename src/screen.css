@@ -1,0 +1,186 @@
+body {
+    background-color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+button {
+    background-color: #efefef;
+    font-family: 'Courier New', Courier, monospace;
+    height: 1.4em;
+    width: 1.4em;
+    border: 2px solid #101010;
+    border-radius: 0.1em;
+    color: #101010;
+    font-size: 3em;
+}
+
+.step {
+    width: 46em;
+}
+
+.container {
+    display: grid;
+    justify-items: center;
+}
+
+.pictureThumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60em;
+}
+
+.samplePicture {
+    width: 1em;
+    margin: 0.8em;
+}
+
+.picturenavigator {
+    width: 26em;
+}
+
+#picturecanvas {
+    position: relative;
+    top: 0.4em;
+    margin: 0 1em 0 1em;
+    border: 2px solid #101010;
+    border-radius: 0.4em;
+}
+
+.navigationbutton {
+    vertical-align: text-bottom;
+    height: 3em;
+    font-size: 4em;
+}
+
+.navigationfield {
+    background-color: #efefef;
+    color: #101010;
+    width: 5em;
+    margin: 1em 1em 1em 6em;
+    border: 2px solid #101010;
+    border-radius: 0.1em;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.navigationbuttonright {
+    justify-self: right;
+}
+
+.navigationbuttonleft::before {
+    content: '<';
+}
+
+.navigationbuttonright::before {
+    content: '>';
+}
+
+.labeldot {
+    width: 1em;
+    border-radius: 0.4em;
+    height: 1em;
+    margin: 0 6em 0 6em;
+    display: inline-block;
+}
+
+#labeldotyes.on {
+    background-color: #004600;
+}
+
+#labeldotno.on {
+    background-color: #460000;
+}
+
+#labeldotyes {
+    background-color: #cfdacf;
+}
+
+#labeldotno {
+    background-color: #d1c6c6;
+}
+
+.labelbutton {
+    margin: 1em 0.6em;
+    width: 3em;
+    font-size: 3em;
+}
+
+#labelbuttonyes {
+    color: #004600;
+}
+
+#labelbuttonno {
+    color: #460000;
+}
+
+#labelbuttonyes::before {
+    content: 'yes';
+}
+
+#labelbuttonno::before {
+    content: 'no';
+}
+
+#classifyButton,
+#saveButton,
+#loadButton {
+    width: fit-content;
+    margin: 0.2em;
+}
+
+.labelcontrol {
+    width: 26em;
+}
+
+.labelcountgroup {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 1em;
+    color: #101010;
+}
+
+.labelcountname {
+    margin: 0.3em 0 0 0;
+    text-align: right;
+    grid-column: 2;
+}
+
+.labelcount {
+    margin: 0.3em 0 0 1em;
+    grid-column: 3;
+}
+
+.labelnamenavigationbutton {
+    display: none;
+    width: 4em;
+    font-size: 1em;
+}
+
+.labelnamenavigationbuttonleft {
+    grid-column: 1;
+}
+
+.labelnamenavigationbuttonright {
+    grid-column: 4;
+}
+
+.labelcountgroup:hover > .labelnamenavigationbutton {
+    display: initial;
+}
+
+h1 {
+    font-size: 3em;
+    color: green;
+    text-align: center;
+}
+
+p {
+    font-size: 2em;
+    color: green;
+    text-align: center;
+}
+
+ul {
+    font-size: 2em;
+    color: green;
+}
