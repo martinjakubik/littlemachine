@@ -108,35 +108,6 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             .catch((oError) => {
                 console.log(`[error] details: ${oError}`);
             });
-
-        // copies MathJS lib as ESM
-        const sLibPath_MathJs = `${sLibPath}/mathjs`;
-        const oLibMathJsCopyOptions = {
-            recursive: true,
-        };
-        oFs.mkdir(sLibPath_MathJs, oMkDirOptions)
-            .then((oResult) => {
-                console.log(
-                    `[success] mkdir ${sLibPath_MathJs}; details: '${oResult}'`,
-                );
-
-                oFs.cp(
-                    './node_modules/mathjs/lib/esm/',
-                    sLibPath_MathJs,
-                    oLibMathJsCopyOptions,
-                )
-                    .then((oResult) => {
-                        console.log(
-                            `[success] copy dir ${sLibPath_MathJs}; details: '${oResult}'`,
-                        );
-                    })
-                    .catch((oError) => {
-                        console.log(`[error] details: ${oError}`);
-                    });
-            })
-            .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
-            });
     })
     .catch((oError) => {
         console.log(`[error] details: ${oError}`);

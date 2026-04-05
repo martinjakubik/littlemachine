@@ -7,7 +7,6 @@
         "mathjs": "^15.1.1"
     },
     "scripts": {
-        "postinstall": "node postinstall.js",
         "build": "node build.js",
         "start": "node dev/server.js"
     },
