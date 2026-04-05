@@ -170,7 +170,6 @@ class LabelMaker {
         oContainer.classList.add('container');
         document.body.appendChild(oContainer);
 
-        this.renderPictureThumbnails(oContainer);
         this.renderPictureNavigator(oContainer);
         this.renderLabelControl(oContainer);
         this.renderLoadButton(oContainer);
