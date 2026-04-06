@@ -113,8 +113,8 @@ oFs.mkdir(sLibPath, oMkDirOptions)
     });
 
 oFs.mkdir(sResourcePath, oMkDirOptions)
-    .then((oResult) => {
-        console.log(oResult);
+    .then(() => {
+        console.log(`[success] mkdir ${sResourcePath}`);
 
         oFs.copyFile(
             './resources/labellist-faces-upright-16-training-3.json',
