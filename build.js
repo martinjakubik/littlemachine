@@ -1,7 +1,7 @@
 import * as oFs from 'fs/promises';
 
 const sApplicationSourcePath = './src';
-const sApplicationDistributiuonPath = './app';
+const sApplicationDistributionPath = './app';
 const sLibPath = './app';
 const sResourcePath = `${sLibPath}/resources`;
 
@@ -14,15 +14,15 @@ const oSrcToDistCopyOptions = {
     recursive: true,
 };
 
-oFs.mkdir(sApplicationDistributiuonPath, oMkDirOptions)
+oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
     .then((oResult) => {
         console.log(
-            `[success] mkdir ${sApplicationDistributiuonPath}; details: '${oResult}'`,
+            `[success] mkdir ${sApplicationDistributionPath}; details: '${oResult}'`,
         );
 
         oFs.cp(
             sApplicationSourcePath,
-            sApplicationDistributiuonPath,
+            sApplicationDistributionPath,
             oSrcToDistCopyOptions,
         )
             .then((oResult) => {
