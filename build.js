@@ -24,7 +24,7 @@ oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
             oSrcToDistCopyOptions,
         )
             .then((oResult) => {
-                console.log(`[success] copy dir ${sApplicationSourcePath}`);
+                console.log(`[success] copied dir ${sApplicationSourcePath}`);
             })
             .catch((oError) => {
                 console.log(`  [error] details: ${oError}`);
@@ -44,7 +44,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
         )
             .then((oResult) => {
                 console.log(
-                    `[success] copy file ${sLibPath}/learnhypertext.mjs`,
+                    `[success] copied file ${sLibPath}/learnhypertext.mjs`,
                 );
             })
             .catch((oError) => {
@@ -57,7 +57,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js`,
         )
             .then((oResult) => {
-                console.log(`[success] copy file ${sLibPath}/math.js`);
+                console.log(`[success] copied file ${sLibPath}/math.js`);
             })
             .catch((oError) => {
                 console.log(`  [error] details: ${oError}`);
@@ -68,7 +68,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js.map`,
         )
             .then((oResult) => {
-                console.log(`[success] copy file ${sLibPath}/math.js.map`);
+                console.log(`[success] copied file ${sLibPath}/math.js.map`);
             })
             .catch((oError) => {
                 console.log(`  [error] details: ${oError}`);
