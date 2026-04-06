@@ -43,6 +43,8 @@
     number of iterations, initial step vector and the display switch, for example
     Parms = fminsearch(fnCalculateCost, [100, 30, 10, 5000], x, y, {maxIter:10000, display:false})
 */
+import { clone as math_clone } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+
 const fminsearch = function (
     oDebugParams,
     mathlib,
@@ -79,8 +81,8 @@ const fminsearch = function (
         Opt.display = true;
     }
 
-    let arrayTheta0 = math.clone(Parm0),
-        arrayTheta1 = math.clone(Parm0);
+    let arrayTheta0 = math_clone(Parm0),
+        arrayTheta1 = math_clone(Parm0);
     let m = arrayTheta0.size()[0];
     let step = Opt.step;
 
@@ -111,7 +113,7 @@ const fminsearch = function (
         // takes a step for each parameter - or.... each example?
         for (let j = 0; j < m; j++) {
             oDebugParams.iteration_j = j;
-            arrayTheta1 = math.clone(arrayTheta0);
+            arrayTheta1 = math_clone(arrayTheta0);
             arrayTheta1._data[j] += step._data[j];
 
             // saves last 11 costs (J)
@@ -135,7 +137,7 @@ const fminsearch = function (
                     console.log('f(th1) is less than f(th0)');
                 // goes a little faster
                 step._data[j] = 1.2 * step._data[j];
-                arrayTheta0 = math.clone(arrayTheta1);
+                arrayTheta0 = math_clone(arrayTheta1);
             } else {
                 if (Opt.display && Opt.displayLevel >= 3 && i % 10 === 0)
                     console.log('f(th1) is more than f(th0)');

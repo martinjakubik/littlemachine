@@ -1,5 +1,10 @@
 import { fminsearch } from './fminsearch.mjs';
 import { lrCostFunction } from './lrCostFunction.mjs';
+import { squeeze as math_squeeze } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { concat as math_concat } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { map as math_map } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { zeros as math_zeros } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { ones as math_ones } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 
 const oneVsAll = function (
     mathlib,
@@ -19,15 +24,15 @@ const oneVsAll = function (
     const n = aMatrixSize[1];
 
     // allTheta has 2 rows (1 per yes/no label), and 17 columns (16 parameters plus a placeholder zero for the label)
-    const arrayAllTheta = math.zeros(nLabelCount, n + 1);
+    const arrayAllTheta = math_zeros(nLabelCount, n + 1);
 
     // X1 concatenates a column of 1's at the left of X0
-    const matrixX1 = math.concat(math.ones(m, 1), matrixX0);
+    const matrixX1 = math_concat(math_ones(m, 1), matrixX0);
 
     // initialTheta is a column vector matching the number of parameters in X0;
     // it therefore has one row per column in X0, plus one;
     // a reasonable size is 17 rows
-    const arrayInitialTheta = math.squeeze(math.zeros(n + 1, 1));
+    const arrayInitialTheta = math_squeeze(math_zeros(n + 1, 1));
 
     const oDebugParams = {
         debugActive: false,
@@ -42,7 +47,7 @@ const oneVsAll = function (
     // end;
     const c = 1;
     const label = c - 1;
-    const arrayYPerLabel = math.map(arrayY, (nValue) => {
+    const arrayYPerLabel = math_map(arrayY, (nValue) => {
         return nValue === label ? 1 : 0;
     });
 

@@ -1,5 +1,9 @@
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
+import { subset as math_subset } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { range as math_range } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { index as math_index } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { squeeze as math_squeeze } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 
 addEventListener('message', (message) => {
     const oMessagePayload = message.data.payload || {};
@@ -20,14 +24,14 @@ const classify = function (matrixData, oDisplayOptions) {
     const m = matrixData.size()[0];
 
     // keeps just the parameters by dropping the last column (16 parameters per row here)
-    const matrixX = math.subset(
+    const matrixX = math_subset(
         matrixData,
-        math.index(math.range(0, m), math.range(0, 16)),
+        math_index(math_range(0, m), math_range(0, 16)),
     );
 
     // keeps the labels by copying the last column
-    const arrayY = math.squeeze(
-        math.subset(matrixData, math.index(math.range(0, m), 16)),
+    const arrayY = math_squeeze(
+        math_subset(matrixData, math_index(math_range(0, m), 16)),
     );
 
     const nLabelCount = 2;
