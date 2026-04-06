@@ -16,9 +16,7 @@ const oSrcToDistCopyOptions = {
 
 oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
     .then((oResult) => {
-        console.log(
-            `[success] mkdir ${sApplicationDistributionPath}; details: '${oResult}'`,
-        );
+        console.log(`[success] mkdir ${sApplicationDistributionPath}`);
 
         oFs.cp(
             sApplicationSourcePath,
@@ -26,21 +24,19 @@ oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
             oSrcToDistCopyOptions,
         )
             .then((oResult) => {
-                console.log(
-                    `[success] copy dir ${sApplicationSourcePath}; details: '${oResult}'`,
-                );
+                console.log(`[success] copy dir ${sApplicationSourcePath}`);
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
     })
     .catch((oError) => {
-        console.log(`[error] details: ${oError}`);
+        console.log(`  [error] details: ${oError}`);
     });
 
 oFs.mkdir(sLibPath, oMkDirOptions)
     .then((oResult) => {
-        console.log(`[success] mkdir ${sLibPath}; details: '${oResult}'`);
+        console.log(`[success] mkdir ${sLibPath}`);
 
         oFs.copyFile(
             './node_modules/learnhypertext/js/index.mjs',
@@ -48,11 +44,11 @@ oFs.mkdir(sLibPath, oMkDirOptions)
         )
             .then((oResult) => {
                 console.log(
-                    `[success] copy file ${sLibPath}/learnhypertext.mjs; details: '${oResult}'`,
+                    `[success] copy file ${sLibPath}/learnhypertext.mjs`,
                 );
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
 
         // copies MathJS lib as browser (one file)
@@ -61,12 +57,10 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js`,
         )
             .then((oResult) => {
-                console.log(
-                    `[success] copy file ${sLibPath}/math.js; details: '${oResult}'`,
-                );
+                console.log(`[success] copy file ${sLibPath}/math.js`);
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
 
         oFs.copyFile(
@@ -74,12 +68,10 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             `${sLibPath}/math.js.map`,
         )
             .then((oResult) => {
-                console.log(
-                    `[success] copy file ${sLibPath}/math.js.map; details: '${oResult}'`,
-                );
+                console.log(`[success] copy file ${sLibPath}/math.js.map`);
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
 
         // copies Impress JS
@@ -117,7 +109,7 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             });
     })
     .catch((oError) => {
-        console.log(`[error] details: ${oError}`);
+        console.log(`  [error] details: ${oError}`);
     });
 
 oFs.mkdir(sResourcePath, oMkDirOptions)
@@ -130,13 +122,13 @@ oFs.mkdir(sResourcePath, oMkDirOptions)
         )
             .then((oResult) => {
                 console.log(
-                    `[success] copied file ${sResourcePath}/labellist.json; details: ${oResult}`,
+                    `[success] copied file ${sResourcePath}/labellist.json`,
                 );
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
     })
     .catch((oError) => {
-        console.log(`[error] details: ${oError}`);
+        console.log(`  [error] details: ${oError}`);
     });
