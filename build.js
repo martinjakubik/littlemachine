@@ -18,6 +18,7 @@ oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
     .then((oResult) => {
         console.log(`[success] mkdir ${sApplicationDistributionPath}`);
 
+        // copies src to app directory
         oFs.cp(
             sApplicationSourcePath,
             sApplicationDistributionPath,
