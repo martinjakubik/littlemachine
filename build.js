@@ -83,30 +83,37 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             });
 
         // copies Impress JS
-        oFs.copyFile(
-            './node_modules/impress.js/js/impress.min.js',
-            `${sLibPath}/impress.min.js`,
-        )
-            .then((oResult) => {
-                console.log(
-                    `[success] copied file ${sLibPath}/impress.min.js; details: '${oResult}'`,
-                );
-            })
-            .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
-            });
+        const sLibPath_ImpressJS = `${sLibPath}/lib/js/impress`;
+        oFs.mkdir(sLibPath_ImpressJS, oMkDirOptions)
+            .then(() => {
+                oFs.copyFile(
+                    './node_modules/impress.js/js/impress.min.js',
+                    `${sLibPath_ImpressJS}/impress.min.js`,
+                )
+                    .then((oResult) => {
+                        console.log(
+                            `[success] copied file ${sLibPath_ImpressJS}/impress.min.js`,
+                        );
+                    })
+                    .catch((oError) => {
+                        console.log(`  [error] details: ${oError}`);
+                    });
 
-        oFs.copyFile(
-            './node_modules/impress.js/js/impress.min.js.map',
-            `${sLibPath}/math.js.map`,
-        )
-            .then((oResult) => {
-                console.log(
-                    `[success] copoied file ${sLibPath}/impress.min.js.map; details: '${oResult}'`,
-                );
+                oFs.copyFile(
+                    './node_modules/impress.js/js/impress.min.js.map',
+                    `${sLibPath_ImpressJS}/impress.min.js.map`,
+                )
+                    .then((oResult) => {
+                        console.log(
+                            `[success] copied file ${sLibPath_ImpressJS}/impress.min.js.map`,
+                        );
+                    })
+                    .catch((oError) => {
+                        console.log(`  [error] details: ${oError}`);
+                    });
             })
             .catch((oError) => {
-                console.log(`[error] details: ${oError}`);
+                console.log(`  [error] details: ${oError}`);
             });
     })
     .catch((oError) => {
