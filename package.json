@@ -4,7 +4,7 @@
     "type": "module",
     "dependencies": {
         "learnhypertext": "^2.0.3",
-        "mathjs": "^15.1.1"
+        "mathjs": "^15.2.0"
     },
     "scripts": {
         "build": "node build.js",
