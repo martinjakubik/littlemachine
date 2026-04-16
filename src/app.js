@@ -1,6 +1,5 @@
 import { createButton } from './learnhypertext.mjs';
 import { classify } from './classify.mjs';
-import { convertToMatrix } from './actualConvert.js';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_BOXES = 65536;
@@ -514,14 +513,10 @@ class LabelMaker {
     }
 
     classifyButtonTap () {
-        const matrixLabelList = convertToMatrix(this.labellist);
-        classify(matrixLabelList, {
-            displayFunction: this.updateTrainingDisplay.bind(this),
+        this.classifyWorker.postMessage({
+            command: 'start',
+            payload: { labelList: this.labellist, options: {} },
         });
-        // this.classifyWorker.postMessage({
-        //     command: 'start',
-        //     payload: { labelList: matrixLabelList, options: {} },
-        // });
     }
 
     drawAsSquare (sSample) {

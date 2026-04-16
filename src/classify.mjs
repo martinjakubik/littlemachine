@@ -1,3 +1,4 @@
+import { convertToMatrix } from './actualConvert.js';
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
 import { subset as math_subset } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
@@ -17,8 +18,10 @@ addEventListener('message', (message) => {
     }
 });
 
-const classify = function (matrixData, oDisplayOptions) {
+const classify = function (labelList, oDisplayOptions) {
     const mathlib = createMathLib('naive');
+
+    const matrixData = convertToMatrix(labelList);
 
     // m is the number of rows, so 2000 could be a reasonable size
     const m = matrixData.size()[0];
