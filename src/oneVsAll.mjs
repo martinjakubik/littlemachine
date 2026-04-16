@@ -56,7 +56,7 @@ const oneVsAll = function (
     // use 1.0e-6 to stop relatively quickly for debugging
     const oFMinSearchOptions = {
         maxIter: 1000,
-        gradientThreshold: 1.0e-6,
+        gradientThreshold: 1.0e-19,
         display: true,
         displayLevel: 1,
         displayFunction: oDisplayOptions.displayFunction,
