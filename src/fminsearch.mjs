@@ -174,12 +174,22 @@ const fminsearch = function (
             console.log(i + 1, nJ0, arrayTheta0);
         }
         // displays every 10th iteration
-        if (Opt.displayFunction && i % 10 === 0) {
-            Opt.displayFunction(oDisplayObject);
+        if (i % 10 === 0) {
+            postMessage({
+                type: 'update',
+                i: i,
+                j0: nJ0,
+                arrayTheta0: arrayTheta0,
+            });
         }
         // displays the last 10 iterations
-        if (Opt.displayFunction && i > Opt.maxIter - 10) {
-            Opt.displayFunction(oDisplayObject);
+        if (i > Opt.maxIter - 10) {
+            postMessage({
+                type: 'update',
+                i: i,
+                j0: nJ0,
+                arrayTheta0: arrayTheta0,
+            });
         }
     }
     return arrayTheta0;

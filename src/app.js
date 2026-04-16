@@ -159,6 +159,19 @@ class LabelMaker {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
         this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
+
+        this.classifyWorker.addEventListener('message', (message) => {
+            const sMessageType = message.data.type || 'NONE';
+            let sMessage;
+            switch (sMessageType) {
+            case 'update':
+                sMessage = `i: ${message.data.i}, j0: ${message.data.j0}; arrayTheta0: ${message.data.arrayTheta0._data.join(', ')}`;
+                this.updateTrainingDisplay(sMessage);
+                break;
+            default:
+                break;
+            }
+        });
     }
 
     renderMainView () {
@@ -651,8 +664,8 @@ class LabelMaker {
         }
     }
 
-    updateTrainingDisplay (oDisplayObject) {
-        this.trainingDisplayDiv.innerHTML = oDisplayObject.i;
+    updateTrainingDisplay (sMessage) {
+        this.trainingDisplayDiv.innerHTML = sMessage;
     }
 }
 
