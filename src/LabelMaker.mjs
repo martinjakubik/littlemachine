@@ -175,7 +175,9 @@ class LabelMaker {
     }
 
     renderMainView () {
-        this.navigationField = this.makeNavigationField();
+        this.navigationField = this.makeNavigationField({
+            onchange: this.movePicture.bind(this),
+        });
         this.navigationField.setAttribute('value', this.decimal);
 
         const oContainer = document.createElement('div');
@@ -350,14 +352,14 @@ class LabelMaker {
         return oButton;
     }
 
-    makeNavigationField () {
+    makeNavigationField (oHandlers) {
         const oField = document.createElement('input');
 
         const sFieldClass = 'navigationfield';
         const sFieldId = 'navigationfield';
         oField.classList.add(sFieldClass);
         oField.setAttribute('id', sFieldId);
-        oField.onchange = this.movePicture.bind(this);
+        oField.onchange = oHandlers.onchange;
 
         return oField;
     }
