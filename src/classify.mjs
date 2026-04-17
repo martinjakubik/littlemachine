@@ -1,4 +1,4 @@
-import { convertToMatrix } from './actualConvert.js';
+import { convertToMatrix } from './jsonToArrayConverter.js';
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
 import { subset as math_subset } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
