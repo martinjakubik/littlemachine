@@ -1,10 +1,10 @@
-import { convertToMatrix } from './jsonToArrayConverter.js';
 import { oneVsAll } from './oneVsAll.mjs';
 import { createMathLib } from './lib/js/mathematix/index.js';
 import { subset as math_subset } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 import { range as math_range } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 import { index as math_index } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 import { squeeze as math_squeeze } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
+import { matrix } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 
 addEventListener('message', (message) => {
     const oMessagePayload = message.data.payload || {};
@@ -18,10 +18,10 @@ addEventListener('message', (message) => {
     }
 });
 
-const classify = function (labelList, oDisplayOptions) {
+const classify = function (aLabelList, oDisplayOptions) {
     const mathlib = createMathLib('naive');
 
-    const matrixData = convertToMatrix(labelList);
+    const matrixData = matrix(aLabelList);
 
     // m is the number of rows, so 2000 could be a reasonable size
     const m = matrixData.size()[0];

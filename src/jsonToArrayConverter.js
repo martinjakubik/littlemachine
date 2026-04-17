@@ -1,5 +1,3 @@
-import { matrix } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
-
 const convertToString = function (oJsonData, bKeepUnlabelled = false) {
     let sCsvData = '';
 
@@ -53,7 +51,7 @@ const convertToMatrix = function (oJsonData, bKeepUnlabelled = false) {
                 matrixData.push(aSampleRowWithLabelSlot);
             }
         });
-        return matrix(matrixData);
+        return matrixData;
     }
 };
 
