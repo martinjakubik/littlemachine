@@ -379,14 +379,11 @@ class LabelMaker {
     }
 
     makeLabelButton (iLabel) {
-        const oButton = document.createElement('button');
-
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
-
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
+        const oButton = createButton(sButtonId, sLabel);
         oButton.classList.add(sButtonClass);
-        oButton.setAttribute('id', sButtonId);
         oButton.onclick = this.setLabel.bind(this, iLabel);
 
         return oButton;

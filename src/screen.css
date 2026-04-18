@@ -113,14 +113,6 @@ button {
     color: #460000;
 }
 
-#labelbuttonyes::before {
-    content: 'yes';
-}
-
-#labelbuttonno::before {
-    content: 'no';
-}
-
 #classifyButton,
 #saveButton,
 #loadButton {
