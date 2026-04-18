@@ -1,4 +1,4 @@
-import { createButton } from './learnhypertext.mjs';
+import { createButton, createDiv } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
 const MAX_EXPONENT = 4096;
@@ -180,9 +180,8 @@ class LabelMaker {
         });
         this.navigationField.setAttribute('value', this.decimal);
 
-        const oContainer = document.createElement('div');
+        const oContainer = createDiv('container');
         oContainer.classList.add('container');
-        document.body.appendChild(oContainer);
 
         this.renderPictureNavigator(oContainer);
         this.renderLabelControl(oContainer);
@@ -193,7 +192,7 @@ class LabelMaker {
     }
 
     renderPictureThumbnails (oParentDiv) {
-        const oPictureThumbnails = document.createElement('div');
+        const oPictureThumbnails = createDiv('pictureThumbnails', oParentDiv);
         oPictureThumbnails.classList.add('pictureThumbnails');
         const nNumberOfThumbnails = 200;
         const nStep = MAX_NUMBER_OF_BOXES / nNumberOfThumbnails;
@@ -209,12 +208,10 @@ class LabelMaker {
             oPicture.src = `./resources/png16/${sPictureFilename}.png`;
             oPictureThumbnails.appendChild(oPicture);
         }
-        oParentDiv.appendChild(oPictureThumbnails);
     }
 
     renderPictureNavigator (oParentDiv) {
-        const oPictureNavigator = document.createElement('div');
-        oPictureNavigator.setAttribute('id', 'picturenavigator');
+        const oPictureNavigator = createDiv('picturenavigator', oParentDiv);
         oPictureNavigator.classList.add('picturenavigator');
 
         const oButtonLeft = this.makeNavigationButton(
@@ -234,8 +231,6 @@ class LabelMaker {
         oPictureNavigator.appendChild(oButtonRight);
         oPictureNavigator.appendChild(this.navigationField);
 
-        oParentDiv.appendChild(oPictureNavigator);
-
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
@@ -249,39 +244,26 @@ class LabelMaker {
     }
 
     renderLabelControl (oParentDiv) {
-        const oLabelControl = document.createElement('div');
-        oLabelControl.setAttribute('id', 'labelcontrol');
+        const oLabelControl = createDiv('labelcontrol', oParentDiv);
         oLabelControl.classList.add('labelcontrol');
 
-        const oLabelDots = document.createElement('div');
-        oLabelDots.setAttribute('id', 'labeldots');
+        const oLabelDots = createDiv('labeldots', oLabelControl);
         oLabelDots.classList.add('labeldots');
 
-        this.dotYes = this.makeLabelDot(LabelMaker.labels().yes);
-        this.dotNo = this.makeLabelDot(LabelMaker.labels().no);
+        this.dotYes = this.makeLabelDot(LabelMaker.labels().yes, oLabelDots);
+        this.dotNo = this.makeLabelDot(LabelMaker.labels().no, oLabelDots);
 
         this.renderDotColors();
 
         const oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
         const oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
 
-        oLabelDots.appendChild(this.dotYes);
-        oLabelDots.appendChild(this.dotNo);
+        this.makeLabelCountGroup('yes', oLabelControl);
+        this.makeLabelCountGroup('no', oLabelControl);
+        this.makeLabelCountGroup('unlabelled', oLabelControl);
 
-        const oLabelCountGroupYes = this.makeLabelCountGroup('yes');
-        const oLabelCountGroupNo = this.makeLabelCountGroup('no');
-        const oLabelCountGroupUnlabelled =
-            this.makeLabelCountGroup('unlabelled');
-
-        oLabelControl.appendChild(oLabelDots);
         oLabelControl.appendChild(oButtonYes);
         oLabelControl.appendChild(oButtonNo);
-
-        oLabelControl.appendChild(oLabelCountGroupYes);
-        oLabelControl.appendChild(oLabelCountGroupNo);
-        oLabelControl.appendChild(oLabelCountGroupUnlabelled);
-
-        oParentDiv.appendChild(oLabelControl);
     }
 
     renderDotColors () {
@@ -366,15 +348,13 @@ class LabelMaker {
         return oField;
     }
 
-    makeLabelDot (iLabel) {
-        const oDot = document.createElement('div');
-
+    makeLabelDot (iLabel, oParentDiv) {
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
 
         const sDotClass = 'labeldot';
         const sDotId = `labeldot${sLabel}`;
+        const oDot = createDiv(sDotId, oParentDiv);
         oDot.classList.add(sDotClass);
-        oDot.setAttribute('id', sDotId);
 
         return oDot;
     }
@@ -390,19 +370,38 @@ class LabelMaker {
         return oButton;
     }
 
-    makeLabelCountGroup (sLabelName) {
-        const labelCountGroup = document.createElement('div');
-        labelCountGroup.setAttribute('id', `labelcountgroup${sLabelName}`);
+    makeLabelCountGroup (sLabelName, oParentDiv) {
+        const labelCountGroup = createDiv(
+            `labelcountgroup${sLabelName}`,
+            oParentDiv,
+        );
         labelCountGroup.classList.add('labelcountgroup');
 
-        const labelCountLabel = document.createElement('div');
-        labelCountLabel.setAttribute('id', `labelcountname${sLabelName}`);
+        const oButtonPreviousByLabel = this.makeNavigationButton(
+            LabelMaker.sides().left,
+            sLabelName,
+            {
+                onclickwithlabelname: this.moveToClosestByLabelName.bind(
+                    this,
+                    LabelMaker.sides().left,
+                    sLabelName,
+                ),
+            },
+        );
+        labelCountGroup.appendChild(oButtonPreviousByLabel);
+
+        const labelCountLabel = createDiv(
+            `labelcountname${sLabelName}`,
+            labelCountGroup,
+        );
         labelCountLabel.classList.add('labelcountname');
         labelCountLabel.textContent = sLabelName;
 
         const sCamelCaseLabelName = `labelCount${sLabelName.substring(0, 1).toUpperCase()}${sLabelName.substring(1)}`;
-        this[sCamelCaseLabelName] = document.createElement('div');
-        this[sCamelCaseLabelName].setAttribute('id', `labelcount${sLabelName}`);
+        this[sCamelCaseLabelName] = createDiv(
+            `labelcount${sLabelName}`,
+            labelCountGroup,
+        );
         this[sCamelCaseLabelName].classList.add('labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
@@ -417,30 +416,14 @@ class LabelMaker {
                 ),
             },
         );
-        const oButtonPreviousByLabel = this.makeNavigationButton(
-            LabelMaker.sides().left,
-            sLabelName,
-            {
-                onclickwithlabelname: this.moveToClosestByLabelName.bind(
-                    this,
-                    LabelMaker.sides().left,
-                    sLabelName,
-                ),
-            },
-        );
-
-        labelCountGroup.appendChild(oButtonPreviousByLabel);
-        labelCountGroup.appendChild(labelCountLabel);
-        labelCountGroup.appendChild(this[sCamelCaseLabelName]);
         labelCountGroup.appendChild(oButtonNextByLabel);
 
         return labelCountGroup;
     }
 
     makeTrainingDisplay (oParentDiv) {
-        this.trainingDisplayDiv = document.createElement('div');
+        this.trainingDisplayDiv = createDiv('trainingDisplay', oParentDiv);
         this.trainingDisplayDiv.classList.add('trainingDisplay');
-        oParentDiv.appendChild(this.trainingDisplayDiv);
     }
 
     renderLoadButton (oParentDiv) {
