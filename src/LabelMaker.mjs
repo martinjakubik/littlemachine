@@ -3,6 +3,7 @@ import {
     createButton,
     createCanvas,
     createDiv,
+    createNumberInput,
 } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
@@ -180,11 +181,6 @@ class LabelMaker {
     }
 
     renderMainView () {
-        this.navigationField = this.makeNavigationField({
-            onchange: this.movePicture.bind(this),
-        });
-        this.navigationField.setAttribute('value', this.decimal);
-
         const oContainer = createDiv('container');
         oContainer.classList.add('container');
 
@@ -205,21 +201,28 @@ class LabelMaker {
             null,
             { onclick: this.incrementPicture.bind(this, -1) },
         );
+        oPictureNavigator.appendChild(oButtonLeft);
+
+        const oCanvas = this.makeCanvas(oPictureNavigator);
+        this.canvasPosition = {
+            top: oCanvas.offsetTop,
+            left: oCanvas.offsetLeft,
+        };
+
         const oButtonRight = this.makeNavigationButton(
             LabelMaker.sides().right,
             null,
             { onclick: this.incrementPicture.bind(this, 1) },
         );
-
-        oPictureNavigator.appendChild(oButtonLeft);
-        const oCanvas = this.makeCanvas(oPictureNavigator);
         oPictureNavigator.appendChild(oButtonRight);
-        oPictureNavigator.appendChild(this.navigationField);
 
-        this.canvasPosition = {
-            top: oCanvas.offsetTop,
-            left: oCanvas.offsetLeft,
-        };
+        this.navigationField = this.makeNavigationField(
+            {
+                onchange: this.movePicture.bind(this),
+            },
+            oPictureNavigator,
+        );
+        this.navigationField.setAttribute('value', this.decimal);
     }
 
     renderPicture () {
@@ -328,13 +331,16 @@ class LabelMaker {
         return oButton;
     }
 
-    makeNavigationField (oHandlers) {
-        const oField = document.createElement('input');
+    makeNavigationField (oHandlers, oParentDiv) {
+        const oField = createNumberInput(
+            'navigationfield',
+            0,
+            null,
+            oParentDiv,
+        );
 
         const sFieldClass = 'navigationfield';
-        const sFieldId = 'navigationfield';
         oField.classList.add(sFieldClass);
-        oField.setAttribute('id', sFieldId);
         oField.onchange = oHandlers.onchange;
 
         return oField;
