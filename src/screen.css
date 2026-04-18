@@ -67,14 +67,6 @@ button {
     justify-self: right;
 }
 
-.navigationbuttonleft::before {
-    content: '<';
-}
-
-.navigationbuttonright::before {
-    content: '>';
-}
-
 .labeldot {
     width: 1em;
     border-radius: 0.4em;

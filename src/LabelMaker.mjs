@@ -327,19 +327,21 @@ class LabelMaker {
     }
 
     makeNavigationButton (iSide, sLabelName, oHandlers) {
-        const oButton = document.createElement('button');
-
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
+        const sButtonLabel = iSide === LabelMaker.sides().left ? '<' : '>';
 
+        let oButton;
         let sButtonClass;
         let sButtonId;
         if (sLabelName) {
             sButtonClass = 'labelnamenavigationbutton';
             sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
+            oButton = createButton(sButtonId, sButtonLabel);
             oButton.onclick = oHandlers.onclickwithlabelname;
         } else {
             sButtonClass = 'navigationbutton';
             sButtonId = `navigationbutton${sSide}`;
+            oButton = createButton(sButtonId, sButtonLabel);
             oButton.onclick = oHandlers.onclick;
         }
         oButton.classList.add(sButtonClass);
@@ -349,7 +351,6 @@ class LabelMaker {
         oButton.classList.add(sButtonSideClass);
         oButton.classList.add(sButtonLabelNameSideClass);
 
-        oButton.setAttribute('id', sButtonId);
         return oButton;
     }
 
