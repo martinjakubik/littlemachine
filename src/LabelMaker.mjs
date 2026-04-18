@@ -1,4 +1,9 @@
-import { createButton, createCanvas, createDiv } from './learnhypertext.mjs';
+import {
+    createAnchor,
+    createButton,
+    createCanvas,
+    createDiv,
+} from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
 const MAX_EXPONENT = 4096;
@@ -714,12 +719,9 @@ var saveJsonToFile = function (aData, sFilename) {
     }
 
     var oFile = new Blob([sData], { type: sType });
-    var oAnchorElement = document.createElement('a');
     var sUrl = URL.createObjectURL(oFile);
-
-    oAnchorElement.href = sUrl;
+    var oAnchorElement = createAnchor('download', 'download', sUrl);
     oAnchorElement.download = sFilename;
-    document.body.appendChild(oAnchorElement);
     oAnchorElement.click();
 
     setTimeout(function () {
