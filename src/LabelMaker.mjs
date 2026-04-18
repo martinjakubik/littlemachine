@@ -1,4 +1,4 @@
-import { createButton, createDiv } from './learnhypertext.mjs';
+import { createButton, createCanvas, createDiv } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
 const MAX_EXPONENT = 4096;
@@ -219,7 +219,6 @@ class LabelMaker {
             null,
             { onclick: this.incrementPicture.bind(this, -1) },
         );
-        const oCanvas = this.makeCanvas();
         const oButtonRight = this.makeNavigationButton(
             LabelMaker.sides().right,
             null,
@@ -227,7 +226,7 @@ class LabelMaker {
         );
 
         oPictureNavigator.appendChild(oButtonLeft);
-        oPictureNavigator.appendChild(oCanvas);
+        const oCanvas = this.makeCanvas(oPictureNavigator);
         oPictureNavigator.appendChild(oButtonRight);
         oPictureNavigator.appendChild(this.navigationField);
 
@@ -286,12 +285,19 @@ class LabelMaker {
             this.getLabelCount('unlabelled');
     }
 
-    makeCanvas () {
-        const oCanvas = document.createElement('canvas');
+    makeCanvas (oParentDiv) {
+        const nWidth = PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE;
+        const nHeight = PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE;
+        const oCanvas = createCanvas(
+            PICTURE_CANVAS_ID,
+            '',
+            0,
+            oParentDiv,
+            nWidth,
+            nHeight,
+            'relative',
+        );
 
-        oCanvas.setAttribute('id', PICTURE_CANVAS_ID);
-        oCanvas.setAttribute('width', PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE);
-        oCanvas.setAttribute('height', PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE);
         oCanvas.addEventListener('click', this.drawAt.bind(this), false);
 
         this.context = oCanvas.getContext('2d');
