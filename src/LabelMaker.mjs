@@ -191,25 +191,6 @@ class LabelMaker {
         this.makeTrainingDisplay(oContainer);
     }
 
-    renderPictureThumbnails (oParentDiv) {
-        const oPictureThumbnails = createDiv('pictureThumbnails', oParentDiv);
-        oPictureThumbnails.classList.add('pictureThumbnails');
-        const nNumberOfThumbnails = 200;
-        const nStep = MAX_NUMBER_OF_BOXES / nNumberOfThumbnails;
-        let oPicture, sPictureFilename;
-        for (
-            let nPicture = 0;
-            nPicture < MAX_NUMBER_OF_BOXES;
-            nPicture = nPicture + nStep
-        ) {
-            oPicture = document.createElement('img');
-            oPicture.classList.add('samplePicture');
-            sPictureFilename = convertDecimalToBinary(nPicture, 4);
-            oPicture.src = `./resources/png16/${sPictureFilename}.png`;
-            oPictureThumbnails.appendChild(oPicture);
-        }
-    }
-
     renderPictureNavigator (oParentDiv) {
         const oPictureNavigator = createDiv('picturenavigator', oParentDiv);
         oPictureNavigator.classList.add('picturenavigator');
