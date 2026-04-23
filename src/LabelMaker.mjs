@@ -119,48 +119,6 @@ class LabelMaker {
         };
     }
 
-    static oInterlace1 (x, y) {
-        const iSpace1 = DRAW_BLOCK_SIZE / 8;
-        const iSpace2 = DRAW_BLOCK_SIZE / 8;
-        const aPath = [];
-        let oPoint = {};
-        for (let i = 1; i < 4; i++) {
-            oPoint = {
-                x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
-                x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
-            };
-            aPath.push(oPoint);
-        }
-        return {
-            x: x,
-            y: y,
-            path: aPath,
-        };
-    }
-
-    static oInterlace2 (x, y) {
-        const iSpace1 = DRAW_BLOCK_SIZE / 8;
-        const iSpace2 = DRAW_BLOCK_SIZE / 8;
-        const aPath = [];
-        let oPoint = {};
-        for (let i = 1; i < 4; i++) {
-            oPoint = {
-                x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
-                x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
-            };
-            aPath.push(oPoint);
-        }
-        return {
-            x: x,
-            y: y,
-            path: aPath,
-        };
-    }
-
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
@@ -196,31 +154,31 @@ class LabelMaker {
         const oPictureNavigator = createDiv('picturenavigator', oParentDiv);
         oPictureNavigator.classList.add('picturenavigator');
 
-        const oButtonLeft = this.makeNavigationButton(
-            LabelMaker.sides().left,
-            null,
-            { onclick: this.incrementPicture.bind(this, -1) },
-        );
-        oPictureNavigator.appendChild(oButtonLeft);
-
         const oCanvas = this.makeCanvas(oPictureNavigator);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
         };
 
+        const oButtonLeft = this.makeNavigationButton(
+            LabelMaker.sides().left,
+            null,
+            { onclick: this.incrementPicture.bind(this, -1) },
+        );
+        oParentDiv.appendChild(oButtonLeft);
+
         const oButtonRight = this.makeNavigationButton(
             LabelMaker.sides().right,
             null,
             { onclick: this.incrementPicture.bind(this, 1) },
         );
-        oPictureNavigator.appendChild(oButtonRight);
+        oParentDiv.appendChild(oButtonRight);
 
         this.navigationField = this.makeNavigationField(
             {
                 onchange: this.movePicture.bind(this),
             },
-            oPictureNavigator,
+            oParentDiv,
         );
         this.navigationField.setAttribute('value', this.decimal);
     }
@@ -290,7 +248,7 @@ class LabelMaker {
         oCanvas.addEventListener('click', this.drawAt.bind(this), false);
 
         this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = 'black';
+        this.context.fillStyle = 'rgba(255, 255, 255, 0)';
         this.context.fillRect(
             0,
             0,
@@ -563,12 +521,6 @@ class LabelMaker {
         this.context.lineWidth = '2';
 
         this.drawShape(LabelMaker.oOutline(x, y));
-
-        this.context.lineWidth = '6';
-        this.drawShape(LabelMaker.oInterlace1(x, y));
-
-        this.context.strokeStyle = '#404040';
-        this.drawShape(LabelMaker.oInterlace2(x, y));
     }
 
     drawPixelOff (x, y) {
@@ -576,10 +528,6 @@ class LabelMaker {
 
         this.context.lineWidth = '2';
         this.drawShape(LabelMaker.oOutline(x, y));
-
-        this.context.lineWidth = '6';
-        this.drawShape(LabelMaker.oInterlace1(x, y));
-        this.drawShape(LabelMaker.oInterlace2(x, y));
     }
 
     drawShape (oOutline) {
