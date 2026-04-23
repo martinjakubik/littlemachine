@@ -160,19 +160,13 @@ class LabelMaker {
             left: oCanvas.offsetLeft,
         };
 
-        const oButtonLeft = this.makeNavigationButton(
-            LabelMaker.sides().left,
-            null,
-            { onclick: this.incrementPicture.bind(this, -1) },
-        );
-        oParentDiv.appendChild(oButtonLeft);
+        this.makeNavigationButton(LabelMaker.sides().left, null, oParentDiv, {
+            onclick: this.incrementPicture.bind(this, -1),
+        });
 
-        const oButtonRight = this.makeNavigationButton(
-            LabelMaker.sides().right,
-            null,
-            { onclick: this.incrementPicture.bind(this, 1) },
-        );
-        oParentDiv.appendChild(oButtonRight);
+        this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
+            onclick: this.incrementPicture.bind(this, 1),
+        });
 
         this.navigationField = this.makeNavigationField(
             {
@@ -261,7 +255,7 @@ class LabelMaker {
         return oCanvas;
     }
 
-    makeNavigationButton (iSide, sLabelName, oHandlers) {
+    makeNavigationButton (iSide, sLabelName, oParentDiv, oHandlers) {
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
         const sButtonLabel = iSide === LabelMaker.sides().left ? '<' : '>';
 
@@ -271,12 +265,12 @@ class LabelMaker {
         if (sLabelName) {
             sButtonClass = 'labelnamenavigationbutton';
             sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
-            oButton = createButton(sButtonId, sButtonLabel);
+            oButton = createButton(sButtonId, sButtonLabel, oParentDiv);
             oButton.onclick = oHandlers.onclickwithlabelname;
         } else {
             sButtonClass = 'navigationbutton';
             sButtonId = `navigationbutton${sSide}`;
-            oButton = createButton(sButtonId, sButtonLabel);
+            oButton = createButton(sButtonId, sButtonLabel, oParentDiv);
             oButton.onclick = oHandlers.onclick;
         }
         oButton.classList.add(sButtonClass);
@@ -333,9 +327,10 @@ class LabelMaker {
         );
         labelCountGroup.classList.add('labelcountgroup');
 
-        const oButtonPreviousByLabel = this.makeNavigationButton(
+        this.makeNavigationButton(
             LabelMaker.sides().left,
             sLabelName,
+            labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
@@ -344,7 +339,6 @@ class LabelMaker {
                 ),
             },
         );
-        labelCountGroup.appendChild(oButtonPreviousByLabel);
 
         const labelCountLabel = createDiv(
             `labelcountname${sLabelName}`,
@@ -361,9 +355,10 @@ class LabelMaker {
         this[sCamelCaseLabelName].classList.add('labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
-        const oButtonNextByLabel = this.makeNavigationButton(
+        this.makeNavigationButton(
             LabelMaker.sides().right,
             sLabelName,
+            labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
@@ -372,7 +367,6 @@ class LabelMaker {
                 ),
             },
         );
-        labelCountGroup.appendChild(oButtonNextByLabel);
 
         return labelCountGroup;
     }
