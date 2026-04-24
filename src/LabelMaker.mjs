@@ -16,6 +16,8 @@ const MIN_DECIMAL = 0;
 const PICTURE_CANVAS_WIDTH = BOX_SIZE;
 const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
 const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = '#efefef';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'black';
 const DRAW_BLOCK_SIZE = 48;
 
 const PICTURE_CANVAS_ID = 'picturecanvas';
@@ -512,14 +514,14 @@ class LabelMaker {
     }
 
     drawPixelOn (x, y) {
-        this.context.strokeStyle = '#efefef';
+        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
 
         this.drawShape(LabelMaker.oOutline(x, y));
     }
 
     drawPixelOff (x, y) {
-        this.context.strokeStyle = 'black';
+        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
 
         this.context.lineWidth = '2';
         this.drawShape(LabelMaker.oOutline(x, y));
