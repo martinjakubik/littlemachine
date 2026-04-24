@@ -88,9 +88,9 @@ class LabelMaker {
         return aLabelList;
     }
 
-    static oOutline (x, y) {
+    static getCanvasPicturePixelOutline (x, y) {
         const nCorner = 4;
-        const borderWidth = 1;
+        const borderWidth = 4;
 
         return {
             x: x,
@@ -518,8 +518,7 @@ class LabelMaker {
     drawPixelOn (x, y) {
         this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-
-        this.drawShape(LabelMaker.oOutline(x, y));
+        this.drawShape(LabelMaker.getCanvasPicturePixelOutline(x, y));
         this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
             x * DRAW_BLOCK_SIZE + 4,
@@ -531,9 +530,8 @@ class LabelMaker {
 
     drawPixelOff (x, y) {
         this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
-
         this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.oOutline(x, y));
+        this.drawShape(LabelMaker.getCanvasPicturePixelOutline(x, y));
         this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
         this.context.fillRect(
             x * DRAW_BLOCK_SIZE + 4,
