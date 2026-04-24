@@ -8,13 +8,18 @@ import {
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
 const MAX_EXPONENT = 4096;
-const MAX_NUMBER_OF_BOXES = 65536;
-const BOX_SIZE = 4;
+const MAX_NUMBER_OF_SAMPLES = 65536;
+const SQUARE_SIZE = 4;
 
 const MIN_DECIMAL = 0;
 
-const PICTURE_CANVAS_WIDTH = BOX_SIZE;
-const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
+const PICTURE_CANVAS_WIDTH = SQUARE_SIZE;
+const PICTURE_CANVAS_HEIGHT = SQUARE_SIZE;
+const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
+const PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
 const DRAW_BLOCK_SIZE = 48;
 
 const PICTURE_CANVAS_ID = 'picturecanvas';
@@ -51,7 +56,7 @@ class LabelMaker {
     }
 
     static getMaxDecimalForBoxSize () {
-        return 2 ** (BOX_SIZE ** 2);
+        return 2 ** (SQUARE_SIZE ** 2);
     }
 
     static getValidDecimalValue (iNewDecimalValue) {
@@ -75,7 +80,7 @@ class LabelMaker {
         const aLabelList = [];
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
-                binary: convertDecimalToBinary(i, BOX_SIZE),
+                binary: convertDecimalToBinary(i, SQUARE_SIZE),
                 label: 'unlabelled',
             };
             aLabelList.push(oLabel);
@@ -83,9 +88,9 @@ class LabelMaker {
         return aLabelList;
     }
 
-    static oOutline (x, y) {
+    static getPicturePixelOutline (x, y) {
         const nCorner = 4;
-        const borderWidth = 1;
+        const borderWidth = 4;
 
         return {
             x: x,
@@ -119,48 +124,6 @@ class LabelMaker {
         };
     }
 
-    static oInterlace1 (x, y) {
-        const iSpace1 = DRAW_BLOCK_SIZE / 8;
-        const iSpace2 = DRAW_BLOCK_SIZE / 8;
-        const aPath = [];
-        let oPoint = {};
-        for (let i = 1; i < 4; i++) {
-            oPoint = {
-                x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
-                x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 - 2,
-            };
-            aPath.push(oPoint);
-        }
-        return {
-            x: x,
-            y: y,
-            path: aPath,
-        };
-    }
-
-    static oInterlace2 (x, y) {
-        const iSpace1 = DRAW_BLOCK_SIZE / 8;
-        const iSpace2 = DRAW_BLOCK_SIZE / 8;
-        const aPath = [];
-        let oPoint = {};
-        for (let i = 1; i < 4; i++) {
-            oPoint = {
-                x1: x * DRAW_BLOCK_SIZE + iSpace2,
-                y1: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
-                x2: x * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - iSpace2,
-                y2: y * DRAW_BLOCK_SIZE + DRAW_BLOCK_SIZE - 2 * i * iSpace1 + 4,
-            };
-            aPath.push(oPoint);
-        }
-        return {
-            x: x,
-            y: y,
-            path: aPath,
-        };
-    }
-
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
@@ -168,11 +131,9 @@ class LabelMaker {
 
         this.classifyWorker.addEventListener('message', (message) => {
             const sMessageType = message.data.type || 'NONE';
-            let sMessage;
             switch (sMessageType) {
             case 'update':
-                sMessage = `i: ${message.data.i}, j0: ${message.data.j0}; arrayTheta0: ${message.data.arrayTheta0._data.join(', ')}`;
-                this.updateTrainingDisplay(sMessage);
+                this.updateTrainingDisplay(message.data);
                 break;
             default:
                 break;
@@ -193,65 +154,38 @@ class LabelMaker {
     }
 
     renderPictureNavigator (oParentDiv) {
-        const oPictureNavigator = createDiv('picturenavigator', oParentDiv);
-        oPictureNavigator.classList.add('picturenavigator');
-
-        const oButtonLeft = this.makeNavigationButton(
-            LabelMaker.sides().left,
-            null,
-            { onclick: this.incrementPicture.bind(this, -1) },
-        );
-        oPictureNavigator.appendChild(oButtonLeft);
-
-        const oCanvas = this.makeCanvas(oPictureNavigator);
+        const oCanvas = this.makeCanvas(oParentDiv);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
         };
 
-        const oButtonRight = this.makeNavigationButton(
-            LabelMaker.sides().right,
-            null,
-            { onclick: this.incrementPicture.bind(this, 1) },
-        );
-        oPictureNavigator.appendChild(oButtonRight);
+        this.makeNavigationButton(LabelMaker.sides().left, null, oParentDiv, {
+            onclick: this.incrementPicture.bind(this, -1),
+        });
 
         this.navigationField = this.makeNavigationField(
             {
                 onchange: this.movePicture.bind(this),
             },
-            oPictureNavigator,
+            oParentDiv,
         );
         this.navigationField.setAttribute('value', this.decimal);
+
+        this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
+            onclick: this.incrementPicture.bind(this, 1),
+        });
     }
 
-    renderPicture () {
+    renderSamplePicture () {
         const i = this.decimal;
-        const sSample = convertDecimalToBinary(i, BOX_SIZE);
-        this.drawAsSquare(sSample);
+        const sSample = convertDecimalToBinary(i, SQUARE_SIZE);
+        this.drawSampleAsSquare(sSample);
     }
 
     renderLabelControl (oParentDiv) {
-        const oLabelControl = createDiv('labelcontrol', oParentDiv);
-        oLabelControl.classList.add('labelcontrol');
-
-        const oLabelDots = createDiv('labeldots', oLabelControl);
-        oLabelDots.classList.add('labeldots');
-
-        this.dotYes = this.makeLabelDot(LabelMaker.labels().yes, oLabelDots);
-        this.dotNo = this.makeLabelDot(LabelMaker.labels().no, oLabelDots);
-
-        this.renderDotColors();
-
-        const oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
-        const oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
-
-        this.makeLabelCountGroup('yes', oLabelControl);
-        this.makeLabelCountGroup('no', oLabelControl);
-        this.makeLabelCountGroup('unlabelled', oLabelControl);
-
-        oLabelControl.appendChild(oButtonYes);
-        oLabelControl.appendChild(oButtonNo);
+        this.makeLabelButton(LabelMaker.labels().yes, oParentDiv);
+        this.makeLabelButton(LabelMaker.labels().no, oParentDiv);
     }
 
     renderDotColors () {
@@ -290,7 +224,7 @@ class LabelMaker {
         oCanvas.addEventListener('click', this.drawAt.bind(this), false);
 
         this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = 'black';
+        this.context.fillStyle = PICTURE_CANVAS_FILL_STYLE;
         this.context.fillRect(
             0,
             0,
@@ -303,7 +237,7 @@ class LabelMaker {
         return oCanvas;
     }
 
-    makeNavigationButton (iSide, sLabelName, oHandlers) {
+    makeNavigationButton (iSide, sLabelName, oParentDiv, oHandlers) {
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
         const sButtonLabel = iSide === LabelMaker.sides().left ? '<' : '>';
 
@@ -313,12 +247,12 @@ class LabelMaker {
         if (sLabelName) {
             sButtonClass = 'labelnamenavigationbutton';
             sButtonId = `labelnamenavigationbutton${sLabelName}${sSide}`;
-            oButton = createButton(sButtonId, sButtonLabel);
+            oButton = createButton(sButtonId, sButtonLabel, oParentDiv);
             oButton.onclick = oHandlers.onclickwithlabelname;
         } else {
             sButtonClass = 'navigationbutton';
             sButtonId = `navigationbutton${sSide}`;
-            oButton = createButton(sButtonId, sButtonLabel);
+            oButton = createButton(sButtonId, sButtonLabel, oParentDiv);
             oButton.onclick = oHandlers.onclick;
         }
         oButton.classList.add(sButtonClass);
@@ -357,11 +291,11 @@ class LabelMaker {
         return oDot;
     }
 
-    makeLabelButton (iLabel) {
+    makeLabelButton (iLabel, oParentDiv) {
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
-        const oButton = createButton(sButtonId, sLabel);
+        const oButton = createButton(sButtonId, sLabel, oParentDiv);
         oButton.classList.add(sButtonClass);
         oButton.onclick = this.setLabel.bind(this, iLabel);
 
@@ -375,9 +309,10 @@ class LabelMaker {
         );
         labelCountGroup.classList.add('labelcountgroup');
 
-        const oButtonPreviousByLabel = this.makeNavigationButton(
+        this.makeNavigationButton(
             LabelMaker.sides().left,
             sLabelName,
+            labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
@@ -386,7 +321,6 @@ class LabelMaker {
                 ),
             },
         );
-        labelCountGroup.appendChild(oButtonPreviousByLabel);
 
         const labelCountLabel = createDiv(
             `labelcountname${sLabelName}`,
@@ -403,9 +337,10 @@ class LabelMaker {
         this[sCamelCaseLabelName].classList.add('labelcount');
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
-        const oButtonNextByLabel = this.makeNavigationButton(
+        this.makeNavigationButton(
             LabelMaker.sides().right,
             sLabelName,
+            labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
@@ -414,7 +349,6 @@ class LabelMaker {
                 ),
             },
         );
-        labelCountGroup.appendChild(oButtonNextByLabel);
 
         return labelCountGroup;
     }
@@ -449,7 +383,7 @@ class LabelMaker {
 
         this.decimal = LabelMaker.getValidDecimalValue(iValue);
 
-        this.renderPicture();
+        this.renderSamplePicture();
         this.renderDotColors();
     }
 
@@ -460,7 +394,7 @@ class LabelMaker {
             );
             this.navigationField.value = this.decimal;
 
-            this.renderPicture();
+            this.renderSamplePicture();
             this.renderDotColors();
         }
     }
@@ -529,8 +463,8 @@ class LabelMaker {
         });
     }
 
-    drawAsSquare (sSample) {
-        const iBoxLength = BOX_SIZE ** 2;
+    drawSampleAsSquare (sSample) {
+        const iBoxLength = SQUARE_SIZE ** 2;
 
         if (sSample.length < iBoxLength) {
             return;
@@ -542,8 +476,8 @@ class LabelMaker {
         let x = 0;
         let y = 0;
         for (let i = 0; i < iBoxLength; i++) {
-            x = i % BOX_SIZE;
-            y = Math.floor(i / BOX_SIZE);
+            x = i % SQUARE_SIZE;
+            y = Math.floor(i / SQUARE_SIZE);
             sColor = sSample.substring(i, i + 1);
             iState = parseInt(sColor);
             this.drawPixel(x, y, iState);
@@ -559,27 +493,29 @@ class LabelMaker {
     }
 
     drawPixelOn (x, y) {
-        this.context.strokeStyle = '#efefef';
+        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-
-        this.drawShape(LabelMaker.oOutline(x, y));
-
-        this.context.lineWidth = '6';
-        this.drawShape(LabelMaker.oInterlace1(x, y));
-
-        this.context.strokeStyle = '#404040';
-        this.drawShape(LabelMaker.oInterlace2(x, y));
+        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
+        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.context.fillRect(
+            x * DRAW_BLOCK_SIZE + 4,
+            y * DRAW_BLOCK_SIZE + 4,
+            x + DRAW_BLOCK_SIZE - 4,
+            y + DRAW_BLOCK_SIZE - 4,
+        );
     }
 
     drawPixelOff (x, y) {
-        this.context.strokeStyle = 'black';
-
+        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.oOutline(x, y));
-
-        this.context.lineWidth = '6';
-        this.drawShape(LabelMaker.oInterlace1(x, y));
-        this.drawShape(LabelMaker.oInterlace2(x, y));
+        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
+        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
+        this.context.fillRect(
+            x * DRAW_BLOCK_SIZE + 4,
+            y * DRAW_BLOCK_SIZE + 4,
+            x + DRAW_BLOCK_SIZE + 4,
+            y + DRAW_BLOCK_SIZE + 4,
+        );
     }
 
     drawShape (oOutline) {
@@ -635,7 +571,7 @@ class LabelMaker {
             const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
 
             // converts x, y coordinate to 0 .. 16
-            const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
+            const nPositionInBinaryString = nBlockX + nBlockY * SQUARE_SIZE;
             let iNewState = 0;
             const sOldBinaryNumber = this.labellist[this.decimal].binary;
             const sPixelColor = sOldBinaryNumber.charAt(
@@ -661,7 +597,11 @@ class LabelMaker {
         }
     }
 
-    updateTrainingDisplay (sMessage) {
+    updateTrainingDisplay (oMessageData) {
+        const aArrayTheta0Rounded = oMessageData.arrayTheta0._data.map(
+            (n) => Math.round(n * 1000) / 1000,
+        );
+        const sMessage = `i: ${oMessageData.i}, j0: ${oMessageData.j0}; arrayTheta0: ${aArrayTheta0Rounded.join(', ')}`;
         this.trainingDisplayDiv.innerHTML = sMessage;
     }
 }
@@ -712,7 +652,7 @@ var saveJsonToFile = function (aData, sFilename) {
     for (var i = 0; i < aData.length; i++) {
         var oDataElement = aData[i];
         var sDataElement = JSON.stringify(oDataElement);
-        if (i < MAX_NUMBER_OF_BOXES) {
+        if (i < MAX_NUMBER_OF_SAMPLES) {
             if (i === 0) {
                 sData = '[' + sDataElement;
             } else {

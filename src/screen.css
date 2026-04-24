@@ -1,17 +1,16 @@
 body {
     background-color: #ffffff;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
-    background-color: #efefef;
-    font-family: 'Courier New', Courier, monospace;
-    height: 1.4em;
-    width: 1.4em;
-    border: 2px solid #101010;
-    border-radius: 0.1em;
-    color: #101010;
-    font-size: 3em;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 3em;
+    border: 0.2em solid #aae4ea;
+    border-radius: 2em;
+    color: #a97b07;
+    font-size: 1em;
 }
 
 .step {
@@ -20,136 +19,76 @@ button {
 
 .container {
     display: grid;
-    justify-items: center;
-}
-
-.pictureThumbnails {
-    display: flex;
-    flex-wrap: wrap;
-    width: 60em;
-}
-
-.samplePicture {
-    width: 1em;
-    margin: 0.8em;
-}
-
-.picturenavigator {
-    width: 26em;
+    background: linear-gradient(90deg, #aae4ea, #ffffff);
+    grid-template-columns: repeat(16, 3em);
+    grid-template-rows: repeat(13, 3em);
 }
 
 #picturecanvas {
-    position: relative;
-    top: 0.4em;
-    margin: 0 1em 0 1em;
-    border: 2px solid #101010;
+    grid-row: 1/5;
+    grid-column: 1/5;
+    margin: 0 0 0 0;
+    border: 2px dotted var(--text-0-fg-color);
     border-radius: 0.4em;
 }
 
 .navigationbutton {
-    vertical-align: text-bottom;
-    height: 3em;
-    font-size: 4em;
+    grid-row: 5;
 }
 
 .navigationfield {
-    background-color: #efefef;
-    color: #101010;
-    width: 5em;
-    margin: 1em 1em 1em 6em;
-    border: 2px solid #101010;
-    border-radius: 0.1em;
+    grid-row: 5;
+    grid-column: 2/4;
+    background-color: #fff;
+    height: 3em;
+    box-sizing: border-box;
+    border: 0.2em solid #aae4ea;
+    border-radius: 3em;
     text-align: center;
-    font-size: 1.5em;
+    color: #a97b07;
+    font-size: 1em;
+}
+
+.navigationbuttonleft {
+    grid-column: 1;
 }
 
 .navigationbuttonright {
-    justify-self: right;
-}
-
-.labeldot {
-    width: 1em;
-    border-radius: 0.4em;
-    height: 1em;
-    margin: 0 6em 0 6em;
-    display: inline-block;
-}
-
-#labeldotyes.on {
-    background-color: #004600;
-}
-
-#labeldotno.on {
-    background-color: #460000;
-}
-
-#labeldotyes {
-    background-color: #cfdacf;
-}
-
-#labeldotno {
-    background-color: #d1c6c6;
+    grid-column: 4;
 }
 
 .labelbutton {
-    margin: 1em 0.6em;
-    width: 3em;
-    font-size: 3em;
+    grid-row: 6;
 }
 
 #labelbuttonyes {
+    grid-column: 1 / 3;
     color: #004600;
 }
 
 #labelbuttonno {
+    grid-column: 3 / 5;
     color: #460000;
 }
 
-#classifyButton,
-#saveButton,
 #loadButton {
-    width: fit-content;
-    margin: 0.2em;
+    grid-row: 7;
+    grid-column: 6 / 9;
 }
 
-.labelcontrol {
-    width: 26em;
+#classifyButton {
+    grid-row: 7;
+    grid-column: 10 / 13;
+}
+#saveButton {
+    grid-row: 8;
+    grid-column: 6 / 9;
 }
 
-.labelcountgroup {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    font-size: 1em;
-    color: #101010;
-}
-
-.labelcountname {
-    margin: 0.3em 0 0 0;
-    text-align: right;
-    grid-column: 2;
-}
-
-.labelcount {
-    margin: 0.3em 0 0 1em;
-    grid-column: 3;
-}
-
-.labelnamenavigationbutton {
-    display: none;
-    width: 4em;
-    font-size: 1em;
-}
-
-.labelnamenavigationbuttonleft {
-    grid-column: 1;
-}
-
-.labelnamenavigationbuttonright {
-    grid-column: 4;
-}
-
-.labelcountgroup:hover > .labelnamenavigationbutton {
-    display: initial;
+#trainingDisplay {
+    grid-row: 5;
+    grid-column: 6/16;
+    color: #a97b07;
 }
 
 h1 {
@@ -167,4 +106,37 @@ p {
 ul {
     font-size: 2em;
     color: green;
+}
+
+root {
+    --bg-0-color: rgb(255, 255, 255);
+    --bg-0-inverted-color: rgba(57, 66, 237, 0.815);
+    --bg-1-color: rgb(237, 237, 237);
+    --bg-2-color: rgba(169, 123, 7, 0.815);
+    --bg-3-color: rgba(204, 141, 5, 0.55);
+    --text-0-fg-color: rgb(170, 228, 234);
+    --text-1-fg-color: rgb(255, 255, 255);
+    --text-0-inverted-fg-color: rgb(169, 123, 7);
+    --text-1-inverted-fg-color: rgb(255, 219, 157);
+    --text-2-fg-color: rgb(71, 133, 49);
+    --font-0-family:
+        normal helvetica-w01-roman, helvetica-w02-roman, helvetica-lt-w10-roman,
+        sans-serif;
+    --copy-column-width: 520px;
+    --gradient1-g0-color: rgb(170, 228, 234);
+    --gradient1-g1-color: rgb(159, 213, 219);
+    --gradient1-g2-color: rgb(148, 199, 204);
+    --gradient1-g3-color: rgb(137, 185, 189);
+    --gradient1-g4-color: rgb(127, 171, 175);
+    --gradient1-g5-color: rgb(116, 156, 160);
+    --gradient1-g6-color: rgb(106, 142, 146);
+    --gradient1-g7-color: rgb(95, 128, 131);
+    --gradient1-g8-color: rgb(85, 114, 117);
+    --gradient1-g9-color: rgb(74, 99, 102);
+    --gradient1-g10-color: rgb(63, 85, 87);
+    --gradient1-g11-color: rgb(52, 71, 72);
+    --gradient1-g12-color: rgb(42, 57, 58);
+    --gradient1-g13-color: rgb(31, 42, 43);
+    --gradient1-g14-color: rgb(21, 28, 29);
+    --gradient1-g15-color: rgb(10, 14, 14);
 }
