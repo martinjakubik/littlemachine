@@ -16,8 +16,10 @@ const MIN_DECIMAL = 0;
 const PICTURE_CANVAS_WIDTH = BOX_SIZE;
 const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
 const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = '#efefef';
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'black';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
+const PICTURE_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
+const PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
 const DRAW_BLOCK_SIZE = 48;
 
 const PICTURE_CANVAS_ID = 'picturecanvas';
@@ -518,6 +520,13 @@ class LabelMaker {
         this.context.lineWidth = '2';
 
         this.drawShape(LabelMaker.oOutline(x, y));
+        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.context.fillRect(
+            x * DRAW_BLOCK_SIZE + 4,
+            y * DRAW_BLOCK_SIZE + 4,
+            x + DRAW_BLOCK_SIZE - 4,
+            y + DRAW_BLOCK_SIZE - 4,
+        );
     }
 
     drawPixelOff (x, y) {
@@ -525,6 +534,13 @@ class LabelMaker {
 
         this.context.lineWidth = '2';
         this.drawShape(LabelMaker.oOutline(x, y));
+        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
+        this.context.fillRect(
+            x * DRAW_BLOCK_SIZE + 4,
+            y * DRAW_BLOCK_SIZE + 4,
+            x + DRAW_BLOCK_SIZE + 4,
+            y + DRAW_BLOCK_SIZE + 4,
+        );
     }
 
     drawShape (oOutline) {
