@@ -7,7 +7,6 @@ button {
     background-color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     height: 3em;
-    margin: 0.6em 0 0.6em 0;
     border: 0.2em solid #aae4ea;
     border-radius: 2em;
     color: #a97b07;
@@ -22,6 +21,7 @@ button {
     display: grid;
     background: linear-gradient(90deg, #aae4ea, #ffffff);
     grid-template-columns: repeat(16, 3em);
+    grid-template-rows: repeat(13, 3em);
 }
 
 #picturecanvas {
@@ -42,7 +42,6 @@ button {
     background-color: #fff;
     height: 3em;
     box-sizing: border-box;
-    margin: 0.6em 0 0 0;
     border: 0.2em solid #aae4ea;
     border-radius: 3em;
     text-align: center;
@@ -73,22 +72,22 @@ button {
 }
 
 #loadButton {
-    grid-row: 5;
+    grid-row: 7;
     grid-column: 6 / 9;
 }
 
 #classifyButton {
-    grid-row: 5;
+    grid-row: 7;
     grid-column: 10 / 13;
 }
 #saveButton {
-    grid-row: 6;
+    grid-row: 8;
     grid-column: 6 / 9;
 }
 
 #trainingDisplay {
     grid-row: 5;
-    grid-column: 6/14;
+    grid-column: 6/16;
     color: var(--text-0-inverted-fg-color);
 }
 
