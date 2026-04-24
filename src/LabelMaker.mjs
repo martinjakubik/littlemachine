@@ -8,13 +8,13 @@ import {
 import { convertToMatrix } from './jsonToArrayConverter.js';
 
 const MAX_EXPONENT = 4096;
-const MAX_NUMBER_OF_BOXES = 65536;
-const BOX_SIZE = 4;
+const MAX_NUMBER_OF_SAMPLES = 65536;
+const SQUARE_SIZE = 4;
 
 const MIN_DECIMAL = 0;
 
-const PICTURE_CANVAS_WIDTH = BOX_SIZE;
-const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
+const PICTURE_CANVAS_WIDTH = SQUARE_SIZE;
+const PICTURE_CANVAS_HEIGHT = SQUARE_SIZE;
 const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
 const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
@@ -56,7 +56,7 @@ class LabelMaker {
     }
 
     static getMaxDecimalForBoxSize () {
-        return 2 ** (BOX_SIZE ** 2);
+        return 2 ** (SQUARE_SIZE ** 2);
     }
 
     static getValidDecimalValue (iNewDecimalValue) {
@@ -80,7 +80,7 @@ class LabelMaker {
         const aLabelList = [];
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
-                binary: convertDecimalToBinary(i, BOX_SIZE),
+                binary: convertDecimalToBinary(i, SQUARE_SIZE),
                 label: 'unlabelled',
             };
             aLabelList.push(oLabel);
@@ -88,7 +88,7 @@ class LabelMaker {
         return aLabelList;
     }
 
-    static getCanvasPicturePixelOutline (x, y) {
+    static getPicturePixelOutline (x, y) {
         const nCorner = 4;
         const borderWidth = 4;
 
@@ -182,10 +182,10 @@ class LabelMaker {
         this.navigationField.setAttribute('value', this.decimal);
     }
 
-    renderPicture () {
+    renderSamplePicture () {
         const i = this.decimal;
-        const sSample = convertDecimalToBinary(i, BOX_SIZE);
-        this.drawAsSquare(sSample);
+        const sSample = convertDecimalToBinary(i, SQUARE_SIZE);
+        this.drawSampleAsSquare(sSample);
     }
 
     renderLabelControl (oParentDiv) {
@@ -406,7 +406,7 @@ class LabelMaker {
 
         this.decimal = LabelMaker.getValidDecimalValue(iValue);
 
-        this.renderPicture();
+        this.renderSamplePicture();
         this.renderDotColors();
     }
 
@@ -417,7 +417,7 @@ class LabelMaker {
             );
             this.navigationField.value = this.decimal;
 
-            this.renderPicture();
+            this.renderSamplePicture();
             this.renderDotColors();
         }
     }
@@ -486,8 +486,8 @@ class LabelMaker {
         });
     }
 
-    drawAsSquare (sSample) {
-        const iBoxLength = BOX_SIZE ** 2;
+    drawSampleAsSquare (sSample) {
+        const iBoxLength = SQUARE_SIZE ** 2;
 
         if (sSample.length < iBoxLength) {
             return;
@@ -499,8 +499,8 @@ class LabelMaker {
         let x = 0;
         let y = 0;
         for (let i = 0; i < iBoxLength; i++) {
-            x = i % BOX_SIZE;
-            y = Math.floor(i / BOX_SIZE);
+            x = i % SQUARE_SIZE;
+            y = Math.floor(i / SQUARE_SIZE);
             sColor = sSample.substring(i, i + 1);
             iState = parseInt(sColor);
             this.drawPixel(x, y, iState);
@@ -518,7 +518,7 @@ class LabelMaker {
     drawPixelOn (x, y) {
         this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.getCanvasPicturePixelOutline(x, y));
+        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
         this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
             x * DRAW_BLOCK_SIZE + 4,
@@ -531,7 +531,7 @@ class LabelMaker {
     drawPixelOff (x, y) {
         this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.getCanvasPicturePixelOutline(x, y));
+        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
         this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
         this.context.fillRect(
             x * DRAW_BLOCK_SIZE + 4,
@@ -594,7 +594,7 @@ class LabelMaker {
             const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
 
             // converts x, y coordinate to 0 .. 16
-            const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
+            const nPositionInBinaryString = nBlockX + nBlockY * SQUARE_SIZE;
             let iNewState = 0;
             const sOldBinaryNumber = this.labellist[this.decimal].binary;
             const sPixelColor = sOldBinaryNumber.charAt(
@@ -671,7 +671,7 @@ var saveJsonToFile = function (aData, sFilename) {
     for (var i = 0; i < aData.length; i++) {
         var oDataElement = aData[i];
         var sDataElement = JSON.stringify(oDataElement);
-        if (i < MAX_NUMBER_OF_BOXES) {
+        if (i < MAX_NUMBER_OF_SAMPLES) {
             if (i === 0) {
                 sData = '[' + sDataElement;
             } else {
