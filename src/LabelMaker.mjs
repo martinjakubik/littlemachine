@@ -156,10 +156,7 @@ class LabelMaker {
     }
 
     renderPictureNavigator (oParentDiv) {
-        const oPictureNavigator = createDiv('picturenavigator', oParentDiv);
-        oPictureNavigator.classList.add('picturenavigator');
-
-        const oCanvas = this.makeCanvas(oPictureNavigator);
+        const oCanvas = this.makeCanvas(oParentDiv);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
@@ -169,10 +166,6 @@ class LabelMaker {
             onclick: this.incrementPicture.bind(this, -1),
         });
 
-        this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
-            onclick: this.incrementPicture.bind(this, 1),
-        });
-
         this.navigationField = this.makeNavigationField(
             {
                 onchange: this.movePicture.bind(this),
@@ -180,6 +173,10 @@ class LabelMaker {
             oParentDiv,
         );
         this.navigationField.setAttribute('value', this.decimal);
+
+        this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
+            onclick: this.incrementPicture.bind(this, 1),
+        });
     }
 
     renderSamplePicture () {
@@ -189,26 +186,8 @@ class LabelMaker {
     }
 
     renderLabelControl (oParentDiv) {
-        const oLabelControl = createDiv('labelcontrol', oParentDiv);
-        oLabelControl.classList.add('labelcontrol');
-
-        const oLabelDots = createDiv('labeldots', oLabelControl);
-        oLabelDots.classList.add('labeldots');
-
-        this.dotYes = this.makeLabelDot(LabelMaker.labels().yes, oLabelDots);
-        this.dotNo = this.makeLabelDot(LabelMaker.labels().no, oLabelDots);
-
-        this.renderDotColors();
-
-        const oButtonYes = this.makeLabelButton(LabelMaker.labels().yes);
-        const oButtonNo = this.makeLabelButton(LabelMaker.labels().no);
-
-        this.makeLabelCountGroup('yes', oLabelControl);
-        this.makeLabelCountGroup('no', oLabelControl);
-        this.makeLabelCountGroup('unlabelled', oLabelControl);
-
-        oLabelControl.appendChild(oButtonYes);
-        oLabelControl.appendChild(oButtonNo);
+        this.makeLabelButton(LabelMaker.labels().yes, oParentDiv);
+        this.makeLabelButton(LabelMaker.labels().no, oParentDiv);
     }
 
     renderDotColors () {
@@ -314,11 +293,11 @@ class LabelMaker {
         return oDot;
     }
 
-    makeLabelButton (iLabel) {
+    makeLabelButton (iLabel, oParentDiv) {
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
-        const oButton = createButton(sButtonId, sLabel);
+        const oButton = createButton(sButtonId, sLabel, oParentDiv);
         oButton.classList.add(sButtonClass);
         oButton.onclick = this.setLabel.bind(this, iLabel);
 
