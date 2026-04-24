@@ -131,11 +131,9 @@ class LabelMaker {
 
         this.classifyWorker.addEventListener('message', (message) => {
             const sMessageType = message.data.type || 'NONE';
-            let sMessage;
             switch (sMessageType) {
             case 'update':
-                sMessage = `i: ${message.data.i}, j0: ${message.data.j0}; arrayTheta0: ${message.data.arrayTheta0._data.join(', ')}`;
-                this.updateTrainingDisplay(sMessage);
+                this.updateTrainingDisplay(message.data);
                 break;
             default:
                 break;
@@ -599,7 +597,11 @@ class LabelMaker {
         }
     }
 
-    updateTrainingDisplay (sMessage) {
+    updateTrainingDisplay (oMessageData) {
+        const aArrayTheta0Rounded = oMessageData.arrayTheta0._data.map(
+            (n) => Math.round(n * 1000) / 1000,
+        );
+        const sMessage = `i: ${oMessageData.i}, j0: ${oMessageData.j0}; arrayTheta0: ${aArrayTheta0Rounded.join(', ')}`;
         this.trainingDisplayDiv.innerHTML = sMessage;
     }
 }
