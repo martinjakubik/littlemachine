@@ -88,7 +88,7 @@ button {
 #trainingDisplay {
     grid-row: 5;
     grid-column: 6/16;
-    color: var(--text-0-inverted-fg-color);
+    color: #a97b07;
 }
 
 h1 {
