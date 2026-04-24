@@ -15,6 +15,7 @@ const MIN_DECIMAL = 0;
 
 const PICTURE_CANVAS_WIDTH = BOX_SIZE;
 const PICTURE_CANVAS_HEIGHT = BOX_SIZE;
+const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 const DRAW_BLOCK_SIZE = 48;
 
 const PICTURE_CANVAS_ID = 'picturecanvas';
@@ -242,7 +243,7 @@ class LabelMaker {
         oCanvas.addEventListener('click', this.drawAt.bind(this), false);
 
         this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = 'rgba(255, 255, 255, 0)';
+        this.context.fillStyle = PICTURE_CANVAS_FILL_STYLE;
         this.context.fillRect(
             0,
             0,
