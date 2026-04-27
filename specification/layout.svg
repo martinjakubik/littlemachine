@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
-   sodipodi:docname="layout-2026.svg"
+   sodipodi:docname="layout.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2"
-     inkscape:cx="1166.5"
-     inkscape:cy="809.25"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="1375.3227"
+     inkscape:cy="1434.3661"
      inkscape:window-width="1440"
      inkscape:window-height="842"
      inkscape:window-x="0"
@@ -47,7 +47,7 @@
        opacity="0.14901961"
        empspacing="4"
        enabled="true"
-       visible="false" />
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs1">
@@ -410,18 +410,18 @@
            transform="translate(42.564482,115.18306)"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan4"><tspan
+             id="tspan35"><tspan
                style="stroke-width:0.8"
-               id="tspan1">Now click </tspan><tspan
+               id="tspan32">Now click </tspan><tspan
                style="font-weight:bold"
-               id="tspan2">Start Training</tspan><tspan
+               id="tspan33">Start Training</tspan><tspan
                style="stroke-width:0.8"
-               id="tspan3"> to create the </tspan></tspan><tspan
+               id="tspan34"> to create the </tspan></tspan><tspan
              x="77.117477"
              y="84.724502"
-             id="tspan6"><tspan
+             id="tspan37"><tspan
                style="stroke-width:0.8"
-               id="tspan5">model using all of your examples...</tspan></tspan></text>
+               id="tspan36">model using all of your examples...</tspan></tspan></text>
       </g>
       <g
          id="g148"
@@ -774,11 +774,11 @@
            transform="translate(42.564482,115.18306)"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan9">Click <tspan
+             id="tspan43">Click <tspan
    style="font-weight:bold"
-   id="tspan7">Yes</tspan> if you see a face and <tspan
+   id="tspan38">Yes</tspan> if you see a face and <tspan
    style="font-weight:bold"
-   id="tspan8">No</tspan> if you don't.</tspan></text>
+   id="tspan42">No</tspan> if you don't.</tspan></text>
       </g>
       <text
          xml:space="preserve"
@@ -1078,12 +1078,12 @@
            dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan11">Click to add pixels and click <tspan
+             id="tspan46">Click to add pixels and click <tspan
    style="font-weight:bold"
-   id="tspan10">Yes</tspan> if you see </tspan><tspan
+   id="tspan44">Yes</tspan> if you see </tspan><tspan
              x="77.117477"
              y="84.724502"
-             id="tspan12">a face.</tspan></text>
+             id="tspan47">a face.</tspan></text>
         <text
            xml:space="preserve"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#aae4ea;stroke-width:0.799999;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1"
@@ -1459,11 +1459,11 @@
            transform="translate(42.564482,115.18306)"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan15">Click <tspan
+             id="tspan50">Click <tspan
    style="font-weight:bold"
-   id="tspan13">Yes</tspan> if you see a face and <tspan
+   id="tspan48">Yes</tspan> if you see a face and <tspan
    style="font-weight:bold"
-   id="tspan14">No</tspan> if don't.</tspan></text>
+   id="tspan49">No</tspan> if don't.</tspan></text>
       </g>
       <text
          xml:space="preserve"
@@ -1784,19 +1784,19 @@
            dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.8708867"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan16">There are 65536 possible pictures.
+             id="tspan51">There are 65536 possible pictures.
 </tspan><tspan
              x="77.117477"
              y="84.724502"
-             id="tspan17">Try to label about 2000 of them.
+             id="tspan52">Try to label about 2000 of them.
 </tspan><tspan
              x="77.117477"
              y="90.898124"
-             id="tspan18">
+             id="tspan53">
 </tspan><tspan
              x="77.117477"
              y="97.071746"
-             id="tspan19">If you're tired, load an existing set.</tspan></text>
+             id="tspan54">If you're tired, load an existing set.</tspan></text>
       </g>
       <text
          xml:space="preserve"
@@ -2203,20 +2203,20 @@
            transform="translate(42.564482,115.18306)"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan24"><tspan
+             id="tspan59"><tspan
                style="stroke-width:0.8"
-               id="tspan20">Click </tspan><tspan
+               id="tspan55">Click </tspan><tspan
                style="font-weight:bold"
-               id="tspan21">Start Training</tspan><tspan
+               id="tspan56">Start Training</tspan><tspan
                style="stroke-width:0.8"
-               id="tspan22"> to create the </tspan><tspan
+               id="tspan57"> to create the </tspan><tspan
                style="stroke-width:0.8"
-               id="tspan23">model </tspan></tspan><tspan
+               id="tspan58">model </tspan></tspan><tspan
              x="77.117477"
              y="84.724502"
-             id="tspan26"><tspan
+             id="tspan64"><tspan
                style="stroke-width:0.8"
-               id="tspan25">using all of your examples...</tspan></tspan></text>
+               id="tspan63">using all of your examples...</tspan></tspan></text>
       </g>
       <text
          xml:space="preserve"
@@ -2492,13 +2492,13 @@
          y="0"><tspan
            x="92.099609"
            y="698.40626"
-           id="tspan27">i: 290, j0: 0.01524; arrayTheta0: 4.4763, -9.9820, -1.7931, 3.1211, -1.7931, </tspan><tspan
+           id="tspan65">i: 290, j0: 0.01524; arrayTheta0: 4.4763, -9.9820, -1.7931, 3.1211, -1.7931, </tspan><tspan
            x="92.099609"
            y="715.07289"
-           id="tspan29">1.2850, -1.6342, 3.3856, -0.9228, 2.2227, 1.4227, 0.6101, 2.1277, 1.4098, </tspan><tspan
+           id="tspan66">1.2850, -1.6342, 3.3856, -0.9228, 2.2227, 1.4227, 0.6101, 2.1277, 1.4098, </tspan><tspan
            x="92.099609"
            y="731.73952"
-           id="tspan30">-0.0599, -0.8520, -0.0010</tspan></text>
+           id="tspan67">-0.0599, -0.8520, -0.0010</tspan></text>
       <g
          id="g257"
          transform="translate(-1.0761742,-120.54883)">
@@ -2589,7 +2589,7 @@
            dx="0 0 0 0 0 0 0 0 0 0 0 -0.093544334"><tspan
              x="77.117477"
              y="78.55088"
-             id="tspan31">Little machine is ready.</tspan></text>
+             id="tspan68">Little machine is ready.</tspan></text>
       </g>
       <text
          xml:space="preserve"
