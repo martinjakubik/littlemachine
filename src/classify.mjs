@@ -1,5 +1,4 @@
 import { oneVsAll } from './oneVsAll.mjs';
-import { createMathLib } from './lib/js/mathematix/index.js';
 import { subset as math_subset } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 import { range as math_range } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
 import { index as math_index } from 'https://cdn.jsdelivr.net/npm/mathjs@14.0.1/+esm';
@@ -19,7 +18,7 @@ addEventListener('message', (message) => {
 });
 
 const classify = function (aLabelList, oDisplayOptions) {
-    const mathlib = createMathLib('naive');
+    const mathlib = null;
 
     const matrixData = matrix(aLabelList);
 
