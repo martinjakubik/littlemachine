@@ -8,7 +8,7 @@ const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
 const PIXEL_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
 
 class PixelCanvas {
-    static getPixelOutline(x, y, nPixelSize) {
+    static getPixelOutline (x, y, nPixelSize) {
         const nCorner = 4;
         const borderWidth = 4;
 
@@ -44,14 +44,14 @@ class PixelCanvas {
         };
     }
 
-    constructor(sCanvasId, nPixelSize, nWidth, nHeight) {
+    constructor (sCanvasId, nPixelSize, nWidth, nHeight) {
         this.canvasId = sCanvasId;
         this.pixelSize = nPixelSize;
         this.width = nWidth;
         this.height = nHeight;
     }
 
-    makeCanvas(oParentDiv, oHandlers) {
+    makeCanvas (oParentDiv, oHandlers) {
         const nWidth = this.width * this.pixelSize;
         const nHeight = this.height * this.pixelSize;
         const oCanvas = createCanvas(
@@ -80,7 +80,7 @@ class PixelCanvas {
         return oCanvas;
     }
 
-    drawPixel(x, y, iState) {
+    drawPixel (x, y, iState) {
         if (iState === 0) {
             this.drawPixelOff(x, y);
         } else {
@@ -88,7 +88,7 @@ class PixelCanvas {
         }
     }
 
-    drawPixelOn(x, y) {
+    drawPixelOn (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
         this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
@@ -101,7 +101,7 @@ class PixelCanvas {
         );
     }
 
-    drawPixelOff(x, y) {
+    drawPixelOff (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
         this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
@@ -114,7 +114,7 @@ class PixelCanvas {
         );
     }
 
-    drawShape(oOutline) {
+    drawShape (oOutline) {
         this.context.beginPath();
         oOutline.path.forEach((oEdge) => {
             this.context.moveTo(oEdge.x1, oEdge.y1);
