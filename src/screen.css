@@ -29,6 +29,10 @@ button {
     grid-column: 1;
 }
 
+#menuButton {
+    width: 3em;
+}
+
 #pixelcanvas {
     grid-row: 1/5;
     grid-column: 2/6;
@@ -104,6 +108,24 @@ button {
     grid-row: 5;
     grid-column: 7/16;
     color: #a97b07;
+}
+
+#labelcounts {
+    grid-row: 9 / 13;
+    grid-column: 2 / 5;
+}
+
+#labelcounts.off {
+    display: none;
+}
+
+#labelcounts.on {
+    display: initial;
+}
+
+.labelcountgroup {
+    display: grid;
+    grid-template-columns: 0px repeat(4, 3em);
 }
 
 h1 {

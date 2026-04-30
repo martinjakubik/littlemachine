@@ -115,11 +115,23 @@ class LabelMaker {
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
         this.makeTrainingDisplay(oContainer);
+        this.makeLabelCountGroups(oContainer);
     }
 
     makeSidebar (oParentDiv) {
         const oSidebarDiv = createDiv('sidebar', oParentDiv);
-        createButton('menuButton', '⛭', oSidebarDiv);
+        const oMenuButton = createButton('menuButton', '⛭', oSidebarDiv);
+        oMenuButton.onclick = this.toggleLabelCounts.bind(this);
+    }
+
+    toggleLabelCounts () {
+        if (this.labelCountGroupDiv.classList.contains('off')) {
+            this.labelCountGroupDiv.classList.remove('off');
+            this.labelCountGroupDiv.classList.add('on');
+        } else {
+            this.labelCountGroupDiv.classList.remove('on');
+            this.labelCountGroupDiv.classList.add('off');
+        }
     }
 
     makeSampleNavigator (oParentDiv) {
@@ -231,6 +243,14 @@ class LabelMaker {
         oButton.classList.add(sButtonClass);
         oButton.onclick = this.setLabel.bind(this, iLabel);
         return oButton;
+    }
+
+    makeLabelCountGroups (oParentDiv) {
+        this.labelCountGroupDiv = createDiv('labelcounts', oParentDiv);
+        this.labelCountGroupDiv.classList.add('off');
+        this.makeLabelCountGroup('yes', this.labelCountGroupDiv);
+        this.makeLabelCountGroup('no', this.labelCountGroupDiv);
+        this.makeLabelCountGroup('none', this.labelCountGroupDiv);
     }
 
     makeLabelCountGroup (sLabelName, oParentDiv) {
