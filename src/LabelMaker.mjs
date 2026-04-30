@@ -204,13 +204,6 @@ class LabelMaker {
         }
     }
 
-    renderLabelCounts () {
-        this.labelCountYes.textContent = this.getLabelCount('yes');
-        this.labelCountNo.textContent = this.getLabelCount('no');
-        this.labelCountUnlabelled.textContent =
-            this.getLabelCount('unlabelled');
-    }
-
     makeCanvas (oParentDiv) {
         const nWidth = PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE;
         const nHeight = PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE;
@@ -403,7 +396,6 @@ class LabelMaker {
         } else {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
-            this.renderLabelCounts();
         }
     }
 
@@ -432,7 +424,6 @@ class LabelMaker {
                 this.labellist = sResponseJson;
                 this.moveToClosestByLabelName(LabelMaker.sides().right, 'yes');
                 this.renderLabelYesNoColors();
-                this.renderLabelCounts();
             })
             .catch((oError) => {
                 this.dataError = true;
