@@ -108,7 +108,7 @@ class LabelMaker {
         const oContainer = createDiv('container');
         oContainer.classList.add('container');
 
-        this.makePictureNavigator(oContainer);
+        this.makeSampleNavigator(oContainer);
         this.makeLabelControl(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
@@ -116,7 +116,7 @@ class LabelMaker {
         this.makeTrainingDisplay(oContainer);
     }
 
-    makePictureNavigator (oParentDiv) {
+    makeSampleNavigator (oParentDiv) {
         const oHandlers = {
             onclick: this.drawAt.bind(this),
         };
@@ -127,23 +127,23 @@ class LabelMaker {
         };
 
         this.makeNavigationButton(LabelMaker.sides().left, null, oParentDiv, {
-            onclick: this.incrementPicture.bind(this, -1),
+            onclick: this.incrementSample.bind(this, -1),
         });
 
         this.navigationField = this.makeNavigationField(
             {
-                onchange: this.movePicture.bind(this),
+                onchange: this.moveSample.bind(this),
             },
             oParentDiv,
         );
         this.navigationField.setAttribute('value', this.decimal);
 
         this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
-            onclick: this.incrementPicture.bind(this, 1),
+            onclick: this.incrementSample.bind(this, 1),
         });
     }
 
-    renderSamplePicture () {
+    renderSample () {
         const i = this.decimal;
         const sSample = convertDecimalToBinary(i, BOX_SIZE);
         this.drawSampleAsBox(sSample);
@@ -297,24 +297,24 @@ class LabelMaker {
         oButton.onclick = this.classifyButtonTap.bind(this);
     }
 
-    movePicture () {
+    moveSample () {
         const sValue = this.navigationField.value;
         const iValue = parseInt(sValue);
 
         this.decimal = LabelMaker.getValidDecimalValue(iValue);
 
-        this.renderSamplePicture();
+        this.renderSample();
         this.renderLabelYesNoColors();
     }
 
-    incrementPicture (iIncrement) {
+    incrementSample (iIncrement) {
         if (Math.abs(iIncrement) === 1) {
             this.decimal = LabelMaker.getValidDecimalValue(
                 this.decimal + iIncrement,
             );
             this.navigationField.value = this.decimal;
 
-            this.renderSamplePicture();
+            this.renderSample();
             this.renderLabelYesNoColors();
         }
     }
@@ -329,7 +329,7 @@ class LabelMaker {
         } else if (sLabel === 'no') {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
-            this.incrementPicture(1);
+            this.incrementSample(1);
         } else {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
@@ -429,7 +429,7 @@ class LabelMaker {
             }
         }
         if (bLabelFound) {
-            this.movePicture();
+            this.moveSample();
         }
     }
 
@@ -461,7 +461,7 @@ class LabelMaker {
 
             const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
             this.navigationField.value = nDecimal;
-            this.movePicture();
+            this.moveSample();
 
             this.pixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
