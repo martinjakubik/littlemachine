@@ -396,11 +396,9 @@ class LabelMaker {
         if (sLabel === sCurrentLabel) {
             this.labellist[this.decimal].label = 'unlabelled';
             this.renderLabelYesNoColors();
-            // this.renderLabelCounts();
         } else if (sLabel === 'no') {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
-            // this.renderLabelCounts();
             this.incrementPicture(1);
         } else {
             this.labellist[this.decimal].label = sLabel;
