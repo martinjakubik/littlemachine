@@ -71,6 +71,18 @@ button {
     color: #460000;
 }
 
+#labelbuttonyes.on {
+    color: #ffffff;
+    background-color: #478531ff;
+    border: 2px solid #7ce956ff;
+}
+
+#labelbuttonno.on {
+    color: #ffffff;
+    background-color: #cf0000ff;
+    border: 2px solid #740000ff;
+}
+
 #loadButton {
     grid-row: 7;
     grid-column: 6 / 9;
