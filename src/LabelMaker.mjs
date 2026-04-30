@@ -141,7 +141,7 @@ class LabelMaker {
         });
     }
 
-    renderMainView () {
+    makeMainView () {
         const oContainer = createDiv('container');
         oContainer.classList.add('container');
 

@@ -2,5 +2,5 @@ import { LabelMaker } from './LabelMaker.mjs';
 
 var oLabelMaker = new LabelMaker();
 
-oLabelMaker.renderMainView();
+oLabelMaker.makeMainView();
 oLabelMaker.renderSamplePicture();
