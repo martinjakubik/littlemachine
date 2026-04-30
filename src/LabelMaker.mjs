@@ -1,26 +1,19 @@
 import {
     createAnchor,
     createButton,
-    createCanvas,
     createDiv,
     createNumberInput,
 } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
+import { PixelCanvas } from './PixelCanvas.mjs';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_SAMPLES = 65536;
-const SQUARE_SIZE = 4;
+const BOX_SIZE = 4;
 
 const MIN_DECIMAL = 0;
 
-const PICTURE_CANVAS_WIDTH = SQUARE_SIZE;
-const PICTURE_CANVAS_HEIGHT = SQUARE_SIZE;
-const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
-const PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
-const DRAW_BLOCK_SIZE = 48;
+const PIXEL_SIZE = 48;
 
 const PICTURE_CANVAS_ID = 'picturecanvas';
 
@@ -56,7 +49,7 @@ class LabelMaker {
     }
 
     static getMaxDecimalForBoxSize () {
-        return 2 ** (SQUARE_SIZE ** 2);
+        return 2 ** (BOX_SIZE ** 2);
     }
 
     static getValidDecimalValue (iNewDecimalValue) {
@@ -80,7 +73,7 @@ class LabelMaker {
         const aLabelList = [];
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
-                binary: convertDecimalToBinary(i, SQUARE_SIZE),
+                binary: convertDecimalToBinary(i, BOX_SIZE),
                 label: 'unlabelled',
             };
             aLabelList.push(oLabel);
@@ -88,45 +81,15 @@ class LabelMaker {
         return aLabelList;
     }
 
-    static getPicturePixelOutline (x, y) {
-        const nCorner = 4;
-        const borderWidth = 4;
-
-        return {
-            x: x,
-            y: y,
-            path: [
-                {
-                    x1: x * DRAW_BLOCK_SIZE + borderWidth + nCorner,
-                    y1: y * DRAW_BLOCK_SIZE + borderWidth,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - borderWidth - nCorner,
-                    y2: y * DRAW_BLOCK_SIZE + borderWidth,
-                },
-                {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - borderWidth,
-                    y1: y * DRAW_BLOCK_SIZE + borderWidth + nCorner,
-                    x2: (x + 1) * DRAW_BLOCK_SIZE - borderWidth,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - borderWidth - nCorner,
-                },
-                {
-                    x1: (x + 1) * DRAW_BLOCK_SIZE - borderWidth - nCorner,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - borderWidth,
-                    x2: x * DRAW_BLOCK_SIZE + borderWidth + nCorner,
-                    y2: (y + 1) * DRAW_BLOCK_SIZE - borderWidth,
-                },
-                {
-                    x1: x * DRAW_BLOCK_SIZE + borderWidth,
-                    y1: (y + 1) * DRAW_BLOCK_SIZE - borderWidth - nCorner,
-                    x2: x * DRAW_BLOCK_SIZE + borderWidth,
-                    y2: y * DRAW_BLOCK_SIZE + borderWidth + nCorner,
-                },
-            ],
-        };
-    }
-
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
+        this.pixelCanvas = new PixelCanvas(
+            PICTURE_CANVAS_ID,
+            PIXEL_SIZE,
+            BOX_SIZE,
+            BOX_SIZE,
+        );
         this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
 
         this.classifyWorker.addEventListener('message', (message) => {
@@ -147,14 +110,17 @@ class LabelMaker {
 
         this.makePictureNavigator(oContainer);
         this.makeLabelControl(oContainer);
-        this.makmakeutton(oContainer);
+        this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
         this.makeTrainingDisplay(oContainer);
     }
 
     makePictureNavigator (oParentDiv) {
-        const oCanvas = this.makeCanvas(oParentDiv);
+        const oHandlers = {
+            onclick: this.drawAt.bind(this),
+        };
+        const oCanvas = this.pixelCanvas.makeCanvas(oParentDiv, oHandlers);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
@@ -179,8 +145,8 @@ class LabelMaker {
 
     renderSamplePicture () {
         const i = this.decimal;
-        const sSample = convertDecimalToBinary(i, SQUARE_SIZE);
-        this.drawSampleAsSquare(sSample);
+        const sSample = convertDecimalToBinary(i, BOX_SIZE);
+        this.drawSampleAsBox(sSample);
     }
 
     makeLabelControl (oParentDiv) {
@@ -202,35 +168,6 @@ class LabelMaker {
             this.labelButtons[LabelMaker.labels().yes].classList.remove('on');
             this.labelButtons[LabelMaker.labels().no].classList.remove('on');
         }
-    }
-
-    makeCanvas (oParentDiv) {
-        const nWidth = PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE;
-        const nHeight = PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE;
-        const oCanvas = createCanvas(
-            PICTURE_CANVAS_ID,
-            '',
-            0,
-            oParentDiv,
-            nWidth,
-            nHeight,
-            'relative',
-        );
-
-        oCanvas.addEventListener('click', this.drawAt.bind(this), false);
-
-        this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = PICTURE_CANVAS_FILL_STYLE;
-        this.context.fillRect(
-            0,
-            0,
-            PICTURE_CANVAS_WIDTH * DRAW_BLOCK_SIZE,
-            PICTURE_CANVAS_HEIGHT * DRAW_BLOCK_SIZE,
-        );
-
-        this.context.lineWidth = '2';
-
-        return oCanvas;
     }
 
     makeNavigationButton (iSide, sLabelName, oParentDiv, oHandlers) {
@@ -442,8 +379,8 @@ class LabelMaker {
         });
     }
 
-    drawSampleAsSquare (sSample) {
-        const iBoxLength = SQUARE_SIZE ** 2;
+    drawSampleAsBox (sSample) {
+        const iBoxLength = BOX_SIZE ** 2;
 
         if (sSample.length < iBoxLength) {
             return;
@@ -455,56 +392,12 @@ class LabelMaker {
         let x = 0;
         let y = 0;
         for (let i = 0; i < iBoxLength; i++) {
-            x = i % SQUARE_SIZE;
-            y = Math.floor(i / SQUARE_SIZE);
+            x = i % BOX_SIZE;
+            y = Math.floor(i / BOX_SIZE);
             sColor = sSample.substring(i, i + 1);
             iState = parseInt(sColor);
-            this.drawPixel(x, y, iState);
+            this.pixelCanvas.drawPixel(x, y, iState);
         }
-    }
-
-    drawPixel (x, y, iState) {
-        if (iState === 0) {
-            this.drawPixelOff(x, y);
-        } else {
-            this.drawPixelOn(x, y);
-        }
-    }
-
-    drawPixelOn (x, y) {
-        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
-        this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
-        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
-        this.context.fillRect(
-            x * DRAW_BLOCK_SIZE + 4,
-            y * DRAW_BLOCK_SIZE + 4,
-            x + DRAW_BLOCK_SIZE - 4,
-            y + DRAW_BLOCK_SIZE - 4,
-        );
-    }
-
-    drawPixelOff (x, y) {
-        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
-        this.context.lineWidth = '2';
-        this.drawShape(LabelMaker.getPicturePixelOutline(x, y));
-        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
-        this.context.fillRect(
-            x * DRAW_BLOCK_SIZE + 4,
-            y * DRAW_BLOCK_SIZE + 4,
-            x + DRAW_BLOCK_SIZE + 4,
-            y + DRAW_BLOCK_SIZE + 4,
-        );
-    }
-
-    drawShape (oOutline) {
-        this.context.beginPath();
-        oOutline.path.forEach((oEdge) => {
-            this.context.moveTo(oEdge.x1, oEdge.y1);
-            this.context.lineTo(oEdge.x2, oEdge.y2);
-        });
-        this.context.closePath();
-        this.context.stroke();
     }
 
     moveToClosestByLabelName (iSide, sLabelName) {
@@ -546,11 +439,11 @@ class LabelMaker {
             const x = oEvent.pageX - oTarget.offsetLeft;
             const y = oEvent.pageY - oTarget.offsetTop;
 
-            const nBlockX = Math.floor(x / DRAW_BLOCK_SIZE);
-            const nBlockY = Math.floor(y / DRAW_BLOCK_SIZE);
+            const nBlockX = Math.floor(x / PIXEL_SIZE);
+            const nBlockY = Math.floor(y / PIXEL_SIZE);
 
             // converts x, y coordinate to 0 .. 16
-            const nPositionInBinaryString = nBlockX + nBlockY * SQUARE_SIZE;
+            const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
             let iNewState = 0;
             const sOldBinaryNumber = this.labellist[this.decimal].binary;
             const sPixelColor = sOldBinaryNumber.charAt(
@@ -570,7 +463,7 @@ class LabelMaker {
             this.navigationField.value = nDecimal;
             this.movePicture();
 
-            this.drawPixel(nBlockX, nBlockY, iNewState);
+            this.pixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
             console.error('no click target found');
         }
