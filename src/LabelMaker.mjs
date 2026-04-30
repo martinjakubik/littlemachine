@@ -108,12 +108,18 @@ class LabelMaker {
         const oContainer = createDiv('container');
         oContainer.classList.add('container');
 
+        this.makeSidebar(oContainer);
         this.makeSampleNavigator(oContainer);
         this.makeLabelControl(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
         this.makeTrainingDisplay(oContainer);
+    }
+
+    makeSidebar (oParentDiv) {
+        const oSidebarDiv = createDiv('sidebar', oParentDiv);
+        createButton('menuButton', '⛭', oSidebarDiv);
     }
 
     makeSampleNavigator (oParentDiv) {
