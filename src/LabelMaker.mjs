@@ -145,15 +145,15 @@ class LabelMaker {
         const oContainer = createDiv('container');
         oContainer.classList.add('container');
 
-        this.renderPictureNavigator(oContainer);
+        this.makePictureNavigator(oContainer);
         this.makeLabelControl(oContainer);
-        this.renderLoadButton(oContainer);
-        this.renderClassifyButton(oContainer);
-        this.renderSaveButton(oContainer);
+        this.makmakeutton(oContainer);
+        this.makeClassifyButton(oContainer);
+        this.makeSaveButton(oContainer);
         this.makeTrainingDisplay(oContainer);
     }
 
-    renderPictureNavigator (oParentDiv) {
+    makePictureNavigator (oParentDiv) {
         const oCanvas = this.makeCanvas(oParentDiv);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
@@ -341,17 +341,17 @@ class LabelMaker {
         this.trainingDisplayDiv.classList.add('trainingDisplay');
     }
 
-    renderLoadButton (oParentDiv) {
+    makeLoadButton (oParentDiv) {
         const oButton = createButton('loadButton', 'Load Data', oParentDiv);
         oButton.onclick = this.loadLabels.bind(this);
     }
 
-    renderSaveButton (oParentDiv) {
+    makeSaveButton (oParentDiv) {
         const oButton = createButton('saveButton', 'Save', oParentDiv);
         oButton.onclick = this.saveLabels.bind(this);
     }
 
-    renderClassifyButton (oParentDiv) {
+    makeClassifyButton (oParentDiv) {
         const oButton = createButton(
             'classifyButton',
             'Start Training',
