@@ -1,14 +1,14 @@
 import { createCanvas } from './learnhypertext.mjs';
 
-const PICTURE_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
+const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
-const PICTURE_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
-const PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
+const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
+const PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
+const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
+const PIXEL_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
 
 class PixelCanvas {
-    static getPicturePixelOutline(x, y, nPixelSize) {
+    static getPixelOutline(x, y, nPixelSize) {
         const nCorner = 4;
         const borderWidth = 4;
 
@@ -67,7 +67,7 @@ class PixelCanvas {
         oCanvas.addEventListener('click', oHandlers.onclick, false);
 
         this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = PICTURE_CANVAS_FILL_STYLE;
+        this.context.fillStyle = PIXEL_CANVAS_FILL_STYLE;
         this.context.fillRect(
             0,
             0,
@@ -89,12 +89,10 @@ class PixelCanvas {
     }
 
     drawPixelOn(x, y) {
-        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_ON;
+        this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-        this.drawShape(
-            PixelCanvas.getPicturePixelOutline(x, y, this.pixelSize),
-        );
-        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
+        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
             x * this.pixelSize + 4,
             y * this.pixelSize + 4,
@@ -104,12 +102,10 @@ class PixelCanvas {
     }
 
     drawPixelOff(x, y) {
-        this.context.strokeStyle = PICTURE_CANVAS_PIXEL_STROKE_STYLE_OFF;
+        this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
-        this.drawShape(
-            PixelCanvas.getPicturePixelOutline(x, y, this.pixelSize),
-        );
-        this.context.fillStyle = PICTURE_CANVAS_PIXEL_FILL_STYLE_OFF;
+        this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
+        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_OFF;
         this.context.fillRect(
             x * this.pixelSize + 4,
             y * this.pixelSize + 4,

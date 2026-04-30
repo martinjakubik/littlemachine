@@ -15,7 +15,7 @@ const MIN_DECIMAL = 0;
 
 const PIXEL_SIZE = 48;
 
-const PICTURE_CANVAS_ID = 'picturecanvas';
+const PIXEL_CANVAS_ID = 'pixelcanvas';
 
 class LabelMaker {
     static sides () {
@@ -85,7 +85,7 @@ class LabelMaker {
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeLabelList();
         this.pixelCanvas = new PixelCanvas(
-            PICTURE_CANVAS_ID,
+            PIXEL_CANVAS_ID,
             PIXEL_SIZE,
             BOX_SIZE,
             BOX_SIZE,
