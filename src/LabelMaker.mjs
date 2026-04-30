@@ -146,7 +146,7 @@ class LabelMaker {
         oContainer.classList.add('container');
 
         this.renderPictureNavigator(oContainer);
-        this.renderLabelControl(oContainer);
+        this.makeLabelControl(oContainer);
         this.renderLoadButton(oContainer);
         this.renderClassifyButton(oContainer);
         this.renderSaveButton(oContainer);
@@ -183,21 +183,24 @@ class LabelMaker {
         this.drawSampleAsSquare(sSample);
     }
 
-    renderLabelControl (oParentDiv) {
+    makeLabelControl (oParentDiv) {
+        this.labelButtons = {};
+        this.labelButtons[LabelMaker.labels().yes] = null;
+        this.labelButtons[LabelMaker.labels().no] = null;
         this.makeLabelButton(LabelMaker.labels().yes, oParentDiv);
         this.makeLabelButton(LabelMaker.labels().no, oParentDiv);
     }
 
-    renderDotColors () {
+    renderLabelYesNoColors () {
         if (this.labellist[this.decimal].label === 'yes') {
-            this.dotNo.classList.remove('on');
-            this.dotYes.classList.add('on');
+            this.labelButtons[LabelMaker.labels().no].classList.remove('on');
+            this.labelButtons[LabelMaker.labels().yes].classList.add('on');
         } else if (this.labellist[this.decimal].label === 'no') {
-            this.dotYes.classList.remove('on');
-            this.dotNo.classList.add('on');
+            this.labelButtons[LabelMaker.labels().yes].classList.remove('on');
+            this.labelButtons[LabelMaker.labels().no].classList.add('on');
         } else {
-            this.dotYes.classList.remove('on');
-            this.dotNo.classList.remove('on');
+            this.labelButtons[LabelMaker.labels().yes].classList.remove('on');
+            this.labelButtons[LabelMaker.labels().no].classList.remove('on');
         }
     }
 
@@ -280,26 +283,13 @@ class LabelMaker {
         return oField;
     }
 
-    makeLabelDot (iLabel, oParentDiv) {
-        const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
-
-        const sDotClass = 'labeldot';
-        const sDotId = `labeldot${sLabel}`;
-        const oDot = createDiv(sDotId, oParentDiv);
-        oDot.classList.add(sDotClass);
-
-        return oDot;
-    }
-
     makeLabelButton (iLabel, oParentDiv) {
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
-        const oButton = createButton(sButtonId, sLabel, oParentDiv);
-        oButton.classList.add(sButtonClass);
-        oButton.onclick = this.setLabel.bind(this, iLabel);
-
-        return oButton;
+        this.labelButtons[iLabel] = createButton(sButtonId, sLabel, oParentDiv);
+        this.labelButtons[iLabel].classList.add(sButtonClass);
+        this.labelButtons[iLabel].onclick = this.setLabel.bind(this, iLabel);
     }
 
     makeLabelCountGroup (sLabelName, oParentDiv) {
@@ -384,7 +374,7 @@ class LabelMaker {
         this.decimal = LabelMaker.getValidDecimalValue(iValue);
 
         this.renderSamplePicture();
-        this.renderDotColors();
+        this.renderLabelYesNoColors();
     }
 
     incrementPicture (iIncrement) {
@@ -395,7 +385,7 @@ class LabelMaker {
             this.navigationField.value = this.decimal;
 
             this.renderSamplePicture();
-            this.renderDotColors();
+            this.renderLabelYesNoColors();
         }
     }
 
@@ -405,16 +395,16 @@ class LabelMaker {
 
         if (sLabel === sCurrentLabel) {
             this.labellist[this.decimal].label = 'unlabelled';
-            this.renderDotColors();
-            this.renderLabelCounts();
+            this.renderLabelYesNoColors();
+            // this.renderLabelCounts();
         } else if (sLabel === 'no') {
             this.labellist[this.decimal].label = sLabel;
-            this.renderDotColors();
-            this.renderLabelCounts();
+            this.renderLabelYesNoColors();
+            // this.renderLabelCounts();
             this.incrementPicture(1);
         } else {
             this.labellist[this.decimal].label = sLabel;
-            this.renderDotColors();
+            this.renderLabelYesNoColors();
             this.renderLabelCounts();
         }
     }
@@ -443,7 +433,7 @@ class LabelMaker {
             .then((sResponseJson) => {
                 this.labellist = sResponseJson;
                 this.moveToClosestByLabelName(LabelMaker.sides().right, 'yes');
-                this.renderDotColors();
+                this.renderLabelYesNoColors();
                 this.renderLabelCounts();
             })
             .catch((oError) => {
