@@ -157,10 +157,14 @@ class LabelMaker {
 
     makeLabelControl (oParentDiv) {
         this.labelButtons = {};
-        this.labelButtons[LabelMaker.labels().yes] = null;
-        this.labelButtons[LabelMaker.labels().no] = null;
-        this.makeLabelButton(LabelMaker.labels().yes, oParentDiv);
-        this.makeLabelButton(LabelMaker.labels().no, oParentDiv);
+        this.labelButtons[LabelMaker.labels().yes] = this.makeLabelButton(
+            LabelMaker.labels().yes,
+            oParentDiv,
+        );
+        this.labelButtons[LabelMaker.labels().no] = this.makeLabelButton(
+            LabelMaker.labels().no,
+            oParentDiv,
+        );
     }
 
     renderLabelYesNoColors () {
@@ -223,9 +227,10 @@ class LabelMaker {
         const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
-        this.labelButtons[iLabel] = createButton(sButtonId, sLabel, oParentDiv);
-        this.labelButtons[iLabel].classList.add(sButtonClass);
-        this.labelButtons[iLabel].onclick = this.setLabel.bind(this, iLabel);
+        const oButton = createButton(sButtonId, sLabel, oParentDiv);
+        oButton.classList.add(sButtonClass);
+        oButton.onclick = this.setLabel.bind(this, iLabel);
+        return oButton;
     }
 
     makeLabelCountGroup (sLabelName, oParentDiv) {
