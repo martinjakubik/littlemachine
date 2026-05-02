@@ -17,6 +17,9 @@ const PIXEL_SIZE = 48;
 
 const PIXEL_CANVAS_ID = 'pixelcanvas';
 
+const LABEL_UNLABELLED_DB = 'unlabelled';
+const LABEL_UNLABELLED_UI = 'none';
+
 class LabelMaker {
     static sides () {
         return {
@@ -33,7 +36,7 @@ class LabelMaker {
     }
 
     static getValidLabelString (iLabel) {
-        let sLabel = 'unlabelled';
+        let sLabel = LABEL_UNLABELLED_DB;
         const oValidLabels = LabelMaker.labels();
         const aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
         for (let i = 0; i < aValidLabelKeys.length; i++) {
@@ -74,7 +77,7 @@ class LabelMaker {
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
-                label: 'unlabelled',
+                label: LABEL_UNLABELLED_DB
             };
             aLabelList.push(oLabel);
         }
@@ -192,6 +195,13 @@ class LabelMaker {
         }
     }
 
+    renderLabelCounts () {
+        this.labelCountYes.textContent = this.getLabelCount('yes');
+        this.labelCountNo.textContent = this.getLabelCount('no');
+        this.labelCountUnlabelled.textContent =
+            this.getLabelCount(LABEL_UNLABELLED_DB);
+    }
+
     makeNavigationButton (iSide, sLabelName, oParentDiv, oHandlers) {
         const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
         const sButtonLabel = iSide === LabelMaker.sides().left ? '<' : '>';
@@ -250,7 +260,7 @@ class LabelMaker {
         this.labelCountGroupDiv.classList.add('off');
         this.makeLabelCountGroup('yes', this.labelCountGroupDiv);
         this.makeLabelCountGroup('no', this.labelCountGroupDiv);
-        this.makeLabelCountGroup('none', this.labelCountGroupDiv);
+        this.makeLabelCountGroup(LABEL_UNLABELLED_DB, this.labelCountGroupDiv);
     }
 
     makeLabelCountGroup (sLabelName, oParentDiv) {
@@ -355,22 +365,25 @@ class LabelMaker {
         const sCurrentLabel = this.labellist[this.decimal].label;
 
         if (sLabel === sCurrentLabel) {
-            this.labellist[this.decimal].label = 'unlabelled';
+            this.labellist[this.decimal].label = LABEL_UNLABELLED_DB;
             this.renderLabelYesNoColors();
+            this.renderLabelCounts();
         } else if (sLabel === 'no') {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
+            this.renderLabelCounts();
             this.incrementSample(1);
         } else {
             this.labellist[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
+            this.renderLabelCounts();
         }
     }
 
     getLabelCount (sLabel) {
         let iLabelCount = 0;
         const sValidLabel =
-            LabelMaker.labels()[sLabel] === undefined ? 'unlabelled' : sLabel;
+            LabelMaker.labels()[sLabel] === undefined ? LABEL_UNLABELLED_DB : sLabel;
         for (let i = 0; i < this.labellist.length; i++) {
             const oLabelData = this.labellist[i];
             if (oLabelData.label === sValidLabel) {
@@ -392,6 +405,7 @@ class LabelMaker {
                 this.labellist = sResponseJson;
                 this.moveToClosestByLabelName(LabelMaker.sides().right, 'yes');
                 this.renderLabelYesNoColors();
+                this.renderLabelCounts();
             })
             .catch((oError) => {
                 this.dataError = true;
