@@ -72,21 +72,21 @@ class LabelMaker {
         }
     }
 
-    static makeLabelList () {
-        const aLabelList = [];
+    static makeSampleList () {
+        const aSampleList = [];
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
                 label: LABEL_UNLABELLED_DB
             };
-            aLabelList.push(oLabel);
+            aSampleList.push(oLabel);
         }
-        return aLabelList;
+        return aSampleList;
     }
 
     constructor () {
         this.decimal = LabelMaker.getValidDecimalValue(0);
-        this.labellist = LabelMaker.makeLabelList();
+        this.labellist = LabelMaker.makeSampleList();
         this.pixelCanvas = new PixelCanvas(
             PIXEL_CANVAS_ID,
             PIXEL_SIZE,
@@ -417,10 +417,10 @@ class LabelMaker {
     }
 
     classifyButtonTap () {
-        const aLabelList = convertToMatrix(this.labellist);
+        const aSampleList = convertToMatrix(this.labellist);
         this.classifyWorker.postMessage({
             command: 'start',
-            payload: { labelList: aLabelList, options: {} },
+            payload: { labelList: aSampleList, options: {} },
         });
     }
 
