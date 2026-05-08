@@ -85,6 +85,8 @@ class LabelMaker {
     }
 
     constructor () {
+        document.addEventListener('keydown', this.handleKeyDown.bind(this));
+
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeSampleList();
         this.pixelCanvas = new PixelCanvas(
@@ -514,6 +516,39 @@ class LabelMaker {
         }
     }
 
+    yPressed () {
+        this.setLabel.call(this, LabelMaker.labels().yes);
+    }
+
+    nPressed () {
+        this.setLabel.call(this, LabelMaker.labels().no);
+    }
+
+    leftArrowPressed () {
+        this.incrementSample.call(this, -1);
+    }
+
+    rightArrowPressed () {
+        this.incrementSample.call(this, 1);
+    }
+
+    handleKeyDown (event) {
+        const keyCode = event.keyCode;
+        if (keyCode === 89) {
+            this.yPressed.call(this);
+            event.preventDefault();
+        } else if (keyCode === 78) {
+            this.nPressed.call(this);
+            event.preventDefault();
+        } else if (keyCode === 37) {
+            this.leftArrowPressed.call(this);
+            event.preventDefault();
+        } else if (keyCode === 39) {
+            this.rightArrowPressed.call(this);
+            event.preventDefault();
+        }
+    }
+
     updateTrainingDisplay (oMessageData) {
         const aArrayTheta0Rounded = oMessageData.arrayTheta0._data.map(
             (n) => Math.round(n * 1000) / 1000,
@@ -591,6 +626,7 @@ var saveJsonToFile = function (aData, sFilename) {
         document.body.removeChild(oAnchorElement);
         window.URL.revokeObjectURL(sUrl);
     }, 0);
+
 };
 
 export { LabelMaker };
