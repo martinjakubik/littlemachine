@@ -118,7 +118,7 @@ oFs.mkdir(sResourcePath, oMkDirOptions)
         console.log(`[success] mkdir ${sResourcePath}`);
 
         oFs.copyFile(
-            './resources/labellist-faces-upright-16-training-3.json',
+            './resources/labellist.json',
             `${sResourcePath}/labellist.json`,
         )
             .then((oResult) => {
