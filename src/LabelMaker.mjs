@@ -18,7 +18,6 @@ const PIXEL_SIZE = 48;
 const PIXEL_CANVAS_ID = 'pixelcanvas';
 
 const LABEL_UNLABELLED_DB = 'unlabelled';
-const LABEL_UNLABELLED_UI = 'none';
 
 class LabelMaker {
     static sides () {
