@@ -1,15 +1,15 @@
 body {
-    background-color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-0-color);
+    font-family: var(--font-0-family);
 }
 
 button {
-    background-color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-0-color);
+    font-family: var(--font-0-family);
     height: 3em;
-    border: 0.2em solid #aae4ea;
+    border: 0.2em solid var(--text-0-fg-color);
     border-radius: 2em;
-    color: #a97b07;
+    color: var(--bg-2-color);
     font-size: 1em;
 }
 
@@ -19,7 +19,11 @@ button {
 
 .container {
     display: grid;
-    background: linear-gradient(90deg, #aae4ea, #ffffff);
+    background: linear-gradient(
+        90deg,
+        var(--text-0-fg-color),
+        var(--bg-0-color)
+    );
     grid-template-columns: repeat(16, 3em);
     grid-template-rows: repeat(13, 3em);
 }
@@ -48,13 +52,13 @@ button {
 .navigationfield {
     grid-row: 5;
     grid-column: 3/5;
-    background-color: #fff;
+    background-color: var(--bg-0-color);
     height: 3em;
     box-sizing: border-box;
-    border: 0.2em solid #aae4ea;
+    border: 0.2em solid var(--text-0-fg-color);
     border-radius: 3em;
     text-align: center;
-    color: #a97b07;
+    color: var(--bg-2-color);
     font-size: 1em;
 }
 
@@ -79,15 +83,15 @@ button {
 }
 
 #labelbuttonyes.on {
-    color: #ffffff;
-    background-color: #478531ff;
-    border: 2px solid #7ce956ff;
+    color: var(--bg-0-color);
+    background-color: var(--semantic-positive-bg-0-color);
+    border: 2px solid var(--semantic-positive-bg-0-inverted-color);
 }
 
 #labelbuttonno.on {
-    color: #ffffff;
-    background-color: #cf0000ff;
-    border: 2px solid #740000ff;
+    color: var(--bg-0-color);
+    background-color: var(--semantic-negative-bg-0-color);
+    border: 2px solid var(--semantic-negative-bg-0-inverted-color);
 }
 
 #loadButton {
@@ -107,7 +111,7 @@ button {
 #trainingDisplay {
     grid-row: 5;
     grid-column: 7/16;
-    color: #a97b07;
+    color: var(--bg-2-color);
 }
 
 #labelcounts {
@@ -130,7 +134,7 @@ button {
 
 .labelcountname,
 .labelcount {
-    color: #a97b07;
+    color: var(--bg-2-color);
     align-self: center;
 }
 
@@ -150,22 +154,22 @@ button {
 
 h1 {
     font-size: 3em;
-    color: green;
+    color: var(--text-2-fg-color);
     text-align: center;
 }
 
 p {
     font-size: 2em;
-    color: green;
+    color: var(--text-2-fg-color);
     text-align: center;
 }
 
 ul {
     font-size: 2em;
-    color: green;
+    color: var(--text-2-fg-color);
 }
 
-root {
+:root {
     --bg-0-color: rgb(255, 255, 255);
     --bg-0-inverted-color: rgba(57, 66, 237, 0.815);
     --bg-1-color: rgb(237, 237, 237);
@@ -176,6 +180,10 @@ root {
     --text-0-inverted-fg-color: rgb(169, 123, 7);
     --text-1-inverted-fg-color: rgb(255, 219, 157);
     --text-2-fg-color: rgb(71, 133, 49);
+    --semantic-negative-bg-0-color: rgb(207, 0, 0);
+    --semantic-negative-bg-0-inverted-color: rgb(116, 0, 0);
+    --semantic-positive-bg-0-color: rgb(71, 133, 0);
+    --semantic-positive-bg-0-inverted-color: rgb(124, 233, 86);
     --font-0-family:
         normal helvetica-w01-roman, helvetica-w02-roman, helvetica-lt-w10-roman,
         sans-serif;
