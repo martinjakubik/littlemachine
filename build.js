@@ -52,6 +52,19 @@ oFs.mkdir(sLibPath, oMkDirOptions)
                 console.log(`  [error] details: ${oError}`);
             });
 
+        oFs.copyFile(
+            './node_modules/localdatamanager/lib/index.mjs',
+            `${sLibPath}/datacontroller.mjs`,
+        )
+            .then((oResult) => {
+                console.log(
+                    `[success] copied file ${sLibPath}/index.mjs`,
+                );
+            })
+            .catch((oError) => {
+                console.log(`  [error] details: ${oError}`);
+            });
+
         // copies MathJS lib as browser (one file)
         oFs.copyFile(
             './node_modules/mathjs/lib/browser/math.js',
