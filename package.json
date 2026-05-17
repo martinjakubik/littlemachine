@@ -4,7 +4,7 @@
     "type": "module",
     "dependencies": {
         "learnhypertext": "^2.0.3",
-        "localdatamanager": "^0.0.1",
+        "localdatamanager": "0.*",
         "mathjs": "^15.2.0"
     },
     "scripts": {
