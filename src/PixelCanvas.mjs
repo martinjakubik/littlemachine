@@ -4,7 +4,6 @@ const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(170, 228, 234, 1)';
 const PIXEL_CANVAS_PIXEL_STROKE_DASH = [4, 4];
-const PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgba(71, 133, 49, 1)';
 const PIXEL_BORDER_WIDTH = 4;
 
@@ -42,6 +41,12 @@ class PixelCanvas {
 
         this.context.lineWidth = '2';
 
+        for (let y = 0; y < this.width; y++) {
+            for (let x = 0; x < this.width; x++) {
+                this.drawPixelOutline(x, y);
+            }
+        }
+
         return oCanvas;
     }
 
@@ -53,17 +58,10 @@ class PixelCanvas {
         }
     }
 
-    drawPixelOn (x, y) {
+    drawPixelOutline (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.setLineDash(PIXEL_CANVAS_PIXEL_STROKE_DASH);
-        // this.context.fillRect(
-        //     x * this.pixelSize + PIXEL_BORDER_WIDTH,
-        //     y * this.pixelSize + PIXEL_BORDER_WIDTH,
-        //     x + this.pixelSize - PIXEL_BORDER_WIDTH,
-        //     y + this.pixelSize - PIXEL_BORDER_WIDTH,
-        // );
         this.context.strokeRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
@@ -72,9 +70,17 @@ class PixelCanvas {
         );
     }
 
+    drawPixelOn (x, y) {
+        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.context.fillRect(
+            x * this.pixelSize + PIXEL_BORDER_WIDTH,
+            y * this.pixelSize + PIXEL_BORDER_WIDTH,
+            x + this.pixelSize - PIXEL_BORDER_WIDTH,
+            y + this.pixelSize - PIXEL_BORDER_WIDTH,
+        );
+    }
+
     drawPixelOff (x, y) {
-        this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF;
-        this.context.lineWidth = '2';
         this.context.clearRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
