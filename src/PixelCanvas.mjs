@@ -71,7 +71,7 @@ class PixelCanvas {
     }
 
     drawPixelOn (x, y) {
-       this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
