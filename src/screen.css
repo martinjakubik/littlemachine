@@ -21,7 +21,7 @@ button {
     display: grid;
     background: linear-gradient(
         90deg,
-        var(--text-0-fg-color),
+        var(--text-0-fg-color) -100%,
         var(--bg-0-color)
     );
     grid-template-columns: repeat(16, 3em);
@@ -41,8 +41,6 @@ button {
     grid-row: 1/5;
     grid-column: 2/6;
     margin: 0 0 0 0;
-    border: 2px dotted var(--text-0-fg-color);
-    border-radius: 0.4em;
     background-color: rgba(0, 0, 0, 0);
 }
 

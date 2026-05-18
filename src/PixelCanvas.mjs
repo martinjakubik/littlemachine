@@ -39,7 +39,7 @@ class PixelCanvas {
             this.height * this.pixelSize,
         );
 
-        this.context.lineWidth = '2';
+        this.context.lineWidth = '4';
 
         for (let y = 0; y < this.width; y++) {
             for (let x = 0; x < this.width; x++) {
@@ -60,7 +60,7 @@ class PixelCanvas {
 
     drawPixelOutline (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
-        this.context.lineWidth = '2';
+        this.context.lineWidth = '4';
         this.context.setLineDash(PIXEL_CANVAS_PIXEL_STROKE_DASH);
         this.context.strokeRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
@@ -71,7 +71,7 @@ class PixelCanvas {
     }
 
     drawPixelOn (x, y) {
-        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
+       this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
