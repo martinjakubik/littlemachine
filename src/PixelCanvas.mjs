@@ -107,8 +107,8 @@ class PixelCanvas {
         this.context.clearRect(
             x * this.pixelSize + 4,
             y * this.pixelSize + 4,
-            x + this.pixelSize + 4,
-            y + this.pixelSize + 4,
+            x + this.pixelSize - 4,
+            y + this.pixelSize - 4,
         );
     }
 
