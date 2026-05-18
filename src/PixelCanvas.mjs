@@ -2,7 +2,8 @@ import { createCanvas } from './learnhypertext.mjs';
 
 const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 
-const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
+const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 1)';
+const PIXEL_CANVAS_PIXEL_STROKE_DASH = [4, 4];
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgba(71, 133, 49, 1)';
 const PIXEL_BORDER_WIDTH = 4;
@@ -91,9 +92,15 @@ class PixelCanvas {
     drawPixelOn (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '2';
-        this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
         this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
-        this.context.fillRect(
+        this.context.setLineDash(PIXEL_CANVAS_PIXEL_STROKE_DASH);
+        // this.context.fillRect(
+        //     x * this.pixelSize + PIXEL_BORDER_WIDTH,
+        //     y * this.pixelSize + PIXEL_BORDER_WIDTH,
+        //     x + this.pixelSize - PIXEL_BORDER_WIDTH,
+        //     y + this.pixelSize - PIXEL_BORDER_WIDTH,
+        // );
+        this.context.strokeRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
             x + this.pixelSize - PIXEL_BORDER_WIDTH,
@@ -104,23 +111,12 @@ class PixelCanvas {
     drawPixelOff (x, y) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
-        this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
         this.context.clearRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
             x + this.pixelSize - PIXEL_BORDER_WIDTH,
             y + this.pixelSize - PIXEL_BORDER_WIDTH,
         );
-    }
-
-    drawShape (oOutline) {
-        this.context.beginPath();
-        oOutline.path.forEach((oEdge) => {
-            this.context.moveTo(oEdge.x1, oEdge.y1);
-            this.context.lineTo(oEdge.x2, oEdge.y2);
-        });
-        this.context.closePath();
-        this.context.stroke();
     }
 }
 
