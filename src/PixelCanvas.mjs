@@ -5,11 +5,12 @@ const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgba(71, 133, 49, 1)';
+const PIXEL_BORDER_WIDTH = 4;
 
 class PixelCanvas {
     static getPixelOutline (x, y, nPixelSize) {
         const nCorner = 4;
-        const borderWidth = 4;
+        const borderWidth = PIXEL_BORDER_WIDTH;
 
         return {
             x: x,
@@ -93,10 +94,10 @@ class PixelCanvas {
         this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
         this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
         this.context.fillRect(
-            x * this.pixelSize + 4,
-            y * this.pixelSize + 4,
-            x + this.pixelSize - 4,
-            y + this.pixelSize - 4,
+            x * this.pixelSize + PIXEL_BORDER_WIDTH,
+            y * this.pixelSize + PIXEL_BORDER_WIDTH,
+            x + this.pixelSize - PIXEL_BORDER_WIDTH,
+            y + this.pixelSize - PIXEL_BORDER_WIDTH,
         );
     }
 
@@ -105,10 +106,10 @@ class PixelCanvas {
         this.context.lineWidth = '2';
         this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
         this.context.clearRect(
-            x * this.pixelSize + 4,
-            y * this.pixelSize + 4,
-            x + this.pixelSize - 4,
-            y + this.pixelSize - 4,
+            x * this.pixelSize + PIXEL_BORDER_WIDTH,
+            y * this.pixelSize + PIXEL_BORDER_WIDTH,
+            x + this.pixelSize - PIXEL_BORDER_WIDTH,
+            y + this.pixelSize - PIXEL_BORDER_WIDTH,
         );
     }
 
