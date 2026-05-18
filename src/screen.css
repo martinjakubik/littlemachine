@@ -43,6 +43,7 @@ button {
     margin: 0 0 0 0;
     border: 2px dotted var(--text-0-fg-color);
     border-radius: 0.4em;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .navigationbutton {

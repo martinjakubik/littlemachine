@@ -4,8 +4,7 @@ const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
 
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(255, 255, 255, 0)';
 const PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF = 'rgba(255, 255, 255, 0)';
-const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgb(71, 133, 49)';
-const PIXEL_CANVAS_PIXEL_FILL_STYLE_OFF = 'rgba(255, 255, 255, .9)';
+const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgba(71, 133, 49, 1)';
 
 class PixelCanvas {
     static getPixelOutline (x, y, nPixelSize) {
@@ -105,8 +104,7 @@ class PixelCanvas {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_OFF;
         this.context.lineWidth = '2';
         this.drawShape(PixelCanvas.getPixelOutline(x, y, this.pixelSize));
-        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_OFF;
-        this.context.fillRect(
+        this.context.clearRect(
             x * this.pixelSize + 4,
             y * this.pixelSize + 4,
             x + this.pixelSize + 4,
