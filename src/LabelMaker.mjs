@@ -6,6 +6,7 @@ import {
 } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 import { PixelCanvas } from './PixelCanvas.mjs';
+import { DataController } from './datacontroller.mjs';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_SAMPLES = 65536;
@@ -76,7 +77,7 @@ class LabelMaker {
         for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
-                label: LABEL_UNLABELLED_DB
+                label: LABEL_UNLABELLED_DB,
             };
             aSampleList.push(oLabel);
         }
@@ -384,7 +385,9 @@ class LabelMaker {
     getLabelCount (sLabel) {
         let iLabelCount = 0;
         const sValidLabel =
-            LabelMaker.labels()[sLabel] === undefined ? LABEL_UNLABELLED_DB : sLabel;
+            LabelMaker.labels()[sLabel] === undefined
+                ? LABEL_UNLABELLED_DB
+                : sLabel;
         for (let i = 0; i < this.labellist.length; i++) {
             const oLabelData = this.labellist[i];
             if (oLabelData.label === sValidLabel) {
@@ -625,7 +628,6 @@ var saveJsonToFile = function (aData, sFilename) {
         document.body.removeChild(oAnchorElement);
         window.URL.revokeObjectURL(sUrl);
     }, 0);
-
 };
 
 export { LabelMaker };
