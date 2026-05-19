@@ -1,5 +1,9 @@
 body {
-    background-color: var(--bg-0-color);
+    background: linear-gradient(
+        90deg,
+        var(--text-0-fg-color) -100%,
+        var(--bg-0-color)
+    );
     font-family: var(--font-0-family);
 }
 
@@ -19,11 +23,6 @@ button {
 
 .container {
     display: grid;
-    background: linear-gradient(
-        90deg,
-        var(--text-0-fg-color) -100%,
-        var(--bg-0-color)
-    );
     grid-template-columns: repeat(16, 3em);
     grid-template-rows: repeat(13, 3em);
 }
