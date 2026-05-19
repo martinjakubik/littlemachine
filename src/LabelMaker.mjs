@@ -552,10 +552,11 @@ class LabelMaker {
     }
 
     updateTrainingDisplay (oMessageData) {
+        const nJ0Rounded = Math.round(oMessageData.j0 * 1000) / 1000;
         const aArrayTheta0Rounded = oMessageData.arrayTheta0._data.map(
             (n) => Math.round(n * 1000) / 1000,
         );
-        const sMessage = `i: ${oMessageData.i}, j0: ${oMessageData.j0}; arrayTheta0: ${aArrayTheta0Rounded.join(', ')}`;
+        const sMessage = `i: ${oMessageData.i}, J₀: ${nJ0Rounded}; ϴ: ${aArrayTheta0Rounded.join(', ')}`;
         this.trainingDisplayDiv.innerHTML = sMessage;
     }
 }
