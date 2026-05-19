@@ -41,10 +41,11 @@ class PixelCanvas {
 
         this.context.lineWidth = '4';
 
+        for (let x = 0; x < this.width; x++) {
+            this.drawPixelBorder(x, 0, x, this.height);
+        }
         for (let y = 0; y < this.width; y++) {
-            for (let x = 0; x < this.width; x++) {
-                this.drawPixelOutline(x, y);
-            }
+            this.drawPixelBorder(0, y, this.width, y);
         }
 
         return oCanvas;
@@ -58,16 +59,19 @@ class PixelCanvas {
         }
     }
 
-    drawPixelOutline (x, y) {
+    drawPixelBorder (x1, y1, x2, y2) {
         this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
         this.context.lineWidth = '4';
         this.context.setLineDash(PIXEL_CANVAS_PIXEL_STROKE_DASH);
-        this.context.strokeRect(
-            x * this.pixelSize + PIXEL_BORDER_WIDTH,
-            y * this.pixelSize + PIXEL_BORDER_WIDTH,
-            x + this.pixelSize - PIXEL_BORDER_WIDTH,
-            y + this.pixelSize - PIXEL_BORDER_WIDTH,
+        this.context.moveTo(
+            x1 * this.pixelSize,
+            y1 * this.pixelSize
         );
+        this.context.lineTo(
+            x2 * this.pixelSize,
+            y2 * this.pixelSize
+        );
+        this.context.stroke();
     }
 
     drawPixelOn (x, y) {
@@ -75,8 +79,8 @@ class PixelCanvas {
         this.context.fillRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
-            x + this.pixelSize - PIXEL_BORDER_WIDTH,
-            y + this.pixelSize - PIXEL_BORDER_WIDTH,
+            this.pixelSize - 2 * PIXEL_BORDER_WIDTH,
+            this.pixelSize - 2 * PIXEL_BORDER_WIDTH,
         );
     }
 
@@ -84,8 +88,8 @@ class PixelCanvas {
         this.context.clearRect(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
-            x + this.pixelSize - PIXEL_BORDER_WIDTH,
-            y + this.pixelSize - PIXEL_BORDER_WIDTH,
+            this.pixelSize - 2 * PIXEL_BORDER_WIDTH,
+            this.pixelSize - 2 * PIXEL_BORDER_WIDTH,
         );
     }
 }
