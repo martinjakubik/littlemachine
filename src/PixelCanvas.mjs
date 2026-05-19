@@ -16,8 +16,8 @@ class PixelCanvas {
     }
 
     makeCanvas (oParentDiv, oHandlers) {
-        const nWidth = this.width * this.pixelSize;
-        const nHeight = this.height * this.pixelSize;
+        const nWidth = this.width * this.pixelSize + PIXEL_BORDER_WIDTH;
+        const nHeight = this.height * this.pixelSize + PIXEL_BORDER_WIDTH;
         const oCanvas = createCanvas(
             this.canvasId,
             '',
@@ -35,16 +35,16 @@ class PixelCanvas {
         this.context.fillRect(
             0,
             0,
-            this.width * this.pixelSize,
-            this.height * this.pixelSize,
+            nWidth,
+            nHeight
         );
 
         this.context.lineWidth = '4';
 
-        for (let x = 0; x < this.width; x++) {
+        for (let x = 0; x <= this.width; x++) {
             this.drawPixelBorder(x, 0, x, this.height);
         }
-        for (let y = 0; y < this.width; y++) {
+        for (let y = 0; y <= this.width; y++) {
             this.drawPixelBorder(0, y, this.width, y);
         }
 
