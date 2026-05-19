@@ -59,6 +59,7 @@ button {
     text-align: center;
     color: var(--bg-2-color);
     font-size: 1em;
+    appearance: textfield;
 }
 
 .navigationbuttonleft {
