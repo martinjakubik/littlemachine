@@ -14,7 +14,7 @@ const BOX_SIZE = 4;
 
 const MIN_DECIMAL = 0;
 
-const PIXEL_SIZE = 48;
+const PIXEL_SIZE = 72;
 
 const PIXEL_CANVAS_ID = 'pixelcanvas';
 
