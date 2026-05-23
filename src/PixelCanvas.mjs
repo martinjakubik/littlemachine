@@ -65,7 +65,7 @@ class PixelCanvas {
 
     drawPixelOn (x, y) {
         this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
-        const oShape = this.makePixelShape();
+        const oShape = this.makePixelShape(90);
         this.context.moveTo(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
@@ -92,9 +92,9 @@ class PixelCanvas {
 
     makePixelShape (nSize = 100) {
         const oShapePath = [];
-        const nScale = nSize / 110;
+        const nScale = nSize / 100;
         const nRadius = 4;
-        const nStartOffset = 100 - nSize;
+        const nStartOffset = ((100 - nSize) * this.pixelSize) / 200;
         const nStartX = nStartOffset;
         const nStartY = nStartOffset;
         oShapePath.push({
