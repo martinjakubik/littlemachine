@@ -87,40 +87,6 @@ oFs.mkdir(sLibPath, oMkDirOptions)
             .catch((oError) => {
                 console.log(`  [error] details: ${oError}`);
             });
-
-        // copies Impress JS
-        const sLibPath_ImpressJS = `${sLibPath}/lib/js/impress`;
-        oFs.mkdir(sLibPath_ImpressJS, oMkDirOptions)
-            .then(() => {
-                oFs.copyFile(
-                    './node_modules/impress.js/js/impress.min.js',
-                    `${sLibPath_ImpressJS}/impress.min.js`,
-                )
-                    .then((oResult) => {
-                        console.log(
-                            `[success] copied file ${sLibPath_ImpressJS}/impress.min.js`,
-                        );
-                    })
-                    .catch((oError) => {
-                        console.log(`  [error] details: ${oError}`);
-                    });
-
-                oFs.copyFile(
-                    './node_modules/impress.js/js/impress.min.js.map',
-                    `${sLibPath_ImpressJS}/impress.min.js.map`,
-                )
-                    .then((oResult) => {
-                        console.log(
-                            `[success] copied file ${sLibPath_ImpressJS}/impress.min.js.map`,
-                        );
-                    })
-                    .catch((oError) => {
-                        console.log(`  [error] details: ${oError}`);
-                    });
-            })
-            .catch((oError) => {
-                console.log(`  [error] details: ${oError}`);
-            });
     })
     .catch((oError) => {
         console.log(`  [error] details: ${oError}`);
