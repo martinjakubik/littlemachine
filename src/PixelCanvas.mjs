@@ -63,9 +63,9 @@ class PixelCanvas {
         this.context.stroke();
     }
 
-    drawPixelOn (x, y) {
+    drawPixelOn (x, y, nSize=80) {
         this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
-        const oShape = this.makePixelShape(90);
+        const oShape = this.makePixelShape(nSize);
         this.context.moveTo(
             x * this.pixelSize + PIXEL_BORDER_WIDTH,
             y * this.pixelSize + PIXEL_BORDER_WIDTH,
@@ -98,44 +98,44 @@ class PixelCanvas {
         const nStartX = nStartOffset;
         const nStartY = nStartOffset;
         oShapePath.push({
-            x: (nStartX + nRadius) * nScale,
-            y: nStartY * nScale,
+            x: nStartX + nRadius * nScale,
+            y: nStartY,
         });
         oShapePath.push({
             x:
-                (nStartX + this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH / 2,
-            y: nStartY * nScale,
+                nStartX + (this.pixelSize - nRadius) * nScale -
+                PIXEL_BORDER_WIDTH,
+            y: nStartY,
         });
         oShapePath.push({
-            x: (nStartX + this.pixelSize) * nScale - PIXEL_BORDER_WIDTH / 2,
-            y: (nStartY + nRadius) * nScale,
+            x: nStartX + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
+            y: nStartY + nRadius * nScale,
         });
         oShapePath.push({
-            x: (nStartX + this.pixelSize) * nScale - PIXEL_BORDER_WIDTH / 2,
+            x: nStartX + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
             y:
-                (nStartY + this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH / 2,
+                nStartY + (this.pixelSize - nRadius) * nScale -
+                PIXEL_BORDER_WIDTH,
         });
         oShapePath.push({
             x:
-                (nStartX + this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH / 2,
-            y: (nStartY + this.pixelSize) * nScale - PIXEL_BORDER_WIDTH / 2,
+                nStartX + (this.pixelSize - nRadius) * nScale -
+                PIXEL_BORDER_WIDTH,
+            y: nStartY + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
         });
         oShapePath.push({
-            x: (nStartX + nRadius) * nScale,
-            y: (nStartY + this.pixelSize) * nScale - PIXEL_BORDER_WIDTH / 2,
+            x: nStartX + nRadius * nScale,
+            y: nStartY + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
         });
         oShapePath.push({
-            x: nStartX * nScale,
+            x: nStartX,
             y:
-                (nStartY + this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH / 2,
+                nStartY + (this.pixelSize - nRadius) * nScale -
+                PIXEL_BORDER_WIDTH,
         });
         oShapePath.push({
-            x: nStartX * nScale,
-            y: (nStartY + nRadius) * nScale,
+            x: nStartX,
+            y: nStartY + nRadius * nScale,
         });
         return oShapePath;
     }
