@@ -1,24 +1,30 @@
 import { createCanvas } from './learnhypertext.mjs';
 
-const PIXEL_CANVAS_FILL_STYLE = 'rgba(255, 255, 255, 0)';
-
-const PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON = 'rgba(170, 228, 234, 1)';
-const PIXEL_CANVAS_PIXEL_STROKE_DASH = [4, 4];
-const PIXEL_CANVAS_PIXEL_FILL_STYLE_ON = 'rgba(71, 133, 49, 1)';
-const PIXEL_BORDER_WIDTH = 4;
-const PIXEL_CORNER_RADIUS = 4;
-
 class PixelCanvas {
-    constructor (sCanvasId, nPixelSize, nWidth, nHeight) {
+    constructor (
+        sCanvasId,
+        nPixelSize,
+        nWidth,
+        nHeight,
+        oStyles = {
+            fillStyle: 'rgba(255, 255, 255, 0)',
+            strokeStyleOn: 'rgba(170, 228, 234, 1)',
+            strokeDash: [4, 4],
+            fillStyleOn: 'rgba(71, 133, 49, 1)',
+            borderWidth: 4,
+            cornerRadius: 4,
+        },
+    ) {
         this.canvasId = sCanvasId;
         this.pixelSize = nPixelSize;
         this.width = nWidth;
         this.height = nHeight;
+        this.styles = oStyles;
     }
 
     makeCanvas (oParentDiv, oHandlers = {}) {
-        const nWidth = this.width * this.pixelSize + PIXEL_BORDER_WIDTH;
-        const nHeight = this.height * this.pixelSize + PIXEL_BORDER_WIDTH;
+        const nWidth = this.width * this.pixelSize + this.styles.borderWidth;
+        const nHeight = this.height * this.pixelSize + this.styles.borderWidth;
         const oCanvas = createCanvas(
             this.canvasId,
             '',
@@ -34,7 +40,7 @@ class PixelCanvas {
         }
 
         this.context = oCanvas.getContext('2d');
-        this.context.fillStyle = PIXEL_CANVAS_FILL_STYLE;
+        this.context.fillStyle = this.styles.fillStyle;
         this.context.fillRect(0, 0, nWidth, nHeight);
 
         this.context.lineWidth = '4';
@@ -58,23 +64,23 @@ class PixelCanvas {
     }
 
     drawPixelBorder (x1, y1, x2, y2) {
-        this.context.strokeStyle = PIXEL_CANVAS_PIXEL_STROKE_STYLE_ON;
-        this.context.lineWidth = PIXEL_BORDER_WIDTH;
-        this.context.setLineDash(PIXEL_CANVAS_PIXEL_STROKE_DASH);
+        this.context.strokeStyle = this.styles.strokeStyleOn;
+        this.context.lineWidth = this.styles.borderWidth;
+        this.context.setLineDash(this.styles.strokeDash);
         this.context.moveTo(x1 * this.pixelSize, y1 * this.pixelSize);
         this.context.lineTo(x2 * this.pixelSize, y2 * this.pixelSize);
         this.context.stroke();
     }
 
     drawPixelOn (x, y, nSize = 80) {
-        this.context.fillStyle = PIXEL_CANVAS_PIXEL_FILL_STYLE_ON;
+        this.context.fillStyle = this.styles.fillStyleOn;
         const oShape = this.makePixelShape(nSize);
         this.context.moveTo(x * this.pixelSize, y * this.pixelSize);
         this.context.beginPath();
         oShape.forEach((oPoint) => {
             this.context.lineTo(
-                x * this.pixelSize + oPoint.x + PIXEL_BORDER_WIDTH / 2,
-                y * this.pixelSize + oPoint.y + PIXEL_BORDER_WIDTH / 2,
+                x * this.pixelSize + oPoint.x + this.styles.borderWidth / 2,
+                y * this.pixelSize + oPoint.y + this.styles.borderWidth / 2,
             );
         });
         this.context.closePath();
@@ -83,17 +89,17 @@ class PixelCanvas {
 
     drawPixelOff (x, y) {
         this.context.clearRect(
-            x * this.pixelSize + PIXEL_BORDER_WIDTH / 2,
-            y * this.pixelSize + PIXEL_BORDER_WIDTH / 2,
-            this.pixelSize - PIXEL_BORDER_WIDTH,
-            this.pixelSize - PIXEL_BORDER_WIDTH,
+            x * this.pixelSize + this.styles.borderWidth / 2,
+            y * this.pixelSize + this.styles.borderWidth / 2,
+            this.pixelSize - this.styles.borderWidth,
+            this.pixelSize - this.styles.borderWidth,
         );
     }
 
     makePixelShape (nSize = 100) {
         const oShapePath = [];
         const nScale = nSize / 100;
-        const nRadius = PIXEL_CORNER_RADIUS;
+        const nRadius = this.styles.cornerRadius;
         const nStartOffset = ((100 - nSize) * this.pixelSize) / 200;
         const nStartX = nStartOffset;
         const nStartY = nStartOffset;
@@ -105,37 +111,37 @@ class PixelCanvas {
             x:
                 nStartX +
                 (this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH,
+                this.styles.borderWidth,
             y: nStartY,
         });
         oShapePath.push({
-            x: nStartX + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
+            x: nStartX + this.pixelSize * nScale - this.styles.borderWidth,
             y: nStartY + nRadius * nScale,
         });
         oShapePath.push({
-            x: nStartX + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
+            x: nStartX + this.pixelSize * nScale - this.styles.borderWidth,
             y:
                 nStartY +
                 (this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH,
+                this.styles.borderWidth,
         });
         oShapePath.push({
             x:
                 nStartX +
                 (this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH,
-            y: nStartY + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
+                this.styles.borderWidth,
+            y: nStartY + this.pixelSize * nScale - this.styles.borderWidth,
         });
         oShapePath.push({
             x: nStartX + nRadius * nScale,
-            y: nStartY + this.pixelSize * nScale - PIXEL_BORDER_WIDTH,
+            y: nStartY + this.pixelSize * nScale - this.styles.borderWidth,
         });
         oShapePath.push({
             x: nStartX,
             y:
                 nStartY +
                 (this.pixelSize - nRadius) * nScale -
-                PIXEL_BORDER_WIDTH,
+                this.styles.borderWidth,
         });
         oShapePath.push({
             x: nStartX,
