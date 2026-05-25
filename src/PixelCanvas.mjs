@@ -55,11 +55,11 @@ class PixelCanvas {
         return oCanvas;
     }
 
-    drawPixel (x, y, iState) {
+    drawPixel (x, y, iState, nSize = 80, bResize = false) {
         if (iState === 0) {
             this.drawPixelOff(x, y);
         } else {
-            this.drawPixelOn(x, y);
+            this.drawPixelOn(x, y, nSize, bResize);
         }
     }
 
@@ -72,7 +72,7 @@ class PixelCanvas {
         this.context.stroke();
     }
 
-    drawPixelOn (x, y, nSize = 80) {
+    drawPixelOn (x, y, nSize = 80, bResize = false) {
         this.context.fillStyle = this.styles.fillStyleOn;
         const oShape = this.makePixelShape(nSize);
         this.context.moveTo(x * this.pixelSize, y * this.pixelSize);

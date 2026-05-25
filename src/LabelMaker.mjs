@@ -570,12 +570,23 @@ class LabelMaker {
     }
 
     updateTrainingDisplay (oMessageData) {
-        const nJ0Rounded = Math.round(oMessageData.j0 * 1000) / 1000;
-        const aArrayTheta0Rounded = oMessageData.arrayTheta0._data.map(
-            (n) => Math.round(n * 1000) / 1000,
-        );
-        const sMessage = `i: ${oMessageData.i}, J₀: ${nJ0Rounded}; ϴ: ${aArrayTheta0Rounded.join(', ')}`;
-        console.log(sMessage);
+        const iBoxLength = BOX_SIZE ** 2;
+        let nThetaValue = 0;
+        let iState = 1;
+        let x = 0;
+        let y = 0;
+        let nSize = 80;
+        let bResize = true;
+        const maxThetaValue = Math.max(...oMessageData.arrayTheta0._data);
+        const minThetaValue = Math.min(...oMessageData.arrayTheta0._data);
+        const diffThetaValue = maxThetaValue - minThetaValue;
+        for (let i = 0; i < iBoxLength; i++) {
+            x = i % BOX_SIZE;
+            y = Math.floor(i / BOX_SIZE);
+            nThetaValue = oMessageData.arrayTheta0._data[i];
+            nSize = ((nThetaValue - minThetaValue) / diffThetaValue) * 80;
+            this.trainingPixelCanvas.drawPixel(x, y, iState, nSize, bResize);
+        }
     }
 }
 
