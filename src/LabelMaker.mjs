@@ -101,6 +101,14 @@ class LabelMaker {
             PIXEL_SIZE,
             BOX_SIZE,
             BOX_SIZE,
+            {
+                fillStyle: 'rgba(255, 255, 255, 0)',
+                strokeStyleOn: 'rgb(169, 123, 7)',
+                strokeDash: [],
+                fillStyleOn: 'rgb(169, 123, 7)',
+                borderWidth: 4,
+                cornerRadius: 4,
+            },
         );
 
         this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
