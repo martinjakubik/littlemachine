@@ -16,7 +16,7 @@ class PixelCanvas {
         this.height = nHeight;
     }
 
-    makeCanvas (oParentDiv, oHandlers) {
+    makeCanvas (oParentDiv, oHandlers = {}) {
         const nWidth = this.width * this.pixelSize + PIXEL_BORDER_WIDTH;
         const nHeight = this.height * this.pixelSize + PIXEL_BORDER_WIDTH;
         const oCanvas = createCanvas(
@@ -29,7 +29,9 @@ class PixelCanvas {
             'relative',
         );
 
-        oCanvas.addEventListener('click', oHandlers.onclick, false);
+        if (oHandlers && oHandlers.onclick) {
+            oCanvas.addEventListener('click', oHandlers.onclick, false);
+        }
 
         this.context = oCanvas.getContext('2d');
         this.context.fillStyle = PIXEL_CANVAS_FILL_STYLE;

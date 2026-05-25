@@ -16,7 +16,8 @@ const MIN_DECIMAL = 0;
 
 const PIXEL_SIZE = 72;
 
-const PIXEL_CANVAS_ID = 'pixelcanvas';
+const DATA_PIXEL_CANVAS_ID = 'datapixelcanvas';
+const TRAINING_PIXEL_CANVAS_ID = 'trainingpixelcanvas';
 
 const LABEL_UNLABELLED_DB = 'unlabelled';
 
@@ -89,14 +90,20 @@ class LabelMaker {
 
         this.decimal = LabelMaker.getValidDecimalValue(0);
         this.labellist = LabelMaker.makeSampleList();
-        this.pixelCanvas = new PixelCanvas(
-            PIXEL_CANVAS_ID,
+        this.dataPixelCanvas = new PixelCanvas(
+            DATA_PIXEL_CANVAS_ID,
             PIXEL_SIZE,
             BOX_SIZE,
             BOX_SIZE,
         );
-        this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
+        this.trainingPixelCanvas = new PixelCanvas(
+            TRAINING_PIXEL_CANVAS_ID,
+            PIXEL_SIZE,
+            BOX_SIZE,
+            BOX_SIZE,
+        );
 
+        this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
         this.classifyWorker.addEventListener('message', (message) => {
             const sMessageType = message.data.type || 'NONE';
             switch (sMessageType) {
@@ -116,10 +123,10 @@ class LabelMaker {
         this.makeSidebar(oContainer);
         this.makeSampleNavigator(oContainer);
         this.makeLabelControl(oContainer);
+        this.makeTrainingDisplay(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
-        this.makeTrainingDisplay(oContainer);
         this.makeLabelCountGroups(oContainer);
     }
 
@@ -143,7 +150,7 @@ class LabelMaker {
         const oHandlers = {
             onclick: this.drawAt.bind(this),
         };
-        const oCanvas = this.pixelCanvas.makeCanvas(oParentDiv, oHandlers);
+        const oCanvas = this.dataPixelCanvas.makeCanvas(oParentDiv, oHandlers);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
@@ -164,6 +171,14 @@ class LabelMaker {
         this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
             onclick: this.incrementSample.bind(this, 1),
         });
+    }
+
+    makeTrainingDisplay (oParentDiv) {
+        const oCanvas = this.trainingPixelCanvas.makeCanvas(oParentDiv);
+        this.canvasPosition = {
+            top: oCanvas.offsetTop,
+            left: oCanvas.offsetLeft,
+        };
     }
 
     renderSample () {
@@ -316,11 +331,6 @@ class LabelMaker {
         return labelCountGroup;
     }
 
-    makeTrainingDisplay (oParentDiv) {
-        this.trainingDisplayDiv = createDiv('trainingDisplay', oParentDiv);
-        this.trainingDisplayDiv.classList.add('trainingDisplay');
-    }
-
     makeLoadButton (oParentDiv) {
         const oButton = createButton('loadButton', 'Load Data', oParentDiv);
         oButton.onclick = this.loadLabels.bind(this);
@@ -445,7 +455,7 @@ class LabelMaker {
             y = Math.floor(i / BOX_SIZE);
             sColor = sSample.substring(i, i + 1);
             iState = parseInt(sColor);
-            this.pixelCanvas.drawPixel(x, y, iState);
+            this.dataPixelCanvas.drawPixel(x, y, iState);
         }
     }
 
@@ -512,7 +522,7 @@ class LabelMaker {
             this.navigationField.value = nDecimal;
             this.moveSample();
 
-            this.pixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
+            this.dataPixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
             console.error('no click target found');
         }
@@ -557,7 +567,7 @@ class LabelMaker {
             (n) => Math.round(n * 1000) / 1000,
         );
         const sMessage = `i: ${oMessageData.i}, J₀: ${nJ0Rounded}; ϴ: ${aArrayTheta0Rounded.join(', ')}`;
-        this.trainingDisplayDiv.innerHTML = sMessage;
+        console.log(sMessage);
     }
 }
 

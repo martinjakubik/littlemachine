@@ -37,9 +37,16 @@ button {
     width: 3em;
 }
 
-#pixelcanvas {
+#datapixelcanvas {
     grid-row: 1/5;
     grid-column: 2/6;
+    margin: 0 0 0 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#trainingpixelcanvas {
+    grid-row: 1/5;
+    grid-column: 7/11;
     margin: 0 0 0 0;
     background-color: rgba(0, 0, 0, 0);
 }
