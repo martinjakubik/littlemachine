@@ -67,8 +67,8 @@ class PixelCanvas {
         this.context.strokeStyle = this.styles.strokeStyleOn;
         this.context.lineWidth = this.styles.borderWidth;
         this.context.setLineDash(this.styles.strokeDash);
-        this.context.moveTo(x1 * this.pixelSize, y1 * this.pixelSize);
-        this.context.lineTo(x2 * this.pixelSize, y2 * this.pixelSize);
+        this.context.moveTo(x1 * this.pixelSize + 2, y1 * this.pixelSize + 2);
+        this.context.lineTo(x2 * this.pixelSize + 2, y2 * this.pixelSize + 2);
         this.context.stroke();
     }
 
@@ -100,8 +100,8 @@ class PixelCanvas {
         this.context.beginPath();
         oShape.forEach((oPoint) => {
             this.context.lineTo(
-                x * this.pixelSize + oPoint.x + this.styles.borderWidth / 2,
-                y * this.pixelSize + oPoint.y + this.styles.borderWidth / 2,
+                x * this.pixelSize + oPoint.x + this.styles.borderWidth / 2 + 2,
+                y * this.pixelSize + oPoint.y + this.styles.borderWidth / 2 + 2,
             );
         });
         this.context.closePath();
@@ -110,10 +110,10 @@ class PixelCanvas {
 
     drawPixelOff (x, y) {
         this.context.clearRect(
-            x * this.pixelSize + this.styles.borderWidth / 2,
-            y * this.pixelSize + this.styles.borderWidth / 2,
-            this.pixelSize - this.styles.borderWidth,
-            this.pixelSize - this.styles.borderWidth,
+            x * this.pixelSize + this.styles.borderWidth / 2 + 1,
+            y * this.pixelSize + this.styles.borderWidth / 2 + 1,
+            this.pixelSize - this.styles.borderWidth - 1,
+            this.pixelSize - this.styles.borderWidth - 1,
         );
     }
 
