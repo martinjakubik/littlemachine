@@ -163,22 +163,6 @@ class LabelMaker {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
         };
-
-        this.makeNavigationButton(LabelMaker.sides().left, null, oParentDiv, {
-            onclick: this.incrementSample.bind(this, -1),
-        });
-
-        this.navigationField = this.makeNavigationField(
-            {
-                onchange: this.moveSample.bind(this),
-            },
-            oParentDiv,
-        );
-        this.navigationField.setAttribute('value', this.decimal);
-
-        this.makeNavigationButton(LabelMaker.sides().right, null, oParentDiv, {
-            onclick: this.incrementSample.bind(this, 1),
-        });
     }
 
     makeTrainingDisplay (oParentDiv) {
@@ -253,21 +237,6 @@ class LabelMaker {
         oButton.classList.add(sButtonLabelNameSideClass);
 
         return oButton;
-    }
-
-    makeNavigationField (oHandlers, oParentDiv) {
-        const oField = createNumberInput(
-            'navigationfield',
-            0,
-            null,
-            oParentDiv,
-        );
-
-        const sFieldClass = 'navigationfield';
-        oField.classList.add(sFieldClass);
-        oField.onchange = oHandlers.onchange;
-
-        return oField;
     }
 
     makeLabelButton (iLabel, oParentDiv) {
@@ -359,11 +328,6 @@ class LabelMaker {
     }
 
     moveSample () {
-        const sValue = this.navigationField.value;
-        const iValue = parseInt(sValue);
-
-        this.decimal = LabelMaker.getValidDecimalValue(iValue);
-
         this.renderSample();
         this.renderLabelYesNoColors();
     }
@@ -373,7 +337,6 @@ class LabelMaker {
             this.decimal = LabelMaker.getValidDecimalValue(
                 this.decimal + iIncrement,
             );
-            this.navigationField.value = this.decimal;
 
             this.renderSample();
             this.renderLabelYesNoColors();
@@ -482,7 +445,7 @@ class LabelMaker {
                 }
                 if (this.labellist[i].label === sLabelName) {
                     bLabelFound = true;
-                    this.navigationField.value = i;
+                    this.decimal = i;
                     break;
                 }
             }
@@ -490,7 +453,7 @@ class LabelMaker {
             for (let i = iCurrentLabel - 1; i >= 0; i--) {
                 if (this.labellist[i].label === sLabelName) {
                     bLabelFound = true;
-                    this.navigationField.value = i;
+                    this.decimal = i;
                     break;
                 }
             }
@@ -527,7 +490,7 @@ class LabelMaker {
                 sOldBinaryNumber.substring(nPositionInBinaryString + 1);
 
             const nDecimal = convertBinaryToDecimal(sNewBinaryNumber);
-            this.navigationField.value = nDecimal;
+            this.decimal = nDecimal;
             this.moveSample();
 
             this.dataPixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
