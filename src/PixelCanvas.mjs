@@ -74,6 +74,27 @@ class PixelCanvas {
 
     drawPixelOn (x, y, nSize = 80, bResize = false) {
         this.context.fillStyle = this.styles.fillStyleOn;
+        if (bResize) {
+            const nRedStartPosition = this.styles.fillStyleOn.indexOf('(') + 1;
+            const nRedEndPosition = this.styles.fillStyleOn.indexOf(',');
+            const nGreenEndPosition = this.styles.fillStyleOn.indexOf(
+                ',',
+                nRedEndPosition + 1,
+            );
+            const bIsCommaAfterBlue =
+                this.styles.fillStyleOn.indexOf(',', nGreenEndPosition + 1) >
+                -1;
+            const nBlueEndPosition = bIsCommaAfterBlue
+                ? this.styles.fillStyleOn.indexOf(',', nGreenEndPosition + 1)
+                : this.styles.fillStyleOn.indexOf(')', nGreenEndPosition + 1);
+            const sRGBValues = this.styles.fillStyleOn.substring(
+                nRedStartPosition,
+                nBlueEndPosition,
+            );
+            const sAlpha = nSize / 100;
+            const sFillStyle = `rgba(${sRGBValues}, ${sAlpha})`;
+            this.context.fillStyle = sFillStyle;
+        }
         const oShape = this.makePixelShape(nSize);
         this.context.moveTo(x * this.pixelSize, y * this.pixelSize);
         this.context.beginPath();
