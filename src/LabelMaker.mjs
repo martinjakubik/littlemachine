@@ -572,10 +572,11 @@ class LabelMaker {
     updateTrainingDisplay (oMessageData) {
         const iBoxLength = BOX_SIZE ** 2;
         let nThetaValue = 0;
-        let iState = 1;
+        const iStateClear = 0;
+        const iStateOn = 1;
         let x = 0;
         let y = 0;
-        let nSize = 80;
+        let nSize = 90;
         let bResize = true;
         const maxThetaValue = Math.max(...oMessageData.arrayTheta0._data);
         const minThetaValue = Math.min(...oMessageData.arrayTheta0._data);
@@ -584,8 +585,9 @@ class LabelMaker {
             x = i % BOX_SIZE;
             y = Math.floor(i / BOX_SIZE);
             nThetaValue = oMessageData.arrayTheta0._data[i];
-            nSize = ((nThetaValue - minThetaValue) / diffThetaValue) * 80;
-            this.trainingPixelCanvas.drawPixel(x, y, iState, nSize, bResize);
+            nSize = ((nThetaValue - minThetaValue) / diffThetaValue) * 90;
+            this.trainingPixelCanvas.drawPixel(x, y, iStateClear, 90);
+            this.trainingPixelCanvas.drawPixel(x, y, iStateOn, nSize, bResize);
         }
     }
 }
