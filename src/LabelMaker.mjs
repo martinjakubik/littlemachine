@@ -172,7 +172,7 @@ class LabelMaker {
 
     makeSampleNavigator (oParentDiv) {
         const oHandlers = {
-            onclick: this.drawAt.bind(this),
+            onclick: this.drawPixelOnSampleCanvas.bind(this),
         };
         const oCanvas = this.dataPixelCanvas.makeCanvas(oParentDiv, oHandlers);
         this.canvasPosition = {
@@ -190,7 +190,10 @@ class LabelMaker {
     }
 
     makeInferenceControl (oParentDiv) {
-        const oCanvas = this.inferencePixelCanvas.makeCanvas(oParentDiv);
+        const oHandlers = {
+            onclick: this.drawPixelOnInferenceCanvas.bind(this),
+        };
+        const oCanvas = this.inferencePixelCanvas.makeCanvas(oParentDiv, oHandlers);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
@@ -487,7 +490,7 @@ class LabelMaker {
         }
     }
 
-    drawAt (oEvent) {
+    drawPixelOnSampleCanvas (oEvent) {
         const oTarget = oEvent ? oEvent.target : null;
         if (oTarget) {
             const x = oEvent.pageX - oTarget.offsetLeft;
@@ -518,6 +521,34 @@ class LabelMaker {
             this.moveSample();
 
             this.dataPixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
+        } else {
+            console.error('no click target found');
+        }
+    }
+
+    drawPixelOnInferenceCanvas (oEvent) {
+        const oTarget = oEvent ? oEvent.target : null;
+        if (oTarget) {
+            const x = oEvent.pageX - oTarget.offsetLeft;
+            const y = oEvent.pageY - oTarget.offsetTop;
+
+            const nBlockX = Math.floor(x / PIXEL_SIZE);
+            const nBlockY = Math.floor(y / PIXEL_SIZE);
+
+            // converts x, y coordinate to 0 .. 16
+            const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
+            let iNewState = 0;
+            const sOldBinaryNumber = this.labellist[this.decimal].binary;
+            const sPixelColor = sOldBinaryNumber.charAt(
+                nPositionInBinaryString,
+            );
+            if (sPixelColor === '0') {
+                iNewState = 1;
+            } else {
+                iNewState = 0;
+            }
+
+            this.inferencePixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
             console.error('no click target found');
         }
