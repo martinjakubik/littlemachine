@@ -18,6 +18,7 @@ const PIXEL_SIZE = 72;
 
 const DATA_PIXEL_CANVAS_ID = 'datapixelcanvas';
 const TRAINING_PIXEL_CANVAS_ID = 'trainingpixelcanvas';
+const INFERENCE_PIXEL_CANVAS_ID = 'inferencepixelcanvas';
 
 const LABEL_UNLABELLED_DB = 'unlabelled';
 
@@ -110,6 +111,20 @@ class LabelMaker {
                 cornerRadius: 4,
             },
         );
+        this.inferencePixelCanvas = new PixelCanvas(
+            INFERENCE_PIXEL_CANVAS_ID,
+            PIXEL_SIZE,
+            BOX_SIZE,
+            BOX_SIZE,
+            {
+                fillStyle: 'rgba(255, 255, 255, 0)',
+                strokeStyleOn: 'rgb(169, 123, 7)',
+                strokeDash: [],
+                fillStyleOn: 'rgb(169, 123, 7)',
+                borderWidth: 4,
+                cornerRadius: 4,
+            },
+        );
 
         this.classifyWorker = new Worker('./classify.mjs', { type: 'module' });
         this.classifyWorker.addEventListener('message', (message) => {
@@ -132,6 +147,7 @@ class LabelMaker {
         this.makeSampleNavigator(oContainer);
         this.makeLabelControl(oContainer);
         this.makeTrainingDisplay(oContainer);
+        this.makeInferenceControl(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
@@ -167,6 +183,14 @@ class LabelMaker {
 
     makeTrainingDisplay (oParentDiv) {
         const oCanvas = this.trainingPixelCanvas.makeCanvas(oParentDiv);
+        this.canvasPosition = {
+            top: oCanvas.offsetTop,
+            left: oCanvas.offsetLeft,
+        };
+    }
+
+    makeInferenceControl (oParentDiv) {
+        const oCanvas = this.inferencePixelCanvas.makeCanvas(oParentDiv);
         this.canvasPosition = {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
