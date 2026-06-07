@@ -90,6 +90,7 @@ class LabelMaker {
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
 
         this.decimal = LabelMaker.getValidDecimalValue(0);
+        this.inferenceBinary = '0000000000000000';
         this.labellist = LabelMaker.makeSampleList();
         this.dataPixelCanvas = new PixelCanvas(
             DATA_PIXEL_CANVAS_ID,
@@ -538,7 +539,7 @@ class LabelMaker {
             // converts x, y coordinate to 0 .. 16
             const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
             let iNewState = 0;
-            const sOldBinaryNumber = this.labellist[this.decimal].binary;
+            const sOldBinaryNumber = this.inferenceBinary;
             const sPixelColor = sOldBinaryNumber.charAt(
                 nPositionInBinaryString,
             );
@@ -547,6 +548,7 @@ class LabelMaker {
             } else {
                 iNewState = 0;
             }
+            this.inferenceBinary = `${sOldBinaryNumber.substring(0, nPositionInBinaryString)}${iNewState}${sOldBinaryNumber.substring(nPositionInBinaryString + 1)}`;
 
             this.inferencePixelCanvas.drawPixel(nBlockX, nBlockY, iNewState);
         } else {
