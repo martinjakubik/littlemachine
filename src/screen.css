@@ -115,7 +115,7 @@ button {
 
 #classifyButton {
     grid-row: 7;
-    grid-column: 11 / 14;
+    grid-column: 12 / 15;
 }
 #saveButton {
     grid-row: 8;
@@ -164,6 +164,18 @@ button {
     grid-column: 4;
     text-align: left;
     margin: 0 0 0 0.1em;
+}
+
+#inferenceDisplay {
+    grid-row: 8;
+    grid-column: 12/16;
+    border: 0.2em solid gray;
+    clip-path: shape(
+        from center left,
+        curve by 200px 0px with 50% -80% from start,
+        smooth to center with 50% 100% from origin,
+        close
+    );
 }
 
 h1 {

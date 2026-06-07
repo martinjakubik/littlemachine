@@ -149,6 +149,7 @@ class LabelMaker {
         this.makeLabelControl(oContainer);
         this.makeTrainingDisplay(oContainer);
         this.makeInferenceControl(oContainer);
+        this.makeInferenceDisplay(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
         this.makeSaveButton(oContainer);
@@ -199,6 +200,10 @@ class LabelMaker {
             top: oCanvas.offsetTop,
             left: oCanvas.offsetLeft,
         };
+    }
+
+    makeInferenceDisplay (oParentDiv) {
+        this.inferenceDisplayBox = createDiv('inferenceDisplay', oParentDiv);
     }
 
     renderSample () {
