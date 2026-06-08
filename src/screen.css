@@ -169,12 +169,11 @@ button {
 #inferenceDisplay {
     grid-row: 8;
     grid-column: 12/16;
-    border: 0.2em solid gray;
 }
 
-#inferenceDisplay path {
+/*#inferenceDisplay path {
     d: path(
-        'm 192.59118 121.63423
+        'm 10 30
     c 0 0 -0.009 1.16791 0.86259 2.22027
       0.87143 1.05236 2.09507 1.12574 2.09507 1.12574
       0 0 3.93685 -1.92394 8.98222 -1.93804
@@ -186,7 +185,7 @@ button {
       -0.14155 -1.20274 -0.0114 -2.63491 1.19914 -3.46032
     z'
     );
-}
+}*/
 
 h1 {
     font-size: 3em;
