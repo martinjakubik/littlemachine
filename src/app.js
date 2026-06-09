@@ -1,6 +1,6 @@
-import { LabelMaker } from './LabelMaker.mjs';
+import { MachineMaker } from './MachineMaker.mjs';
 
-var oLabelMaker = new LabelMaker();
+var oMachineMaker = new MachineMaker();
 
-oLabelMaker.makeMainView();
-oLabelMaker.renderSample();
+oMachineMaker.makeMainView();
+oMachineMaker.renderSample();

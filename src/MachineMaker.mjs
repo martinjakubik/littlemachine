@@ -24,7 +24,7 @@ const INFERENCE_PIXEL_CANVAS_ID = 'inferencepixelcanvas';
 
 const LABEL_UNLABELLED_DB = 'unlabelled';
 
-class LabelMaker {
+class MachineMaker {
     static sides () {
         return {
             left: 0,
@@ -41,7 +41,7 @@ class LabelMaker {
 
     static getValidLabelString (iLabel) {
         let sLabel = LABEL_UNLABELLED_DB;
-        const oValidLabels = LabelMaker.labels();
+        const oValidLabels = MachineMaker.labels();
         const aValidLabelKeys = Object.getOwnPropertyNames(oValidLabels);
         for (let i = 0; i < aValidLabelKeys.length; i++) {
             const sValidLabelKey = aValidLabelKeys[i];
@@ -62,13 +62,13 @@ class LabelMaker {
     static getValidDecimalValue (iNewDecimalValue) {
         if (
             MIN_DECIMAL <= iNewDecimalValue &&
-            iNewDecimalValue <= LabelMaker.getMaxDecimalForBoxSize()
+            iNewDecimalValue <= MachineMaker.getMaxDecimalForBoxSize()
         ) {
             return iNewDecimalValue;
         }
 
-        if (iNewDecimalValue > LabelMaker.getMaxDecimalForBoxSize()) {
-            return LabelMaker.getMaxDecimalForBoxSize();
+        if (iNewDecimalValue > MachineMaker.getMaxDecimalForBoxSize()) {
+            return MachineMaker.getMaxDecimalForBoxSize();
         }
 
         if (iNewDecimalValue < MIN_DECIMAL) {
@@ -78,7 +78,7 @@ class LabelMaker {
 
     static makeSampleList () {
         const aSampleList = [];
-        for (let i = 0; i < LabelMaker.getMaxDecimalForBoxSize(); i++) {
+        for (let i = 0; i < MachineMaker.getMaxDecimalForBoxSize(); i++) {
             const oLabel = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
                 label: LABEL_UNLABELLED_DB,
@@ -91,9 +91,9 @@ class LabelMaker {
     constructor () {
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
 
-        this.decimal = LabelMaker.getValidDecimalValue(0);
+        this.decimal = MachineMaker.getValidDecimalValue(0);
         this.inferenceBinary = '0000000000000000';
-        this.labellist = LabelMaker.makeSampleList();
+        this.labellist = MachineMaker.makeSampleList();
         this.dataPixelCanvas = new PixelCanvas(
             DATA_PIXEL_CANVAS_ID,
             PIXEL_SIZE,
@@ -220,26 +220,26 @@ class LabelMaker {
 
     makeLabelControl (oParentDiv) {
         this.labelButtons = {};
-        this.labelButtons[LabelMaker.labels().yes] = this.makeLabelButton(
-            LabelMaker.labels().yes,
+        this.labelButtons[MachineMaker.labels().yes] = this.makeLabelButton(
+            MachineMaker.labels().yes,
             oParentDiv,
         );
-        this.labelButtons[LabelMaker.labels().no] = this.makeLabelButton(
-            LabelMaker.labels().no,
+        this.labelButtons[MachineMaker.labels().no] = this.makeLabelButton(
+            MachineMaker.labels().no,
             oParentDiv,
         );
     }
 
     renderLabelYesNoColors () {
         if (this.labellist[this.decimal].label === 'yes') {
-            this.labelButtons[LabelMaker.labels().no].classList.remove('on');
-            this.labelButtons[LabelMaker.labels().yes].classList.add('on');
+            this.labelButtons[MachineMaker.labels().no].classList.remove('on');
+            this.labelButtons[MachineMaker.labels().yes].classList.add('on');
         } else if (this.labellist[this.decimal].label === 'no') {
-            this.labelButtons[LabelMaker.labels().yes].classList.remove('on');
-            this.labelButtons[LabelMaker.labels().no].classList.add('on');
+            this.labelButtons[MachineMaker.labels().yes].classList.remove('on');
+            this.labelButtons[MachineMaker.labels().no].classList.add('on');
         } else {
-            this.labelButtons[LabelMaker.labels().yes].classList.remove('on');
-            this.labelButtons[LabelMaker.labels().no].classList.remove('on');
+            this.labelButtons[MachineMaker.labels().yes].classList.remove('on');
+            this.labelButtons[MachineMaker.labels().no].classList.remove('on');
         }
     }
 
@@ -251,8 +251,8 @@ class LabelMaker {
     }
 
     makeNavigationButton (iSide, sLabelName, oParentDiv, oHandlers) {
-        const sSide = iSide === LabelMaker.sides().left ? 'left' : 'right';
-        const sButtonLabel = iSide === LabelMaker.sides().left ? '<' : '>';
+        const sSide = iSide === MachineMaker.sides().left ? 'left' : 'right';
+        const sButtonLabel = iSide === MachineMaker.sides().left ? '<' : '>';
 
         let oButton;
         let sButtonClass;
@@ -279,7 +279,7 @@ class LabelMaker {
     }
 
     makeLabelButton (iLabel, oParentDiv) {
-        const sLabel = iLabel === LabelMaker.labels().yes ? 'yes' : 'no';
+        const sLabel = iLabel === MachineMaker.labels().yes ? 'yes' : 'no';
         const sButtonClass = 'labelbutton';
         const sButtonId = `labelbutton${sLabel}`;
         const oButton = createButton(sButtonId, sLabel, oParentDiv);
@@ -304,13 +304,13 @@ class LabelMaker {
         labelCountGroup.classList.add('labelcountgroup');
 
         this.makeNavigationButton(
-            LabelMaker.sides().left,
+            MachineMaker.sides().left,
             sLabelName,
             labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
-                    LabelMaker.sides().left,
+                    MachineMaker.sides().left,
                     sLabelName,
                 ),
             },
@@ -332,13 +332,13 @@ class LabelMaker {
         this[sCamelCaseLabelName].textContent = this.getLabelCount(sLabelName);
 
         this.makeNavigationButton(
-            LabelMaker.sides().right,
+            MachineMaker.sides().right,
             sLabelName,
             labelCountGroup,
             {
                 onclickwithlabelname: this.moveToClosestByLabelName.bind(
                     this,
-                    LabelMaker.sides().right,
+                    MachineMaker.sides().right,
                     sLabelName,
                 ),
             },
@@ -373,7 +373,7 @@ class LabelMaker {
 
     incrementSample (iIncrement) {
         if (Math.abs(iIncrement) === 1) {
-            this.decimal = LabelMaker.getValidDecimalValue(
+            this.decimal = MachineMaker.getValidDecimalValue(
                 this.decimal + iIncrement,
             );
 
@@ -383,7 +383,7 @@ class LabelMaker {
     }
 
     setLabel (iLabel) {
-        const sLabel = LabelMaker.getValidLabelString(iLabel);
+        const sLabel = MachineMaker.getValidLabelString(iLabel);
         const sCurrentLabel = this.labellist[this.decimal].label;
 
         if (sLabel === sCurrentLabel) {
@@ -405,7 +405,7 @@ class LabelMaker {
     getLabelCount (sLabel) {
         let iLabelCount = 0;
         const sValidLabel =
-            LabelMaker.labels()[sLabel] === undefined
+            MachineMaker.labels()[sLabel] === undefined
                 ? LABEL_UNLABELLED_DB
                 : sLabel;
         for (let i = 0; i < this.labellist.length; i++) {
@@ -427,7 +427,7 @@ class LabelMaker {
             })
             .then((sResponseJson) => {
                 this.labellist = sResponseJson;
-                this.moveToClosestByLabelName(LabelMaker.sides().right, 'yes');
+                this.moveToClosestByLabelName(MachineMaker.sides().right, 'yes');
                 this.renderLabelYesNoColors();
                 this.renderLabelCounts();
             })
@@ -473,10 +473,10 @@ class LabelMaker {
         const iCurrentLabel = this.decimal;
         let bLabelFound = false;
 
-        if (iSide === LabelMaker.sides().right) {
+        if (iSide === MachineMaker.sides().right) {
             for (
                 let i = iCurrentLabel + 1;
-                i < LabelMaker.getMaxDecimalForBoxSize();
+                i < MachineMaker.getMaxDecimalForBoxSize();
                 i++
             ) {
                 if (!this.labellist[i]) {
@@ -488,7 +488,7 @@ class LabelMaker {
                     break;
                 }
             }
-        } else if (iSide === LabelMaker.sides().left) {
+        } else if (iSide === MachineMaker.sides().left) {
             for (let i = iCurrentLabel - 1; i >= 0; i--) {
                 if (this.labellist[i].label === sLabelName) {
                     bLabelFound = true;
@@ -606,11 +606,11 @@ class LabelMaker {
     }
 
     yPressed () {
-        this.setLabel.call(this, LabelMaker.labels().yes);
+        this.setLabel.call(this, MachineMaker.labels().yes);
     }
 
     nPressed () {
-        this.setLabel.call(this, LabelMaker.labels().no);
+        this.setLabel.call(this, MachineMaker.labels().no);
     }
 
     leftArrowPressed () {
@@ -738,4 +738,4 @@ var saveJsonToFile = function (aData, sFilename) {
     }, 0);
 };
 
-export { LabelMaker };
+export { MachineMaker };
