@@ -208,14 +208,7 @@ class LabelMaker {
 
     makeInferenceDisplay (oParentDiv) {
         this.inferenceDisplayBox = createSvg('inferenceDisplay', oParentDiv);
-        const oPath = createSvgPath('p1', this.inferenceDisplayBox);
-        oPath.fill = 'gray';
-        oPath.stroke = 'red';
-        oPath.setAttribute('fill', 'none');
-        oPath.setAttribute('stroke', 'red');
-        const sBubblePath =
-            'm 10 30 c0,0 -0.009,1.16791 0.86259,2.22027 0.87143,1.05236 2.09507,1.12574 2.09507,1.12574 0,0 3.93685,-1.92394 8.98222,-1.93804 5.04537,-0.0141 10.4223,2.39862 10.62499,6.25002 0.20269,3.8514 -4.9008,5.18848 -10.99999,5.12499 -6.09919,-0.0635 -10.63656,-0.12854 -12.26883,-2.47411 -1.63227,-2.34557 0.54105,-4.79497 0.54105,-4.79497 0,0 -0.89469,-0.85084 -1.03624,-2.05358 -0.14155,-1.20274 -0.0114,-2.63491 1.19914,-3.46032 z';
-        oPath.setAttribute('d', sBubblePath);
+        createSvgPath('p1', this.inferenceDisplayBox);
     }
 
     renderSample () {
