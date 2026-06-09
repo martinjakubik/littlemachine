@@ -347,12 +347,12 @@ class MachineMaker {
 
     makeLoadButton (oParentDiv) {
         const oButton = createButton('loadButton', 'Load Data', oParentDiv);
-        oButton.onclick = this.loadLabels.bind(this);
+        oButton.onclick = this.loadSamples.bind(this);
     }
 
     makeSaveButton (oParentDiv) {
         const oButton = createButton('saveButton', 'Save', oParentDiv);
-        oButton.onclick = this.saveLabels.bind(this);
+        oButton.onclick = this.saveSamples.bind(this);
     }
 
     makeClassifyButton (oParentDiv) {
@@ -415,7 +415,7 @@ class MachineMaker {
         return iLabelCount;
     }
 
-    loadLabels () {
+    loadSamples () {
         loadJsonFromFile('resources/samplelist.json')
             .then((oResponse) => {
                 if (!oResponse.ok) {
@@ -434,7 +434,7 @@ class MachineMaker {
             });
     }
 
-    saveLabels () {
+    saveSamples () {
         saveJsonToFile(this.sampleList, 'samplelist.json');
     }
 
