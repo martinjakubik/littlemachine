@@ -2,13 +2,11 @@ import {
     createAnchor,
     createButton,
     createDiv,
-    createNumberInput,
     createSvg,
     createSvgPath,
 } from './learnhypertext.mjs';
 import { convertToMatrix } from './jsonToArrayConverter.js';
 import { PixelCanvas } from './PixelCanvas.mjs';
-import { DataController } from './datacontroller.mjs';
 
 const MAX_EXPONENT = 4096;
 const MAX_NUMBER_OF_SAMPLES = 65536;
