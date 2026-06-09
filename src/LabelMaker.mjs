@@ -194,7 +194,7 @@ class LabelMaker {
 
     makeInferenceControl (oParentDiv) {
         const oHandlers = {
-            onclick: this.drawPixelOnInferenceCanvas.bind(this),
+            onclick: this.handleInferenceCanvasClicked.bind(this),
         };
         const oCanvas = this.inferencePixelCanvas.makeCanvas(
             oParentDiv,
@@ -209,8 +209,8 @@ class LabelMaker {
     makeInferenceDisplay (oParentDiv) {
         this.inferenceDisplayBox = createSvg('inferenceDisplay', oParentDiv);
         createSvgPath('p1', this.inferenceDisplayBox);
-        const oInferenceResponse = createDiv('inferenceResponseText', oParentDiv);
-        oInferenceResponse.innerHTML = 'Yes';
+        this.inferenceResponse = createDiv('inferenceResponseText', oParentDiv);
+        this.inferenceResponse.innerHTML = 'Yes';
     }
 
     renderSample () {
@@ -568,6 +568,16 @@ class LabelMaker {
         }
     }
 
+    showInferenceAnswer () {
+        this.inferenceDisplayBox.classList.add('show');
+        this.inferenceResponse.classList.add('show');
+    }
+
+    hideInferenceAnswer () {
+        this.inferenceDisplayBox.classList.remove('show');
+        this.inferenceResponse.classList.remove('show');
+    }
+
     yPressed () {
         this.setLabel.call(this, LabelMaker.labels().yes);
     }
@@ -599,6 +609,10 @@ class LabelMaker {
             this.rightArrowPressed.call(this);
             event.preventDefault();
         }
+    }
+
+    handleInferenceCanvasClicked (oEvent){
+        this.drawPixelOnInferenceCanvas.call(this, oEvent);
     }
 
     updateTrainingDisplay (oMessageData) {
