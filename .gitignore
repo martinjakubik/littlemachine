@@ -31,7 +31,7 @@ resources/png9/*
 resources/png16/*
 
 octave/labellist*.csv
-octave/sampleList*.csv
+octave/samplelist*.csv
 
 dev/server.js
 
