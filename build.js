@@ -97,12 +97,12 @@ oFs.mkdir(sResourcePath, oMkDirOptions)
         console.log(`[success] mkdir ${sResourcePath}`);
 
         oFs.copyFile(
-            './resources/labellist.json',
-            `${sResourcePath}/labellist.json`,
+            './resources/samplelist.json',
+            `${sResourcePath}/samplelist.json`,
         )
             .then((oResult) => {
                 console.log(
-                    `[success] copied file ${sResourcePath}/labellist.json`,
+                    `[success] copied file ${sResourcePath}/samplelist.json`,
                 );
             })
             .catch((oError) => {

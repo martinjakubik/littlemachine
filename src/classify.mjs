@@ -10,17 +10,17 @@ addEventListener('message', (message) => {
     const sCommand = message.data.command || 'none';
     switch (sCommand) {
     case 'start':
-        classify(oMessagePayload.labelList, oMessagePayload.options);
+        classify(oMessagePayload.sampleList, oMessagePayload.options);
         break;
     default:
         break;
     }
 });
 
-const classify = function (aLabelList, oDisplayOptions) {
+const classify = function (aSampleList, oDisplayOptions) {
     const mathlib = null;
 
-    const matrixData = matrix(aLabelList);
+    const matrixData = matrix(aSampleList);
 
     // m is the number of rows, so 2000 could be a reasonable size
     const m = matrixData.size()[0];

@@ -12,7 +12,7 @@ let sCsvDatum = '';
 let sCsvContent = '';
 
 oFs.readFile(
-    'resources/labellist.json',
+    'resources/samplelist.json',
     { encoding: 'utf8' },
     (oError, sData) => {
         if (oError) {
@@ -39,7 +39,7 @@ oFs.readFile(
         console.log(`${nLabelledSamplesFound} labelled samples read`);
 
         const oWritableStream = oFs.createWriteStream(
-            'resources/labellist.csv',
+            'resources/samplelist.csv',
         );
 
         oWritableStream.write(sCsvContent, (oError) => {

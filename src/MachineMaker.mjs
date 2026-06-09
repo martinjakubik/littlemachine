@@ -77,11 +77,11 @@ class MachineMaker {
     static makeSampleList () {
         const aSampleList = [];
         for (let i = 0; i < MachineMaker.getMaxDecimalForBoxSize(); i++) {
-            const oLabel = {
+            const oSample = {
                 binary: convertDecimalToBinary(i, BOX_SIZE),
                 label: LABEL_UNLABELLED_DB,
             };
-            aSampleList.push(oLabel);
+            aSampleList.push(oSample);
         }
         return aSampleList;
     }
@@ -91,7 +91,7 @@ class MachineMaker {
 
         this.decimal = MachineMaker.getValidDecimalValue(0);
         this.inferenceBinary = '0000000000000000';
-        this.labellist = MachineMaker.makeSampleList();
+        this.sampleList = MachineMaker.makeSampleList();
         this.dataPixelCanvas = new PixelCanvas(
             DATA_PIXEL_CANVAS_ID,
             PIXEL_SIZE,
@@ -229,10 +229,10 @@ class MachineMaker {
     }
 
     renderLabelYesNoColors () {
-        if (this.labellist[this.decimal].label === 'yes') {
+        if (this.sampleList[this.decimal].label === 'yes') {
             this.labelButtons[MachineMaker.labels().no].classList.remove('on');
             this.labelButtons[MachineMaker.labels().yes].classList.add('on');
-        } else if (this.labellist[this.decimal].label === 'no') {
+        } else if (this.sampleList[this.decimal].label === 'no') {
             this.labelButtons[MachineMaker.labels().yes].classList.remove('on');
             this.labelButtons[MachineMaker.labels().no].classList.add('on');
         } else {
@@ -382,19 +382,19 @@ class MachineMaker {
 
     setLabel (iLabel) {
         const sLabel = MachineMaker.getValidLabelString(iLabel);
-        const sCurrentLabel = this.labellist[this.decimal].label;
+        const sCurrentLabel = this.sampleList[this.decimal].label;
 
         if (sLabel === sCurrentLabel) {
-            this.labellist[this.decimal].label = LABEL_UNLABELLED_DB;
+            this.sampleList[this.decimal].label = LABEL_UNLABELLED_DB;
             this.renderLabelYesNoColors();
             this.renderLabelCounts();
         } else if (sLabel === 'no') {
-            this.labellist[this.decimal].label = sLabel;
+            this.sampleList[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
             this.renderLabelCounts();
             this.incrementSample(1);
         } else {
-            this.labellist[this.decimal].label = sLabel;
+            this.sampleList[this.decimal].label = sLabel;
             this.renderLabelYesNoColors();
             this.renderLabelCounts();
         }
@@ -406,8 +406,8 @@ class MachineMaker {
             MachineMaker.labels()[sLabel] === undefined
                 ? LABEL_UNLABELLED_DB
                 : sLabel;
-        for (let i = 0; i < this.labellist.length; i++) {
-            const oLabelData = this.labellist[i];
+        for (let i = 0; i < this.sampleList.length; i++) {
+            const oLabelData = this.sampleList[i];
             if (oLabelData.label === sValidLabel) {
                 iLabelCount++;
             }
@@ -416,7 +416,7 @@ class MachineMaker {
     }
 
     loadLabels () {
-        loadJsonFromFile('resources/labellist.json')
+        loadJsonFromFile('resources/samplelist.json')
             .then((oResponse) => {
                 if (!oResponse.ok) {
                     throw new Error(`http error ${oResponse.status}`);
@@ -424,7 +424,7 @@ class MachineMaker {
                 return oResponse.json();
             })
             .then((sResponseJson) => {
-                this.labellist = sResponseJson;
+                this.sampleList = sResponseJson;
                 this.moveToClosestByLabelName(MachineMaker.sides().right, 'yes');
                 this.renderLabelYesNoColors();
                 this.renderLabelCounts();
@@ -435,14 +435,14 @@ class MachineMaker {
     }
 
     saveLabels () {
-        saveJsonToFile(this.labellist, 'labellist.json');
+        saveJsonToFile(this.sampleList, 'samplelist.json');
     }
 
     classifyButtonTap () {
-        const aSampleList = convertToMatrix(this.labellist);
+        const aSampleList = convertToMatrix(this.sampleList);
         this.classifyWorker.postMessage({
             command: 'start',
-            payload: { labelList: aSampleList, options: {} },
+            payload: { sampleList: aSampleList, options: {} },
         });
     }
 
@@ -477,10 +477,10 @@ class MachineMaker {
                 i < MachineMaker.getMaxDecimalForBoxSize();
                 i++
             ) {
-                if (!this.labellist[i]) {
+                if (!this.sampleList[i]) {
                     return;
                 }
-                if (this.labellist[i].label === sLabelName) {
+                if (this.sampleList[i].label === sLabelName) {
                     bLabelFound = true;
                     this.decimal = i;
                     break;
@@ -488,7 +488,7 @@ class MachineMaker {
             }
         } else if (iSide === MachineMaker.sides().left) {
             for (let i = iCurrentLabel - 1; i >= 0; i--) {
-                if (this.labellist[i].label === sLabelName) {
+                if (this.sampleList[i].label === sLabelName) {
                     bLabelFound = true;
                     this.decimal = i;
                     break;
@@ -512,7 +512,7 @@ class MachineMaker {
             // converts x, y coordinate to 0 .. 16
             const nPositionInBinaryString = nBlockX + nBlockY * BOX_SIZE;
             let iNewState = 0;
-            const sOldBinaryNumber = this.labellist[this.decimal].binary;
+            const sOldBinaryNumber = this.sampleList[this.decimal].binary;
             const sPixelColor = sOldBinaryNumber.charAt(
                 nPositionInBinaryString,
             );
