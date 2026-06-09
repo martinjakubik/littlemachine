@@ -583,15 +583,22 @@ class LabelMaker {
         if (bResultCalculated === true) {
             const nResult = nSum / 16;
             const nAverage = this.trainingModel.reduce((accumulator, currentValue) => accumulator + currentValue) / 16;
-            return nResult > nAverage ? true : false;
+            this.inferenceAnswerBoolean = nResult > nAverage ? true : false;
         } else {
-            return false;
+            this.inferenceAnswerBoolean = false;
         }
     }
 
     showInferenceAnswer () {
-        this.inferenceDisplay.classList.add('show');
-        this.inferenceAnswer.classList.add('show');
+        if (this.inferenceAnswerBoolean == true) {
+            this.inferenceAnswer.innerHTML = 'Yes';
+        } else {
+            this.inferenceAnswer.innerHTML = 'No';
+        }
+        window.setTimeout(() => {
+            this.inferenceDisplay.classList.add('show');
+            this.inferenceAnswer.classList.add('show');
+        }, 2000);
     }
 
     hideInferenceAnswer () {
@@ -635,6 +642,7 @@ class LabelMaker {
     handleInferenceCanvasClicked (oEvent){
         this.drawPixelOnInferenceCanvas.call(this, oEvent);
         this.runInference.call(this);
+        this.showInferenceAnswer.call(this);
     }
 
     updateTrainingDisplay (oMessageData) {
