@@ -110,12 +110,12 @@ button {
 
 #loadButton {
     grid-row: 7;
-    grid-column: 7 / 10;
+    grid-column: 2 / 6;
 }
 
 #classifyButton {
     grid-row: 7;
-    grid-column: 12 / 15;
+    grid-column: 7 / 11;
 }
 #saveButton {
     grid-row: 8;
@@ -129,7 +129,7 @@ button {
 }
 
 #labelcounts {
-    grid-row: 7 / 11;
+    grid-row: 8 / 12;
     grid-column: 2 / 5;
 }
 

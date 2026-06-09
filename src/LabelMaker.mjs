@@ -153,7 +153,6 @@ class LabelMaker {
         this.makeInferenceDisplay(oContainer);
         this.makeLoadButton(oContainer);
         this.makeClassifyButton(oContainer);
-        this.makeSaveButton(oContainer);
         this.makeLabelCountGroups(oContainer);
     }
 
