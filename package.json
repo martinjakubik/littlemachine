@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "type": "module",
     "dependencies": {
-        "learnhypertext": "^2.0.3",
+        "learnhypertext": "^2.3.0",
         "localdatamanager": "^0.2.0",
         "mathjs": "^15.2.0"
     },
