@@ -207,10 +207,10 @@ class LabelMaker {
     }
 
     makeInferenceDisplay (oParentDiv) {
-        this.inferenceDisplayBox = createSvg('inferenceDisplay', oParentDiv);
-        createSvgPath('p1', this.inferenceDisplayBox);
-        this.inferenceResponse = createDiv('inferenceResponseText', oParentDiv);
-        this.inferenceResponse.innerHTML = 'Yes';
+        this.inferenceDisplay = createSvg('inferenceDisplay', oParentDiv);
+        createSvgPath('inferenceCallout', this.inferenceDisplay);
+        this.inferenceAnswer = createDiv('inferenceAnswer', oParentDiv);
+        this.inferenceAnswer.innerHTML = 'Yes';
     }
 
     renderSample () {
@@ -569,13 +569,13 @@ class LabelMaker {
     }
 
     showInferenceAnswer () {
-        this.inferenceDisplayBox.classList.add('show');
-        this.inferenceResponse.classList.add('show');
+        this.inferenceDisplay.classList.add('show');
+        this.inferenceAnswer.classList.add('show');
     }
 
     hideInferenceAnswer () {
-        this.inferenceDisplayBox.classList.remove('show');
-        this.inferenceResponse.classList.remove('show');
+        this.inferenceDisplay.classList.remove('show');
+        this.inferenceAnswer.classList.remove('show');
     }
 
     yPressed () {
