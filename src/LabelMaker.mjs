@@ -209,6 +209,8 @@ class LabelMaker {
     makeInferenceDisplay (oParentDiv) {
         this.inferenceDisplayBox = createSvg('inferenceDisplay', oParentDiv);
         createSvgPath('p1', this.inferenceDisplayBox);
+        const oInferenceResponse = createDiv('inferenceResponseText', oParentDiv);
+        oInferenceResponse.innerHTML = 'Yes';
     }
 
     renderSample () {

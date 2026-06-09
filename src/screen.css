@@ -178,6 +178,13 @@ button {
     stroke-width: 0.06em;
 }
 
+#inferenceResponseText {
+    grid-row: 6;
+    grid-column: 13/15;
+    text-align: center;
+    color: var(--text-0-inverted-fg-color);
+}
+
 h1 {
     font-size: 3em;
     color: var(--text-2-fg-color);
