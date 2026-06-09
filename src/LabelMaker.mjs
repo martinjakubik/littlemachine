@@ -568,6 +568,27 @@ class LabelMaker {
         }
     }
 
+    runInference () {
+        if (!this.trainingModel) return false;
+
+        let nSum = 0;
+        let bResultCalculated = false;
+        for(let i = 0; i < this.trainingModel.length - 1; i++) {
+            const nCoefficient = this.trainingModel[i];
+            const nValue = this.inferenceBinary[i];
+            if (!nCoefficient || !nValue || Number.isNaN(nCoefficient) || Number.isNaN(nValue)) break;
+            nSum = nSum + nCoefficient * nValue;
+            if (i >= this.trainingModel.length - 2) bResultCalculated = true;
+        }
+        if (bResultCalculated === true) {
+            const nResult = nSum / 16;
+            const nAverage = this.trainingModel.reduce((accumulator, currentValue) => accumulator + currentValue) / 16;
+            return nResult > nAverage ? true : false;
+        } else {
+            return false;
+        }
+    }
+
     showInferenceAnswer () {
         this.inferenceDisplay.classList.add('show');
         this.inferenceAnswer.classList.add('show');
@@ -613,6 +634,7 @@ class LabelMaker {
 
     handleInferenceCanvasClicked (oEvent){
         this.drawPixelOnInferenceCanvas.call(this, oEvent);
+        this.runInference.call(this);
     }
 
     updateTrainingDisplay (oMessageData) {
@@ -624,8 +646,9 @@ class LabelMaker {
         let y = 0;
         let nSize = 90;
         let bResize = true;
-        const maxThetaValue = Math.max(...oMessageData.arrayTheta0._data);
-        const minThetaValue = Math.min(...oMessageData.arrayTheta0._data);
+        this.trainingModel = oMessageData.arrayTheta0._data;
+        const maxThetaValue = Math.max(...this.trainingModel);
+        const minThetaValue = Math.min(...this.trainingModel);
         const diffThetaValue = maxThetaValue - minThetaValue;
         for (let i = 0; i < iBoxLength; i++) {
             x = i % BOX_SIZE;
