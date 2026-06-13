@@ -210,6 +210,186 @@ ul {
     color: var(--text-2-fg-color);
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+    body {
+        background: linear-gradient(
+            90deg,
+            var(--text-0-fg-color) -100%,
+            var(--bg-0-color)
+        );
+        font-family: var(--font-0-family);
+        font-size: 54px;
+    }
+
+    button {
+        height: 3em;
+        border: 0.2em solid var(--text-0-fg-color);
+        border-radius: 2em;
+        font-size: 1em;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(6, 3em);
+        grid-template-rows: repeat(30, 3em);
+    }
+
+    #sidebar {
+        grid-row: 1/9;
+        grid-column: 1;
+    }
+
+    #menuButton {
+        width: 3em;
+    }
+
+    #datapixelcanvas {
+        grid-row: 1/5;
+        grid-column: 2/6;
+        margin: 0 0 0 0;
+    }
+
+    #trainingpixelcanvas {
+        grid-row: 9/13;
+        grid-column: 2/6;
+        margin: 0 0 0 0;
+    }
+
+    #inferencepixelcanvas {
+        grid-row: 16/20;
+        grid-column: 2/6;
+        margin: 0 0 0 0;
+    }
+
+    .navigationbutton {
+        grid-row: 5;
+    }
+
+    .navigationfield {
+        grid-row: 5;
+        grid-column: 3/5;
+        height: 3em;
+        box-sizing: border-box;
+        border: 0.2em solid var(--text-0-fg-color);
+        border-radius: 3em;
+        text-align: center;
+        font-size: 1em;
+    }
+
+    .navigationbuttonleft {
+        grid-column: 2;
+    }
+
+    .navigationbuttonright {
+        grid-column: 5;
+    }
+
+    .labelbutton {
+        grid-row: 6;
+    }
+
+    #labelbuttonyes {
+        grid-column: 2 / 4;
+    }
+
+    #labelbuttonno {
+        grid-column: 4 / 6;
+    }
+
+    #labelbuttonyes.on {
+        border: 2px solid var(--semantic-positive-bg-0-inverted-color);
+    }
+
+    #labelbuttonno.on {
+        border: 2px solid var(--semantic-negative-bg-0-inverted-color);
+    }
+
+    #classifyButton {
+        grid-row: 14;
+        grid-column: 2 / 6;
+    }
+
+    #trainingDisplay {
+        grid-row: 5;
+        grid-column: 7/16;
+        color: var(--bg-2-color);
+    }
+
+    #labelcounts {
+        grid-row: 8 / 12;
+        grid-column: 2 / 5;
+    }
+
+    #labelcounts.off {
+        display: none;
+    }
+
+    #labelcounts.on {
+        display: initial;
+    }
+
+    .labelcountgroup {
+        display: grid;
+        grid-template-columns: 0px repeat(4, 3em);
+    }
+
+    .labelcountname,
+    .labelcount {
+        align-self: center;
+    }
+
+    .labelcountname {
+        grid-column: 3;
+        text-align: right;
+        margin: 0 0.1em 0 0;
+        max-width: 3em;
+        overflow-x: clip;
+    }
+
+    .labelcount {
+        grid-column: 4;
+        text-align: left;
+        margin: 0 0 0 0.1em;
+    }
+
+    #inferenceDisplay {
+        grid-row: 20;
+        grid-column: 2/6;
+    }
+
+    #inferenceDisplay #inferenceCallout {
+        stroke-width: 0.06em;
+    }
+
+    #inferenceDisplay.show #inferenceCallout {
+        stroke: var(--text-0-inverted-fg-color);
+    }
+
+    #inferenceAnswer {
+        grid-row: 21;
+        grid-column: 2/6;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3em;
+        text-align: center;
+    }
+
+    p {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    ul {
+        font-size: 2em;
+    }
+
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+}
+
 :root {
     --bg-0-color: rgb(255, 255, 255);
     --bg-0-inverted-color: rgba(57, 66, 237, 0.815);

@@ -14,7 +14,9 @@ const BOX_SIZE = 4;
 
 const MIN_DECIMAL = 0;
 
-const PIXEL_SIZE = 72;
+const PIXEL_SIZE_DESKTOP = 72;
+const PIXEL_SIZE_PHONE_PORTRAIT = 162;
+const PIXEL_SIZE = window.screen.width >= 320 && window.screen.width < 586 ? PIXEL_SIZE_PHONE_PORTRAIT : PIXEL_SIZE_DESKTOP;
 
 const DATA_PIXEL_CANVAS_ID = 'datapixelcanvas';
 const TRAINING_PIXEL_CANVAS_ID = 'trainingpixelcanvas';
