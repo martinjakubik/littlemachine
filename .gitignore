@@ -36,3 +36,5 @@ octave/samplelist*.csv
 dev/server.js
 
 html/resources/*.json
+
+package.sh
