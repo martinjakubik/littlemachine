@@ -231,7 +231,7 @@ ul {
     .container {
         display: grid;
         grid-template-columns: repeat(6, 3em);
-        grid-template-rows: repeat(30, 3em);
+        grid-template-rows: repeat(26, 3em);
     }
 
     #sidebar {
@@ -240,6 +240,7 @@ ul {
     }
 
     #menuButton {
+        display: none;
         width: 3em;
     }
 
@@ -316,7 +317,7 @@ ul {
     }
 
     #labelcounts {
-        grid-row: 8 / 12;
+        grid-row: 21 / 26;
         grid-column: 2 / 5;
     }
 
