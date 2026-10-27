@@ -26,6 +26,7 @@ resources/*.debug.mat
 resources/*.debug.*littlemachine
 resources/*.debug-*littlemachine
 
+resources/*.png
 resources/png4
 resources/png9/*
 resources/png16/*
@@ -38,3 +39,4 @@ dev/server.js
 html/resources/*.json
 
 package.sh
+

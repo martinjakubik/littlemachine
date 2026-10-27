@@ -217,6 +217,13 @@ ul {
         font-size: 54px;
     }
 
+    button#navigateHome {
+        height: 3em;
+        width: 100%;
+        font-size: 2em;
+        color: var(--bg-0-inverted-color);
+    }
+
     button {
         height: 3em;
         border: 0.2em solid var(--text-0-fg-color);

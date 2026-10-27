@@ -1,17 +1,36 @@
 import * as oFs from 'fs/promises';
+import { promisify as oPromisify } from 'node:util';
+import oChildProcess from 'node:child_process';
 
 const sApplicationSourcePath = './src';
+const sApplicationResourceSourcePath = './resources';
 const sApplicationDistributionPath = './app';
 const sLibPath = './app';
-const sResourcePath = `${sLibPath}/resources`;
+const sAppName = 'littlemachine';
 
 const oMkDirOptions = {
     recursive: true,
 };
 
+const aFilesToExcludeFromApp = [
+    '.DS_Store',
+];
+
+// filters the content to copy
+const filterFiles = function (sSrcPath) {
+    const sFileToCheck = sSrcPath.substring(sSrcPath.indexOf('src/') + 4);
+    if (aFilesToExcludeFromApp.includes(sFileToCheck)) {
+        console.log(`checking file: ✗ not copying ${sFileToCheck}`);
+        return false;
+    }
+    console.log(`checking file: ✔︎     copying ${sFileToCheck}`);
+    return true;
+};
+
 // copies all sources to application distribution path
 const oSrcToDistCopyOptions = {
     recursive: true,
+    filter: filterFiles,
 };
 
 oFs.mkdir(sApplicationDistributionPath, oMkDirOptions)
@@ -92,23 +111,61 @@ oFs.mkdir(sLibPath, oMkDirOptions)
         console.log(`  [error] details: ${oError}`);
     });
 
-oFs.mkdir(sResourcePath, oMkDirOptions)
-    .then(() => {
-        console.log(`[success] mkdir ${sResourcePath}`);
+async function renameImage(oFileToRename) {
+        const sCurrentFilename = `${sApplicationResourceSourcePath}/${oFileToRename.filename}`;
+        const sNewFilename = `${sApplicationResourceSourcePath}/${oFileToRename.filename.replace(`${sAppName}-`, '')}`;
 
-        oFs.copyFile(
-            './resources/samplelist.json',
-            `${sResourcePath}/samplelist.json`,
-        )
-            .then((oResult) => {
-                console.log(
-                    `[success] copied file ${sResourcePath}/samplelist.json`,
-                );
-            })
-            .catch((oError) => {
-                console.log(`  [error] details: ${oError}`);
-            });
-    })
-    .catch((oError) => {
-        console.log(`  [error] details: ${oError}`);
-    });
+        const oStat = await oFs.stat(sCurrentFilename);
+        if (!oStat.isFile) {
+            throw new Error(`${sCurrentFilename} is not a file`);
+        }
+        await oFs.rename(sCurrentFilename, sNewFilename);
+        console.log(`[success] renamed file named ${sCurrentFilename} to ${sNewFilename}`);
+}
+
+async function copyImage(oFileToCopy) {
+    let sCurrentFilename, sNewFilename;
+    if (oFileToCopy.filename) {
+        sCurrentFilename = oFileToCopy.filename;
+        sNewFilename = oFileToCopy.filename;
+    } else if (oFileToCopy.currentFilename && oFileToCopy.newFilename) {
+        sCurrentFilename = oFileToCopy.currentFilename;
+        sNewFilename = oFileToCopy.newFilename;
+    } else {
+        return;
+    }
+    await oFs.cp(`${sApplicationResourceSourcePath}/${sCurrentFilename}`, `${sApplicationDistributionPath}/${sNewFilename}`);
+    console.log(`[success] copied ${sApplicationResourceSourcePath}/${sCurrentFilename} to ${sApplicationDistributionPath}/${sNewFilename}`);
+}
+
+const renameImages = (aFilesToRename) => Promise.all(aFilesToRename.map(renameImage));
+const copyImages = (aFilesToCopy) => Promise.all(aFilesToCopy.map(copyImage));
+
+const aResourceFilesToRename = [{
+        filename: 'littlemachine-icon.png',
+    }, {
+        filename: 'littlemachine-logo.png',
+    }];
+
+const aFilesToCopy = [{
+        filename: 'icon.png',
+    }, {
+        filename: 'logo.png',
+    }, {
+        filename: 'samplelist.json',
+}];
+
+const buildImages = oPromisify(oChildProcess.execFile);
+try {
+    const oBuildResult = await buildImages('scripts/build-images.sh');
+    console.log(`[success] built images finished with result ${oBuildResult.stdout}`);
+
+    const oRenameResult = await renameImages(aResourceFilesToRename);
+    console.log(`[success] renamed images finished with result ${oRenameResult.stdout}`);
+
+    const oCopyResult = await copyImages(aFilesToCopy);
+    console.log(`[success] copies images finished with result ${oCopyResult.stdout}`);
+} catch (oError) {
+    console.log(`  [error] error while building images; ${oError}`);
+    process.exitCode = 1;
+}

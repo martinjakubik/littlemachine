@@ -418,7 +418,7 @@ class MachineMaker {
     }
 
     loadSamples () {
-        loadJsonFromFile('resources/samplelist.json')
+        loadJsonFromFile('samplelist.json')
             .then((oResponse) => {
                 if (!oResponse.ok) {
                     throw new Error(`http error ${oResponse.status}`);
