@@ -218,9 +218,9 @@ ul {
     }
 
     button#navigateHome {
-        height: 3em;
+        height: 2em;
         width: 100%;
-        font-size: 2em;
+        font-size: 1em;
         color: var(--bg-0-inverted-color);
     }
 
