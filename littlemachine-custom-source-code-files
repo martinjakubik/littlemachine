@@ -3,11 +3,9 @@ app.js
 classify.mjs
 datacontroller.mjs
 fminsearch.mjs
-icon.png
 index.html
 jsonToArrayConverter.js
 learnhypertext.mjs
-logo.png
 lrCostFunction.mjs
 MachineMaker.mjs
 math.js
